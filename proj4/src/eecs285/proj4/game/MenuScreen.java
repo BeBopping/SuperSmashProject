@@ -10,7 +10,7 @@ import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Window;
 
-import net.java.games.input.*;
+import net.java.games.input.Controller;
 import net.java.games.input.Component.Identifier;
 
 public class MenuScreen implements GameState{

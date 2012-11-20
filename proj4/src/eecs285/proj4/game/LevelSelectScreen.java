@@ -15,6 +15,8 @@ public class LevelSelectScreen implements GameState {
 	private Window window;
 	private Texture background;
 	private TrueTypeFont titleFont;
+
+	private ArrayList<SelectableLevel> selectableCharacters;
 	
 	public LevelSelectScreen(){
 		window = new Window(0.0f, 100.0f, 0.0f, 100.0f);

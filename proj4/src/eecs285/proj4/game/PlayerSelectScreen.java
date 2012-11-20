@@ -2,19 +2,24 @@ package eecs285.proj4.game;
 
 import java.util.ArrayList;
 
+import net.java.games.input.Controller;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.Window;
-import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;
 
 public class PlayerSelectScreen implements GameState {
 	private Window window;
 	private Texture background;
 	private TrueTypeFont titleFont;
+	
+	private ArrayList<SelectableFighter> selectableFighter;
+	private ArrayList<Controller> controllers;
+	private ArrayList<PlayerInfoVis> playerInfoVis;
 	
 	public PlayerSelectScreen(){
 		window = new Window(0.0f, 100.0f, 0.0f, 100.0f);

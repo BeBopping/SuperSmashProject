@@ -8,19 +8,49 @@ import org.newdawn.slick.opengl.Texture;
 
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.Window;
-import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;
 
 public class Battle implements GameState {
 	private Window window;
 	private Texture background;
 	private TrueTypeFont titleFont;
+
+	private BattleCharacter[] battleCharacters;
+	private Level level;
+	private boolean timedMatch;
+	private boolean stockMatch;
+	float timeLeft;
 	
-	public Battle(){
+	public Battle(BattleInfo battleInfo){
 		window = new Window(0.0f, 100.0f, 0.0f, 100.0f);
 		
 		background = Assets.GetTexture("title_screen_background");
 		titleFont = Assets.GetFont("title");
+		
+		// Setup Characters
+		int numPlayers = battleInfo.getPlayers().length;
+		Player[] players = battleInfo.getPlayers();
+		Fighter[] fighters = battleInfo.getFighters();
+		battleCharacters = new BattleCharacter[numPlayers];
+		
+		for(int i=0; i<numPlayers; ++i){
+			//battleCharacters[i] = new BattleCharacter(fighters[i], players[i]);
+		}
+		
+		// Setup time
+		if(battleInfo.getMinutes() > 0){
+			timedMatch = true;
+			timeLeft = 60.0f * battleInfo.getMinutes();
+		}
+		
+		// Setup stock
+		if(battleInfo.getStock() > 0){
+			stockMatch = true;
+			for(BattleCharacter character : battleCharacters){
+				character.setStock(battleInfo.getStock());
+			}
+		}
+		
 	}
 	
 	public void onActivate(){}
