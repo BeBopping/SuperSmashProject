@@ -1,4 +1,4 @@
-package eecs285.proj4.ihines;
+package eecs285.proj4.game;
 
 import java.awt.Font;
 import java.io.IOException;

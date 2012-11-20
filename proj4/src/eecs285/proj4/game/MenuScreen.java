@@ -1,9 +1,14 @@
-package eecs285.proj4.util;
+package eecs285.proj4.game;
 
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
+import eecs285.proj4.util.DisplayInfo;
+import eecs285.proj4.util.GameState;
+import eecs285.proj4.util.SelectableObject;
+import eecs285.proj4.util.Window;
 
 import net.java.games.input.*;
 import net.java.games.input.Component.Identifier;

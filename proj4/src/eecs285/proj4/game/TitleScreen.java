@@ -1,4 +1,4 @@
-package eecs285.proj4.ihines;
+package eecs285.proj4.game;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
-import eecs285.proj4.util.MenuScreen;
 import eecs285.proj4.util.Window;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;

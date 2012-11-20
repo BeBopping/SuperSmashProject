@@ -1,4 +1,4 @@
-package eecs285.proj4.ihines;
+package eecs285.proj4.game;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -60,7 +60,7 @@ public class Game {
 			Display.create();
 			glEnable(GL_TEXTURE_2D);
 			glShadeModel(GL_SMOOTH);
-			// TODO: We may or may not want to use depth
+			// TODO Isaiah: We may or may not want to use depth
 			glDisable(GL_DEPTH_TEST);
 			glDisable(GL_LIGHTING);
 			
@@ -137,7 +137,7 @@ public class Game {
 			// Update everything
 			currentState.getInput(delta);
 			currentState.step(delta);
-				// TODO: If we don't use depth change this...
+				// TODO Isaiah: If we don't use depth change this...
 				glClear(GL_COLOR_BUFFER_BIT);// | GL_DEPTH_BUFFER_BIT);
 			currentState.prerender(delta);
 			currentState.render(delta);
