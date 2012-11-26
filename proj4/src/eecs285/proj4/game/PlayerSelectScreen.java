@@ -20,9 +20,11 @@ public class PlayerSelectScreen implements GameState {
 	private ArrayList<SelectableFighter> selectableFighter;
 	private ArrayList<Controller> controllers;
 	private ArrayList<PlayerInfoVis> playerInfoVis;
+	BattleInfo battleInfo;
 	
 	public PlayerSelectScreen(){
 		window = new Window(0.0f, 100.0f, 0.0f, 100.0f);
+		battleInfo = new BattleInfo();
 		
 		background = Assets.GetTexture("title_screen_background"); 
 		titleFont = Assets.GetFont("title");
@@ -33,7 +35,19 @@ public class PlayerSelectScreen implements GameState {
 
 	public void getInput(double delta){}
 
-	public void step(double delta){}
+	public void step(double delta){
+
+		// TODO Move this to when we actually want to select a level.
+		battleInfo.setStock(5);
+		battleInfo.setMinutes(2);
+		Fighter[] fighters = new Fighter[4];
+		fighters[0] = new FighterA(FighterTrait.Normal, 15, 75);
+		fighters[1] = new FighterA(FighterTrait.Normal, 25, 65);
+		fighters[2] = new FighterA(FighterTrait.Normal, 35, 55);
+		fighters[3] = new FighterA(FighterTrait.Normal, 45, 45);
+		battleInfo.setFighters(fighters);
+		Game.pushGameState(new LevelSelectScreen(battleInfo));
+	}
 
 	public void prerender(double delta){}
 	

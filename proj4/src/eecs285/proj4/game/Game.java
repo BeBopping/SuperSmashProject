@@ -18,7 +18,7 @@ public class Game {
 	private Stack<GameState> gameStates;
 	private GameState savedGameState;
 	private boolean stateChange;
-	private final boolean FixedFPS = false;
+	private final boolean FixedFPS = true;
 	
 	private static final long TimerTicksPerSecond = Sys.getTimerResolution();
 	private static int FPS = 60;
@@ -64,18 +64,19 @@ public class Game {
 			glDisable(GL_DEPTH_TEST);
 			glDisable(GL_LIGHTING);
 			
-			//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-			//glClearDepth(1);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			glClearDepth(1);
 			
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			
-			//glViewport(0,0,Game.GetWindowWidth(),Game.GetWindowHeight());
+			//glViewport(0,0,DisplayInfo.GetWidth(),DisplayInfo.GetHeight());
 			//glMatrixMode(GL_MODELVIEW);
 			
 			//glMatrixMode(GL_PROJECTION);
 			//glLoadIdentity();
-			//glOrtho(0, resolutionWidth, resolutionHeight, 0, 1, -1);
+			//glOrtho(0, DisplayInfo.GetWidth(), DisplayInfo.GetHeight(), 0, 1, -1);
 			//glMatrixMode(GL_MODELVIEW);
 			
 			resetScreenPos();

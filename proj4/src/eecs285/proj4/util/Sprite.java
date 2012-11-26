@@ -36,4 +36,12 @@ public class Sprite {
 	public float getBottom(){
 		return bottom;
 	}
+	
+	public float getPercentX(){
+		return right - left;
+	}
+	
+	public float getPercentY(){
+		return bottom - top;
+	}
 }

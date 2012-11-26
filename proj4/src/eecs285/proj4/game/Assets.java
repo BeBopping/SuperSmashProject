@@ -9,6 +9,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import eecs285.proj4.game.Levels.Level;
+import eecs285.proj4.game.Levels.LevelHardCoded;
 import eecs285.proj4.util.Sprite;
 
 public class Assets {
@@ -35,8 +37,15 @@ public class Assets {
 				textures.put("title_screen_background", texture);
 				textures.put("about_screen_background", texture);
 				textures.put("how_to_play_screen_background", texture);
+				textures.put("default_level_background", texture);
 				
 				sprites.put("example_sprite", new Sprite(texture, 0.0f, 0.1f, 0.0f, 0.1f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Platforms.png"));
+				textures.put("platforms", texture);
+				sprites.put("floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
+				sprites.put("platform", new Sprite(texture, 0.0625f, 0.125f, 0.0f, 0.0625f));
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(0);
@@ -75,6 +84,14 @@ public class Assets {
 	
 	public static TrueTypeFont GetFont(String label){
 		return fonts.get(label);
+	}
+	
+	public static Level GetLevel(String string){
+		//if(string.equals("Hard Coded")){
+		//	return new LevelHardCoded();
+		//}
+		
+		return new LevelHardCoded();
 	}
 	
 	private Assets(){}

@@ -18,7 +18,11 @@ public class LevelSelectScreen implements GameState {
 
 	private ArrayList<SelectableLevel> selectableCharacters;
 	
-	public LevelSelectScreen(){
+	private BattleInfo battleInfo;
+	
+	public LevelSelectScreen(BattleInfo battleInfo){
+		this.battleInfo = battleInfo;
+		
 		window = new Window(0.0f, 100.0f, 0.0f, 100.0f);
 		
 		background = Assets.GetTexture("title_screen_background");
@@ -30,7 +34,15 @@ public class LevelSelectScreen implements GameState {
 
 	public void getInput(double delta){}
 
-	public void step(double delta){}
+	public void step(double delta){
+		
+		// TODO Move this to when we actually select a level.
+		
+		battleInfo.setLevel("Default Level");
+		Game.popGameState();
+		Game.pushGameState(new Battle(battleInfo));
+		
+	}
 
 	public void prerender(double delta){}
 	

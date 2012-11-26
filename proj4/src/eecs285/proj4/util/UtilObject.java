@@ -1,10 +1,10 @@
 package eecs285.proj4.util;
 
 public abstract class UtilObject {
-	private float posX;
-	private float posY;
-	private float sizeX;
-	private float sizeY;
+	protected float posX;
+	protected float posY;
+	protected float sizeX;
+	protected float sizeY;
 	
 	public UtilObject(float left, float right, float top, float bottom){
 		posX = left;
