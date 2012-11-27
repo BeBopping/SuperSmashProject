@@ -82,15 +82,25 @@ public class ScreenPlayerSelect implements GameState {
 			// TODO Move this to when we actually want to select a level.
 			battleInfo.setStock(5);
 			battleInfo.setMinutes(2);
-			Fighter[] fighters = new Fighter[4];
-			fighters[0] = new FighterA(FighterTrait.Normal, 25, 75);
+			Fighter[] fighters = new Fighter[4]; //8
+			fighters[0] = new FighterA(FighterTrait.Normal);
 			fighters[0].SetInput(input);
-			fighters[1] = new FighterA(FighterTrait.Normal, 35, 65);
+			fighters[1] = new FighterA(FighterTrait.Normal);
 			fighters[1].SetInput(input);
-			fighters[2] = new FighterA(FighterTrait.Normal, 45, 55);
+			fighters[2] = new FighterA(FighterTrait.Normal);
 			fighters[2].SetInput(input);
-			fighters[3] = new FighterA(FighterTrait.Normal, 65, 45);
+			fighters[3] = new FighterA(FighterTrait.Normal);
 			fighters[3].SetInput(input);
+			
+			//fighters[4] = new FighterA(FighterTrait.Normal);
+			//fighters[4].SetInput(input);
+			//fighters[5] = new FighterA(FighterTrait.Normal);
+			//fighters[5].SetInput(input);
+			//fighters[6] = new FighterA(FighterTrait.Normal);
+			//fighters[6].SetInput(input);
+			//fighters[7] = new FighterA(FighterTrait.Normal);
+			//fighters[7].SetInput(input);
+			
 			battleInfo.setFighters(fighters);
 			Game.pushGameState(new ScreenLevelSelect(battleInfo));
 		}

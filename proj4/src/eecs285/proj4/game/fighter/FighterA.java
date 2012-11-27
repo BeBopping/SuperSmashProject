@@ -12,8 +12,8 @@ public class FighterA extends Fighter {
 	private static final float HEIGHT = 1.4f;
 	private Sprite normalStance;
 	
-	public FighterA(FighterTrait trait, float centerX, float bottom){
-		super("Fighter A", trait, centerX - WIDTH*0.5f, centerX + WIDTH*0.5f, bottom - HEIGHT, bottom);
+	public FighterA(FighterTrait trait){
+		super("Fighter A", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
 		normalStance = Assets.GetSprite("floor");
 		
 		minWalkSpeed = 0.01f;

@@ -1,11 +1,14 @@
 package eecs285.proj4.game.fighter;
 
 import static eecs285.proj4.game.fighter.FighterState.*;
+
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.Input;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Sprite;
+
+import org.newdawn.slick.Color;
 
 public abstract class Fighter extends MovingObject {
 	protected static final float GRAVITY = 10.0f;
@@ -31,15 +34,20 @@ public abstract class Fighter extends MovingObject {
 	protected float maxWalkSpeed;
 	protected float runSpeed;
 	protected float firstJumpSpeed;
+	protected float firstJumpMinTime;
 	protected float firstJumpMaxTime;
 	protected float secondJumpSpeed;
+	protected float secondJumpMinTime;
 	protected float secondJumpMaxTime;
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
+	protected boolean canMove;
+	protected boolean facingLeft;
 	
 	protected Sprite currentSprite;
 	protected float visualWidth;
 	protected float visualHeight;
+	protected Color playerColor;
 	
 	public Fighter(String name, FighterTrait trait,
 			float left, float right, float top, float bottom) {
@@ -48,6 +56,7 @@ public abstract class Fighter extends MovingObject {
 		fighterName = name;
 		fighterTrait = trait;
 		fighterState = None;
+		canMove = true;
 	}
 	
 	public void SetInput(Input input){
@@ -56,6 +65,10 @@ public abstract class Fighter extends MovingObject {
 	
 	public void SetStock(int stock){
 		this.stock = stock;
+	}
+	
+	public void SetColor(Color color){
+		playerColor = color;
 	}
 	
 	public String toString(){
@@ -79,10 +92,37 @@ public abstract class Fighter extends MovingObject {
 	public void step(double delta){
 		lastPosX = posX;
 		lastPosY = posY;
-		
-		velY += delta * GRAVITY;
+
 		velX += (float)(input.xAxis * delta * 100.0f);
+		velY += delta * GRAVITY;
 		
+		doJump(delta);
+		doDuck(delta);
+		doMovement(delta);
+		doAction(delta);
+		
+		if(velX > MAXHORIZONTAL) velX = MAXHORIZONTAL;
+		if(velX < -MAXHORIZONTAL) velX = -MAXHORIZONTAL;
+		if(velY > MAXVERTICAL) velY = MAXVERTICAL;
+		if(velY < -MAXVERTICAL) velY = -MAXVERTICAL;
+		
+		if(input.xAxis != 0.0f){
+			facingLeft = input.xAxis < 0.0f;
+		}
+
+		posX += delta * velX;
+		posY += delta * velY;
+		
+		onGround = false;
+	}
+	
+	private void doJump(double delta){
+		
+	}
+	
+	private void doDuck(double delta){}
+	
+	private void doMovement(double delta){
 		if(onGround){
 			if(fighterState == None || fighterState == Ducking){
 				velX *= 0.75f;
@@ -100,14 +140,6 @@ public abstract class Fighter extends MovingObject {
 			}
 		}
 		
-		if(velX > MAXHORIZONTAL) velX = MAXHORIZONTAL;
-		if(velX < -MAXHORIZONTAL) velX = -MAXHORIZONTAL;
-		if(velY > MAXVERTICAL) velY = MAXVERTICAL;
-		if(velY < -MAXVERTICAL) velY = -MAXVERTICAL;
-		
-		posY += delta * velY;
-		posX += delta * velX;
-	
 		if(fighterState == Flying){
 			if(flightTime <= 0.0f){
 				fighterState = None;
@@ -115,13 +147,15 @@ public abstract class Fighter extends MovingObject {
 			
 			flightTime -= delta;
 		}
+	}
+	
+	private void doAction(double delta){
 		
-		onGround = false;
 	}
 	
 	public void render(double delta){
 		Render.render(currentSprite, getCenterX()-visualWidth*0.5f, getCenterX()+visualWidth*0.5f,
-									 getBottomEdge()-visualHeight, getBottomEdge());
+									 getBottomEdge()-visualHeight, getBottomEdge(), playerColor, facingLeft);
 		
 		handleRender(delta);
 	}

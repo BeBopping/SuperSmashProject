@@ -11,20 +11,26 @@ public class Render {
 	// ************************************************************************
 	// Render Stuff with Sprite
 	public static void render(Sprite sprite, UtilObject gameObject){
-		render(sprite, gameObject.getLeftEdge(), gameObject.getRightEdge(), gameObject.getTopEdge(), gameObject.getBottomEdge());
+		render(sprite, gameObject.getLeftEdge(), gameObject.getRightEdge(), gameObject.getTopEdge(), gameObject.getBottomEdge(), Color.white, false);
 	}
 	
-	public static void render(Sprite sprite, UtilObject gameObject, Color color){
-		render(sprite, gameObject.getLeftEdge(), gameObject.getRightEdge(), gameObject.getTopEdge(), gameObject.getBottomEdge(), color);
+	public static void render(Sprite sprite, UtilObject gameObject, Color color, boolean flipX){
+		render(sprite, gameObject.getLeftEdge(), gameObject.getRightEdge(), gameObject.getTopEdge(), gameObject.getBottomEdge(), color, flipX);
 	}
 	
 	public static void render(Sprite sprite, float left, float right, float top, float bottom){
-		render(sprite, left, right, top, bottom, Color.white);
+		render(sprite, left, right, top, bottom, Color.white, false);
 	}
 	
-	public static void render(Sprite sprite, float left, float right, float top, float bottom, Color color){
+	public static void render(Sprite sprite, float left, float right, float top, float bottom, Color color, boolean flipX){
 		color.bind();
 		sprite.getTexture().bind(); // or GL11.glBind(texture.getTextureID());
+		
+		if(flipX){
+			float temp = right;
+			right = left;
+			left = temp;
+		}
 		
 		glBegin(GL_QUADS);
 			glTexCoord2f(sprite.getLeft(),sprite.getTop());

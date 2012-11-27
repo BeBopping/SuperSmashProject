@@ -17,6 +17,9 @@ import eecs285.proj4.util.Render;
 
 public class Battle implements GameState {
 	private static final boolean DEBUG_MODE = true;
+	public static final Color[] PLAYER_COLORS = new Color[]{
+		Color.red, Color.blue, Color.green, Color.yellow, Color.pink, Color.magenta, Color.gray, Color.orange
+	};
 	
 	private Window window;
 	private Window hud;
@@ -67,6 +70,7 @@ public class Battle implements GameState {
 		
 		for(int i=0; i<fighters.length; i++){
 			fighters[i].setSpawn(level.startX[i], level.startY[i]);
+			fighters[i].SetColor(PLAYER_COLORS[i]);
 		}
 	}
 	
