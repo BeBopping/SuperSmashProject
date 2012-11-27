@@ -11,7 +11,7 @@ import eecs285.proj4.util.Sprite;
 import org.newdawn.slick.Color;
 
 public abstract class Fighter extends MovingObject {
-	protected static final float GRAVITY = 10.0f;
+	protected static final float GRAVITY = 100.0f;
 	protected static final float MAXHORIZONTAL = 100.0f;
 	protected static final float MAXVERTICAL = 1000.0f;
 	
@@ -25,10 +25,6 @@ public abstract class Fighter extends MovingObject {
 	private int deaths;
 	private int suicides;
 	
-	public FighterState fighterState;
-	protected boolean onGround;
-	protected float flightTime;
-	
 	// ALl units use meters and seconds
 	protected float minWalkSpeed;
 	protected float maxWalkSpeed;
@@ -36,13 +32,21 @@ public abstract class Fighter extends MovingObject {
 	protected float firstJumpSpeed;
 	protected float firstJumpMinTime;
 	protected float firstJumpMaxTime;
+	protected float firstJumpLiniencyTime;
 	protected float secondJumpSpeed;
 	protected float secondJumpMinTime;
 	protected float secondJumpMaxTime;
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
+
+	public FighterState fighterState;
 	protected boolean canMove;
 	protected boolean facingLeft;
+	protected boolean onGround;
+	//protected boolean ducking;
+	protected boolean canDoubleJump;
+	protected double flightTime;		// Is flying if > 0.0f
+	protected double jumpTime;			// Is jumping if > 0.0f
 	
 	protected Sprite currentSprite;
 	protected float visualWidth;
@@ -93,6 +97,10 @@ public abstract class Fighter extends MovingObject {
 		lastPosX = posX;
 		lastPosY = posY;
 		
+		if(onGround){
+			canDoubleJump = true;
+		}
+		
 		doDuck(delta);
 		doMovement(delta);
 		doJump(delta);
@@ -111,7 +119,43 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	private void doJump(double delta){
+		// TODO : return when not allowed to jump
 		
+		if(onGround){
+			if(input.jump){
+				if(jumpTime >= -firstJumpLiniencyTime && jumpTime <= 0.0d){
+					jumpTime = delta;
+				}
+				else if(jumpTime > 0.0d && jumpTime <= firstJumpMaxTime){
+					jumpTime += delta;
+				}
+			}
+			else{
+				jumpTime = 0.0d;
+			}
+		}
+		else{
+			if(input.jump){
+				if(jumpTime >= -firstJumpLiniencyTime && jumpTime <= 0.0d){
+					jumpTime -= delta;
+				}
+				else if(jumpTime > 0.0d && jumpTime <= firstJumpMaxTime){
+					jumpTime += delta;
+				}
+			}
+			else{
+				if(jumpTime > 0.0d && jumpTime < firstJumpMinTime){
+					jumpTime += delta;
+				}
+				else{
+					jumpTime = 0.0d;
+				}
+			}
+		}
+		
+		if(jumpTime > 0.0d && jumpTime < firstJumpMaxTime){
+			velY = -firstJumpSpeed;
+		}
 	}
 	
 	private void doDuck(double delta){}

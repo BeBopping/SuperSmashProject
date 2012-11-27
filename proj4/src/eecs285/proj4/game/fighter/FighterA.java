@@ -19,10 +19,13 @@ public class FighterA extends Fighter {
 		minWalkSpeed = 0.01f;
 		maxWalkSpeed = 4.0f;
 		runSpeed = 6.0f;
-		firstJumpSpeed = 4.0f;
-		firstJumpMaxTime = 1.5f;
-		secondJumpSpeed = 5.5f;
-		secondJumpMaxTime = 2.0f;
+		firstJumpSpeed = 12.0f;
+		firstJumpMinTime = 0.05f;
+		firstJumpMaxTime = 0.3f;
+		firstJumpLiniencyTime = 0.05f;
+		secondJumpSpeed = 10.5f;
+		secondJumpMinTime = 0.05f;
+		secondJumpMaxTime = 0.3f;
 		maxFallSpeed = 20.0f;
 		maxFallSpeedHorizontal = 4.0f;
 		

@@ -15,10 +15,10 @@ public class InputXbox extends Input {
 	public void getInput(){
 		controller.poll();
 		
-		a = controller.getComponent(Identifier.Button._0).getPollData() > 0.75f;
-		b = controller.getComponent(Identifier.Button._1).getPollData() > 0.75f;
-		x = controller.getComponent(Identifier.Button._2).getPollData() > 0.75f;
-		y = controller.getComponent(Identifier.Button._3).getPollData() > 0.75f;
+		primaryAttack = controller.getComponent(Identifier.Button._0).getPollData() > 0.75f;
+		secondaryAttack = controller.getComponent(Identifier.Button._1).getPollData() > 0.75f;
+		jump = controller.getComponent(Identifier.Button._2).getPollData() > 0.75f
+			|| controller.getComponent(Identifier.Button._3).getPollData() > 0.75f;
 	
 		xAxis = controller.getComponent(Identifier.Axis.X).getPollData();
 		yAxis = controller.getComponent(Identifier.Axis.Y).getPollData();
