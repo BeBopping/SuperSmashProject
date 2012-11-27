@@ -10,10 +10,10 @@ import eecs285.proj4.util.Window;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;
 
-public class StartMenuScreen extends MenuScreen {
+public class ScreenStartMenu extends ScreenMenu {
 	private Texture background;
 	
-	public StartMenuScreen(){
+	public ScreenStartMenu(){
 		super(new Window(0.0f, 100.0f, 0.0f, 100.0f));
 		ArrayList<SelectableObject> menuItems = new ArrayList<SelectableObject>();
 		menuItems.add(new StartItem(25.0f, 75.0f, 10.0f, 30.0f));
@@ -46,7 +46,7 @@ public class StartMenuScreen extends MenuScreen {
 
 		public void step(double delta){
 			if(currentState == State.BEGIN_MOUSE_PRESS){
-				Game.pushGameState(new PlayerSelectScreen());
+				Game.pushGameState(new ScreenPlayerSelect());
 			}
 		}
 

@@ -1,4 +1,4 @@
-package eecs285.proj4.game.Levels;
+package eecs285.proj4.game.levels;
 
 import eecs285.proj4.util.UtilObject;
 

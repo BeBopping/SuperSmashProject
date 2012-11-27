@@ -9,8 +9,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import eecs285.proj4.game.Levels.Level;
-import eecs285.proj4.game.Levels.LevelHardCoded;
+import eecs285.proj4.game.levels.Level;
+import eecs285.proj4.game.levels.LevelHardCoded;
 import eecs285.proj4.util.Sprite;
 
 public class Assets {
@@ -45,6 +45,9 @@ public class Assets {
 				textures.put("platforms", texture);
 				sprites.put("floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
 				sprites.put("platform", new Sprite(texture, 0.0625f, 0.125f, 0.0f, 0.0625f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));
+				textures.put("square", texture);
 				
 			} catch (IOException e) {
 				e.printStackTrace();

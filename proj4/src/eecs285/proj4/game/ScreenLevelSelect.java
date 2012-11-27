@@ -11,7 +11,7 @@ import eecs285.proj4.util.Window;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;
 
-public class LevelSelectScreen implements GameState {
+public class ScreenLevelSelect implements GameState {
 	private Window window;
 	private Texture background;
 	private TrueTypeFont titleFont;
@@ -20,7 +20,7 @@ public class LevelSelectScreen implements GameState {
 	
 	private BattleInfo battleInfo;
 	
-	public LevelSelectScreen(BattleInfo battleInfo){
+	public ScreenLevelSelect(BattleInfo battleInfo){
 		this.battleInfo = battleInfo;
 		
 		window = new Window(0.0f, 100.0f, 0.0f, 100.0f);

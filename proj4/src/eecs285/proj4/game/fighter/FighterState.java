@@ -1,9 +1,9 @@
-package eecs285.proj4.game;
+package eecs285.proj4.game.fighter;
 
 public enum FighterState {
-	OnGround,
-	InAir,
+	None,
 	Ducking,
 	Running,
+	Attacking,
 	Flying
 }

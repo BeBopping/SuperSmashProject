@@ -152,6 +152,6 @@ public class Game {
 	
 	public static void main(String[] argv){
 		Game game = new Game(800, 600);
-		game.run(new TitleScreen());
+		game.run(new ScreenTitle());
 	}
 }

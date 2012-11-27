@@ -1,5 +1,7 @@
 package eecs285.proj4.game;
 
+import eecs285.proj4.game.fighter.Fighter;
+
 public class BattleInfo {
 	private Fighter[] fighters;
 	private String levelName;

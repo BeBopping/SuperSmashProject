@@ -13,7 +13,7 @@ import eecs285.proj4.util.Window;
 import net.java.games.input.Controller;
 import net.java.games.input.Component.Identifier;
 
-public class MenuScreen implements GameState{
+public class ScreenMenu implements GameState{
 	protected Window window;
 	private ArrayList<SelectableObject> menuItems;
 	private int currentMenuItem;
@@ -28,11 +28,11 @@ public class MenuScreen implements GameState{
 	
 	private boolean firstFrame;
 
-	public MenuScreen(){
+	public ScreenMenu(){
 		this(new Window(0.0f, 0.0f, 1.0f, 1.0f));
 	}
 	
-	public MenuScreen(Window window){
+	public ScreenMenu(Window window){
 		this.window = window;
 		currentMenuItem = 0;
 		mouseLeftClick = false;

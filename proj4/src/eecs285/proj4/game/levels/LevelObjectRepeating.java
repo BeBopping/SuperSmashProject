@@ -1,4 +1,4 @@
-package eecs285.proj4.game.Levels;
+package eecs285.proj4.game.levels;
 
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Sprite;
@@ -44,7 +44,7 @@ public class LevelObjectRepeating extends LevelObject {
 			//float imageHeight = sprite.getPercentY() * sprite.getTexture().getImageHeight();
 			float height = (getSizeX() / ratioXOverY);
 			
-			for(float top=getLeftEdge(); top < getBottomEdge(); top += height){//scale * imageHeight){
+			for(float top=getTopEdge(); top < getBottomEdge(); top += height){//scale * imageHeight){
 				final float bottom = Math.min(top + height, getBottomEdge());
 				
 				Render.render(sprite, getLeftEdge(), getRightEdge(), top, bottom);
