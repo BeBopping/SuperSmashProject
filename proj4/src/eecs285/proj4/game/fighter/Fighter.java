@@ -92,23 +92,17 @@ public abstract class Fighter extends MovingObject {
 	public void step(double delta){
 		lastPosX = posX;
 		lastPosY = posY;
-
-		velX += (float)(input.xAxis * delta * 100.0f);
-		velY += delta * GRAVITY;
 		
-		doJump(delta);
 		doDuck(delta);
 		doMovement(delta);
+		doJump(delta);
 		doAction(delta);
+		doPlayerDirection(delta);
 		
 		if(velX > MAXHORIZONTAL) velX = MAXHORIZONTAL;
 		if(velX < -MAXHORIZONTAL) velX = -MAXHORIZONTAL;
 		if(velY > MAXVERTICAL) velY = MAXVERTICAL;
 		if(velY < -MAXVERTICAL) velY = -MAXVERTICAL;
-		
-		if(input.xAxis != 0.0f){
-			facingLeft = input.xAxis < 0.0f;
-		}
 
 		posX += delta * velX;
 		posY += delta * velY;
@@ -123,6 +117,9 @@ public abstract class Fighter extends MovingObject {
 	private void doDuck(double delta){}
 	
 	private void doMovement(double delta){
+		velX += (float)(input.xAxis * delta * 100.0f);
+		velY += delta * GRAVITY;
+		
 		if(onGround){
 			if(fighterState == None || fighterState == Ducking){
 				velX *= 0.75f;
@@ -151,6 +148,24 @@ public abstract class Fighter extends MovingObject {
 	
 	private void doAction(double delta){
 		
+	}
+	
+	private void doPlayerDirection(double delta){
+		if(facingLeft){
+			if(velX >= 0 && input.xAxis > 0.0f){
+				facingLeft = false;
+			}
+		}
+		else{
+			if(velX <= 0 && input.xAxis < 0.0f){
+				facingLeft = true;
+			}
+		}
+		
+		// Alternate function
+		//if(input.xAxis != 0.0f){
+		//	facingLeft = input.xAxis < 0.0f;
+		//}
 	}
 	
 	public void render(double delta){
