@@ -13,12 +13,23 @@ public class InputXbox extends Input {
 	}
 	
 	public void getInput(){
-		a = controller.getComponent(Identifier.Button.A).getPollData() > 0.75f;
-		b = controller.getComponent(Identifier.Button.B).getPollData() > 0.75f;
-		x = controller.getComponent(Identifier.Button.X).getPollData() > 0.75f;
-		y = controller.getComponent(Identifier.Button.Y).getPollData() > 0.75f;
+		controller.poll();
+		
+		a = controller.getComponent(Identifier.Button._0).getPollData() > 0.75f;
+		b = controller.getComponent(Identifier.Button._1).getPollData() > 0.75f;
+		x = controller.getComponent(Identifier.Button._2).getPollData() > 0.75f;
+		y = controller.getComponent(Identifier.Button._3).getPollData() > 0.75f;
 	
 		xAxis = controller.getComponent(Identifier.Axis.X).getPollData();
 		yAxis = controller.getComponent(Identifier.Axis.Y).getPollData();
 	}
+	
+	//_0 = A
+	//_1 = B
+	//_2 = X
+	//_3 = Y
+	//_4 = left_bumper
+	//_5 = right_bumber
+	//_6 = back
+	//_7 = start
 }

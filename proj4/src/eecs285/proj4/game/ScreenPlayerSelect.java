@@ -55,20 +55,36 @@ public class ScreenPlayerSelect implements GameState {
 		
 		// Controller
 		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
-
+		
 		// Key Up
 		tempKeyPress = false;
 		for(int i=0; i<controllers.length; i++){
+			controllers[i].poll();
+			Component component;
 			
-			Component component = controllers[i].getComponent(Identifier.Button.A);
+			// A
+			component = controllers[i].getComponent(Identifier.Button._0);
 			if(component != null){
 				if(component.getPollData() >= 0.75){
-					System.out.println(component.getName());
 					tempKeyPress = true;
-					input = new InputXbox(controllers[i]);
-					
-					enters++;
+					System.out.println(component.getName());
 				}
+			}
+			
+			// Start
+			component = controllers[i].getComponent(Identifier.Button._7);
+			if(component != null){
+				if(component.getPollData() >= 0.75){
+					tempKeyPress = true;
+					System.out.println(component.getName());
+				}
+			}
+			
+			if(tempKeyPress){
+				tempKeyPress = true;
+				input = new InputXbox(controllers[i]);
+				
+				enters++;
 			}
 		}
 		
