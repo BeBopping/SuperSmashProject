@@ -161,7 +161,9 @@ public abstract class Fighter extends MovingObject {
 	private void doDuck(double delta){}
 	
 	private void doMovement(double delta){
-		velX += (float)(input.xAxis * delta * 100.0f);
+		//TODO : return in situations where we don't allow movement
+		
+		velX += (float)((double)input.xAxis * delta * 100.0d);
 		velY += delta * GRAVITY;
 		
 		if(onGround){
