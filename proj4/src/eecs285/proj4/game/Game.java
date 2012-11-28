@@ -2,6 +2,7 @@ package eecs285.proj4.game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 import org.lwjgl.LWJGLException;
@@ -106,48 +107,56 @@ public class Game {
 	private void run(GameState firstState){
 		pushGameState(firstState);
 		
-		while(!Display.isCloseRequested()){
-			
-			double delta = 0.0d;
-			if(FixedFPS){
-				// Wait to sync with screen
-				Display.sync(FPS);
-				delta = SPF;
-			}
-			else{
-				double currentTime = getTime();
-				delta = currentTime - lastTime;
+		try{
+			while(!Display.isCloseRequested()){
 				
-				if(delta == 0.0f){
-					continue;
+				double delta = 0.0d;
+				if(FixedFPS){
+					// Wait to sync with screen
+					Display.sync(FPS);
+					delta = SPF;
 				}
-				lastTime = currentTime;
-			}
-			
-			GameState currentState = gameStates.peek();
-			
-			// Update stateChange
-			if(stateChange){
-				if(savedGameState != null){
-					savedGameState.onDeactivate();
-					savedGameState = null;
+				else{
+					double currentTime = getTime();
+					delta = currentTime - lastTime;
+					
+					if(delta == 0.0f){
+						continue;
+					}
+					lastTime = currentTime;
 				}
-				currentState.onActivate();
+				
+				GameState currentState = gameStates.peek();
+				
+				// Update stateChange
+				if(stateChange){
+					if(savedGameState != null){
+						savedGameState.onDeactivate();
+						savedGameState = null;
+					}
+					
+					currentState.onActivate();
+					stateChange = false;
+				}
+				
+				// Update everything
+				currentState.getInput(delta);
+				currentState.step(delta);
+					// TODO Isaiah: If we don't use depth, change this...
+					glClear(GL_COLOR_BUFFER_BIT);// | GL_DEPTH_BUFFER_BIT);
+				currentState.prerender(delta);
+				currentState.render(delta);
+				
+				// Finalize display
+				Display.update();
 			}
-			
-			// Update everything
-			currentState.getInput(delta);
-			currentState.step(delta);
-				// TODO Isaiah: If we don't use depth change this...
-				glClear(GL_COLOR_BUFFER_BIT);// | GL_DEPTH_BUFFER_BIT);
-			currentState.prerender(delta);
-			currentState.render(delta);
-			
-			// Finalize display
-			Display.update();
 		}
-		
-		Display.destroy();
+		catch(EmptyStackException except){
+			// Not an error
+		}
+		finally{
+			Display.destroy();
+		}
 	}
 	
 	public static void main(String[] argv){

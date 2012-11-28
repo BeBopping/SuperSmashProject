@@ -16,9 +16,11 @@ public class FighterA extends Fighter {
 		super("Fighter A", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
 		normalStance = Assets.GetSprite("floor");
 		
-		minWalkSpeed = 0.01f;
-		maxWalkSpeed = 4.0f;
-		runSpeed = 6.0f;
+		//minWalkSpeed = 0.01f;
+		maxWalkSpeed = 7.0f;
+		forwardAcceleration = 20.0f;
+		reverseAcceleration = 50.0f;
+		//maxWalkSpeedFastestTime = 0.05f;
 		firstJumpSpeed = 12.0f;
 		firstJumpMinTime = 0.05f;
 		firstJumpMaxTime = 0.3f;
@@ -27,7 +29,7 @@ public class FighterA extends Fighter {
 		secondJumpMinTime = 0.05f;
 		secondJumpMaxTime = 0.3f;
 		maxFallSpeed = 20.0f;
-		maxFallSpeedHorizontal = 4.0f;
+		maxFallSpeedHorizontal = 7.0f;
 		
 		currentSprite = normalStance;
 		visualWidth = 1.0f;

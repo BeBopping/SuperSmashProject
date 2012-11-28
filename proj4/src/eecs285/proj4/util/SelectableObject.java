@@ -38,4 +38,8 @@ public abstract class SelectableObject extends UtilObject {
 			}
 		}
 	}
+	
+	public void resetState(){
+		currentState = State.NONE;
+	}
 }

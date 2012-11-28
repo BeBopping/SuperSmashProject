@@ -10,7 +10,9 @@ import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Window;
 
+import net.java.games.input.Component;
 import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Component.Identifier;
 
 public class ScreenMenu implements GameState{
@@ -25,6 +27,8 @@ public class ScreenMenu implements GameState{
 	private boolean moveUp;
 	private boolean selectKey;
 	private boolean selectItem;
+	private boolean exitKey;
+	private boolean exitState;
 	
 	private boolean firstFrame;
 
@@ -35,50 +39,55 @@ public class ScreenMenu implements GameState{
 	public ScreenMenu(Window window){
 		this.window = window;
 		currentMenuItem = 0;
-		mouseLeftClick = false;
-		moveDown = false;
-		moveUp = false;
-		selectKey = false;
-		selectItem = false;
-		firstFrame = true;
+		//firstFrame = true;
 	}
 	
 	protected void initMenuItems(ArrayList<SelectableObject> menuItems){
 		this.menuItems = menuItems;
 	}
 	
-	public void onActivate(){}
+	public void onActivate(){
+		firstFrame = true; 
+		mouseLeftClick = false;
+		moveDown = false;
+		moveUp = false;
+		selectKey = false;
+		selectItem = false;
+		exitKey = false;
+		exitState = false;
+		
+		// TODO : this is kind of odd... but might be necessary
+		for(SelectableObject object : menuItems){
+			object.resetState();
+		}
+	}
+	
 	public void onDeactivate(){}
 	
 	public void getInput(double delta) {
 		mouseX = ((float)Mouse.getX() / DisplayInfo.GetWidth()) * window.getSizeX() + window.getLeft();
 		mouseY = ((DisplayInfo.GetHeight() - (float)Mouse.getY()) / DisplayInfo.GetHeight()) * window.getSizeY() + window.getTop();
 		mouseLeftClick = Mouse.isButtonDown(0);
-		
-		//Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+
+		Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+		for(Controller controller : controllers){
+			controller.poll();
+		}
 		
 		// Key Up
 		boolean tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W));
-		//for(Controller controller : controllers){
-		//	Component component = controller.getComponent(Identifier.Button.A);
-		//	if(component != null){
-		//		tempKeyPress = tempKeyPress || (component.getPollData() >= 0.75);
-		//	}
-		//	
-		//	/*
-		//	Component[] components = controller.getComponents();
-		//	for(Component component : components){
-		//		if(component != null){
-		//			System.out.println(component.getIdentifier());
-		//			System.out.println(component.getName());
-		//			System.out.println(component.getPollData());
-		//			
-		//			//tempKeyPress = tempKeyPress || (component.getPollData() <= -0.75);
-		//			//System.out.println(component);
-		//			//System.out.println(component.getPollData());
-		//		}
-		//	}*/
-		//}
+		for(Controller controller : controllers){
+			// TODO : this is not desirable
+			if (controller.toString().indexOf("mouse") != -1) continue;
+			
+			Component component = controller.getComponent(Identifier.Axis.Y);
+			if(component != null){
+				if(component.getPollData() <= -0.75f){
+					tempKeyPress = true;
+				}
+			}
+		}
+				
 		if(tempKeyPress && !moveUp){
 			currentMenuItem = Math.max((currentMenuItem - 1), 0);
 		}
@@ -86,12 +95,18 @@ public class ScreenMenu implements GameState{
 		
 		// Key Down
 		tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S));
-		//for(Controller controller : controllers){
-		//	Component component = controller.getComponent(Identifier.Axis.Y);
-		//	if(component != null){
-		//		tempKeyPress = tempKeyPress || (component.getPollData() >= 0.75);
-		//	}
-		//}
+		for(Controller controller : controllers){
+			// TODO : this is not desirable
+			if (controller.toString().indexOf("mouse") != -1) continue;
+			
+			Component component = controller.getComponent(Identifier.Axis.Y);
+			if(component != null){
+				if(component.getPollData() >= 0.75f){
+					tempKeyPress = true;
+				}
+			}
+		}
+		
 		if(tempKeyPress && !moveDown){
 			currentMenuItem = Math.min((currentMenuItem + 1), menuItems.size()-1);
 		}
@@ -99,6 +114,22 @@ public class ScreenMenu implements GameState{
 		
 		// Key Select
 		tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_SPACE) || Keyboard.isKeyDown(Keyboard.KEY_RETURN));
+		for(Controller controller : controllers){
+			Component component = controller.getComponent(Identifier.Button._0);
+			if(component != null){
+				if(component.getPollData() >= 0.75f){
+					tempKeyPress = true;
+				}
+			}
+			
+			component = controller.getComponent(Identifier.Button._7);
+			if(component != null){
+				if(component.getPollData() >= 0.75f){
+					tempKeyPress = true;
+				}
+			}
+		}
+		
 		if(tempKeyPress && !selectKey && !firstFrame){
 			selectItem = true;
 		}
@@ -106,10 +137,41 @@ public class ScreenMenu implements GameState{
 			selectItem = false;
 		}
 		selectKey = tempKeyPress;
+		
+		// Key Exit
+		tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
+		for(Controller controller : controllers){
+			Component component = controller.getComponent(Identifier.Button._1);
+			if(component != null){
+				if(component.getPollData() >= 0.75f){
+					tempKeyPress = true;
+				}
+			}
+			
+			component = controller.getComponent(Identifier.Button._6);
+			if(component != null){
+				if(component.getPollData() >= 0.75f){
+					tempKeyPress = true;
+				}
+			}
+		}
+		
+		if(tempKeyPress && !exitKey && !firstFrame){
+			exitState = true;
+		}
+		else{
+			exitState = false;
+		}
+		exitKey = tempKeyPress;
 	}
 
 	public void step(double delta) {
 		window.step(delta);
+		
+		if(exitState){
+			Game.popGameState();
+			return;
+		}
 		
 		int counter = 0;
 		for(SelectableObject object : menuItems){

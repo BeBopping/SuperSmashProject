@@ -26,9 +26,11 @@ public abstract class Fighter extends MovingObject {
 	private int suicides;
 	
 	// ALl units use meters and seconds
-	protected float minWalkSpeed;
+	//protected float minWalkSpeed;
 	protected float maxWalkSpeed;
-	protected float runSpeed;
+	protected float forwardAcceleration;
+	protected float reverseAcceleration;
+	//protected float runSpeed;
 	protected float firstJumpSpeed;
 	protected float firstJumpMinTime;
 	protected float firstJumpMaxTime;
@@ -39,11 +41,12 @@ public abstract class Fighter extends MovingObject {
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
 
-	public FighterState fighterState;
+	//public FighterState fighterState;
 	protected boolean canMove;
 	protected boolean facingLeft;
 	protected boolean onGround;
 	//protected boolean ducking;
+	//protected boolean running;
 	protected boolean canDoubleJump;
 	protected double flightTime;		// Is flying if > 0.0f
 	protected double jumpTime;			// Is jumping if > 0.0f
@@ -59,7 +62,6 @@ public abstract class Fighter extends MovingObject {
 		
 		fighterName = name;
 		fighterTrait = trait;
-		fighterState = None;
 		canMove = true;
 	}
 	
@@ -73,6 +75,10 @@ public abstract class Fighter extends MovingObject {
 	
 	public void SetColor(Color color){
 		playerColor = color;
+	}
+	
+	public boolean GetOnGround(){
+		return onGround;
 	}
 	
 	public String toString(){
@@ -163,32 +169,56 @@ public abstract class Fighter extends MovingObject {
 	private void doMovement(double delta){
 		//TODO : return in situations where we don't allow movement
 		
-		velX += (float)((double)input.xAxis * delta * 100.0d);
+		//velX += (float)((double)input.xAxis * delta * (double)maxWalkSpeed * 10.0d);
+		//velX += input.xAxis * maxWalkSpeed;
+		
 		velY += delta * GRAVITY;
 		
 		if(onGround){
-			if(fighterState == None || fighterState == Ducking){
-				velX *= 0.75f;
+			if(input.xAxis != 0.0f){
+				float desiredSpeed = input.xAxis * maxWalkSpeed;
+				double rateOfChange;
 				
-				if(velX > maxWalkSpeed) velX = maxWalkSpeed;
-				if(velX < -maxWalkSpeed) velX = -maxWalkSpeed;
+				// Change speed faster if we are "in reverse"
+				if(velX < desiredSpeed && velX < 0.0f
+				|| velX > desiredSpeed && velX > 0.0f){
+					rateOfChange = reverseAcceleration * delta;
+				}
+				else{
+					rateOfChange = forwardAcceleration * delta;
+				}
+				
+				// Move closer to desired speed
+				if(velX - rateOfChange > desiredSpeed){
+					velX -= rateOfChange;
+				}
+				else if(velX + rateOfChange < desiredSpeed){
+					velX += rateOfChange;
+				}
+				else{
+					velX = desiredSpeed;
+				}
 			}
-		}
-		else{
-			if(fighterState == None){
-				if(velX > maxFallSpeedHorizontal) velX = maxFallSpeedHorizontal;
-				if(velX < -maxFallSpeedHorizontal) velX = -maxFallSpeedHorizontal;
-				if(velY > maxFallSpeed) velY = maxFallSpeed;
-				if(velY < -maxFallSpeed) velY = -maxFallSpeed;
-			}
-		}
-		
-		if(fighterState == Flying){
-			if(flightTime <= 0.0f){
-				fighterState = None;
+			else{
+				velX *= 0.75f;
 			}
 			
-			flightTime -= delta;
+			if(velX > maxWalkSpeed) velX = maxWalkSpeed;
+			if(velX < -maxWalkSpeed) velX = -maxWalkSpeed;
+		}
+		else{
+			// Check if we are trying to go in the opposite direction that we are moving
+			if(velX * input.xAxis < 0.0f){
+				velX += (double)input.xAxis * (delta * (double)reverseAcceleration);
+			}
+			else{
+				velX += (double)input.xAxis * (delta * (double)forwardAcceleration);
+			}
+			
+			if(velX > maxFallSpeedHorizontal) velX = maxFallSpeedHorizontal;
+			if(velX < -maxFallSpeedHorizontal) velX = -maxFallSpeedHorizontal;
+			if(velY > maxFallSpeed) velY = maxFallSpeed;
+			if(velY < -maxFallSpeed) velY = -maxFallSpeed;
 		}
 	}
 	
@@ -222,7 +252,7 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	public void collideWithSolid(Direction dir, float pos){
-		if(fighterState == Flying){
+		/*if(fighterState == Flying){
 			switch(dir){
 			case North:
 				posY = Math.min(pos, lastPosY);
@@ -242,21 +272,21 @@ public abstract class Fighter extends MovingObject {
 				velX = Math.abs(this.velX)*0.5f;
 				break;
 			}
-		}
-		else{
+		}*/
+		//else{
 			handleCollideWithSolid(dir, pos);
-		}
+		//}
 	}
 	
 	public void collideWithPlatform(float pos){
-		if(fighterState == Flying){
+		/*if(fighterState == Flying){
 			posY = Math.max(pos - sizeY, lastPosY);
 			velY = -Math.abs(this.velY)*0.5f;
 			onGround = true;
-		}
-		else{
+		}*/
+		//else{
 			handleCollideWithPlatform(pos);
-		}
+		//}
 	}
 
 	protected abstract void handleStep(double delta);

@@ -2,6 +2,11 @@ package eecs285.proj4.game;
 
 import java.util.ArrayList;
 
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
+import net.java.games.input.Component.Identifier;
+
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
@@ -78,10 +83,23 @@ public class Battle implements GameState {
 	public void onDeactivate(){}
 
 	public void getInput(double delta){
-		boolean tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
-		if(tempKeyPress){
-			Game.popGameState();
-		}
+		// TODO : Get rid of this
+			boolean tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
+			
+			Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+			for(Controller controller : controllers){
+				controller.poll();
+				Component component = controller.getComponent(Identifier.Button._6);
+				if(component != null){
+					if(component.getPollData() >= 0.75f){
+						tempKeyPress = true;
+					}
+				}
+			}
+			
+			if(tempKeyPress){
+				Game.popGameState();
+			}
 		
 		// Get fighter input
 		for(Fighter fighter : fighters){
@@ -152,8 +170,7 @@ public class Battle implements GameState {
 				if(fighters[i].getLeftEdge() < fighters[j].getRightEdge() && fighters[i].getRightEdge() > fighters[j].getLeftEdge()
 				&& fighters[i].getTopEdge() < fighters[j].getBottomEdge() && fighters[i].getBottomEdge() > fighters[j].getTopEdge()){
 					// Are they in the right states and moving slowly?
-					if((fighters[i].fighterState == FighterState.None || fighters[i].fighterState == FighterState.Ducking)
-					&& (fighters[j].fighterState == FighterState.None || fighters[j].fighterState == FighterState.Ducking)
+					if(fighters[i].GetOnGround() && fighters[j].GetOnGround()
 					&& Math.abs(fighters[i].getVelocityX()) < 1.1f && Math.abs(fighters[j].getVelocityX()) < 1.1f){
 						// Move them apart.
 						final float movement = 1.0f;
