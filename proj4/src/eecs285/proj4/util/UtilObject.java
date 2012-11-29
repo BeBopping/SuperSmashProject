@@ -1,6 +1,6 @@
 package eecs285.proj4.util;
 
-public abstract class UtilObject {
+public class UtilObject {
 	protected float posX;
 	protected float posY;
 	protected float sizeX;
@@ -21,7 +21,4 @@ public abstract class UtilObject {
 	public float getCenterY(){ return posY + sizeY*0.5f; }
 	public float getSizeX(){ return sizeX; }
 	public float getSizeY(){ return sizeY; }
-	
-	public abstract void step(double delta);
-	public abstract void render(double delta);
 }

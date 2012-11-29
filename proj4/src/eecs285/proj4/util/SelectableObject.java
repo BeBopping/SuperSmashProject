@@ -42,4 +42,7 @@ public abstract class SelectableObject extends UtilObject {
 	public void resetState(){
 		currentState = State.NONE;
 	}
+	
+	public abstract void step(double delta);
+	public abstract void render(double delta);
 }

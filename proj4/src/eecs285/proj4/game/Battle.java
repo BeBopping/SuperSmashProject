@@ -11,12 +11,13 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
+import eecs285.proj4.game.fighter.CollisionBox;
 import eecs285.proj4.game.fighter.Fighter;
-import eecs285.proj4.game.fighter.FighterState;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelObject;
 import eecs285.proj4.util.DisplayInfo;
 import eecs285.proj4.util.GameState;
+import eecs285.proj4.util.UtilObject;
 import eecs285.proj4.util.Window;
 import eecs285.proj4.util.Render;
 
@@ -158,7 +159,7 @@ public class Battle implements GameState {
 			for(LevelObject platform : level.platformObjects){
 				if(fighter.getBottomEdge() > platform.getTopEdge() && fighter.getPreviousBottomEdge() <= platform.getTopEdge()
 				&& fighter.getLeftEdge() < platform.getRightEdge() && fighter.getRightEdge() > platform.getLeftEdge()){
-					fighter.collideWithSolid(Direction.South, platform.getTopEdge());
+					fighter.collideWithPlatform(platform.getTopEdge());
 				}
 			}
 		}
@@ -188,6 +189,102 @@ public class Battle implements GameState {
 				}
 			}
 		}
+		
+		// Detecting attack collisions
+		for(Fighter attacker : fighters){
+			if(attacker.currentAttack != null){
+				for(int i=0; i<fighters.length; i++){
+					Fighter receiver = fighters[i];
+					
+					if(attacker==receiver || attacker.currentAttack.hitPlayers[i]){
+						continue;
+					}
+					
+					boolean hitPlayer = false;
+					
+					// Check (collision box -> collision box) collisions
+					if(receiver.currentAttack != null){
+						for(CollisionBox attackerBox : attacker.currentAttack.getCollisionBoxes()){
+							if(hitPlayer == true){ break; }
+							
+							UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker.GetFacingLeft());
+						
+							for(CollisionBox receiverBox : receiver.currentAttack.getCollisionBoxes()){
+
+								UtilObject rBox = receiverBox.getBox(receiver.currentAttack.getCurrentTime(), receiver.GetFacingLeft());
+								
+								if(attacker.getCenterX() + aBox.getLeftEdge() < receiver.getCenterX() + rBox.getRightEdge()
+								&& attacker.getCenterX() + aBox.getRightEdge() > receiver.getCenterX() + rBox.getLeftEdge()
+								&& attacker.getBottomEdge() + aBox.getTopEdge() < receiver.getBottomEdge() + rBox.getBottomEdge()
+								&& attacker.getBottomEdge() + aBox.getBottomEdge() > receiver.getBottomEdge() + rBox.getTopEdge()){
+									
+									if(attackerBox.attackPriority > receiverBox.attackPriority - 2){
+										float hitSpeedX;
+										float hitSpeedY;
+										if(attacker.getCenterX() + aBox.getCenterX() < receiver.getCenterX() + rBox.getCenterX()){
+											hitSpeedX = attackerBox.hitSpeedX;
+											hitSpeedY = attackerBox.hitSpeedY;
+										}
+										else{
+											hitSpeedX = attackerBox.oppositeHitSpeedX;
+											hitSpeedY = attackerBox.oppositeHitSpeedY;
+										}
+										
+										if(attacker.GetFacingLeft()){
+											hitSpeedX = -hitSpeedX;
+										}
+										
+										// Get hit
+										receiver.doGetHit(delta, hitSpeedX, hitSpeedY, 
+														attackerBox.flightTime, attackerBox.stunTime, attackerBox.damage);
+										
+										attacker.currentAttack.hitPlayers[i] = true;
+										hitPlayer = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+					
+					// Check collision with player location
+					for(CollisionBox attackerBox : attacker.currentAttack.getCollisionBoxes()){
+						if(hitPlayer == true){ break; }
+						
+						UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker.GetFacingLeft());
+						
+						if(attacker.getCenterX() + aBox.getLeftEdge() < receiver.getRightEdge()
+						&& attacker.getCenterX() + aBox.getRightEdge() > receiver.getLeftEdge()
+						&& attacker.getBottomEdge() + aBox.getTopEdge() < receiver.getBottomEdge()
+						&& attacker.getBottomEdge() + aBox.getBottomEdge() > receiver.getTopEdge()
+						){	
+							float hitSpeedX;
+							float hitSpeedY;
+							if(attacker.getCenterX() + aBox.getCenterX() < receiver.getCenterX() + receiver.getCenterX()){
+								hitSpeedX = attackerBox.hitSpeedX;
+								hitSpeedY = attackerBox.hitSpeedY;
+							}
+							else{
+								hitSpeedX = attackerBox.oppositeHitSpeedX;
+								hitSpeedY = attackerBox.oppositeHitSpeedY;
+							}
+							
+							if(attacker.GetFacingLeft()){
+								hitSpeedX = -hitSpeedX;
+							}
+							
+							// Get hit
+							receiver.doGetHit(delta, hitSpeedX, hitSpeedY, 
+											attackerBox.flightTime, attackerBox.stunTime, attackerBox.damage);
+							
+							attacker.currentAttack.hitPlayers[i] = true;
+							hitPlayer = true;
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public void prerender(double delta){}
@@ -204,6 +301,9 @@ public class Battle implements GameState {
 		if(DEBUG_MODE){
 			for(Fighter fighter : fighters){
 				Render.render(Assets.GetTexture("square"), fighter, Color.blue);
+				if(fighter.currentAttack != null){
+					fighter.currentAttack.debugRender(delta, fighter, fighter.GetFacingLeft());
+				}
 			}
 		}
 

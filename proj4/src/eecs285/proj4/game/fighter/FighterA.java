@@ -1,7 +1,5 @@
 package eecs285.proj4.game.fighter;
 
-import static eecs285.proj4.game.fighter.FighterState.*;
-
 import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.util.Render;
@@ -45,32 +43,9 @@ public class FighterA extends Fighter {
 	}
 
 	protected void handleCollideWithSolid(Direction dir, float pos){
-		switch(dir){
-		case North:
-			posY = Math.min(pos, lastPosY);
-			velY = Math.max(velY, 0.0f);
-			break;
-		case South:
-			posY = Math.max(pos - sizeY, lastPosY);
-			velY = Math.min(velY, 0.0f);
-			onGround = true;
-			//if(fighterState != Flying && fighterState != Ducking){
-			//	fighterState = OnGround;
-			//}
-			break;
-		case West:
-			posX = Math.min(pos, lastPosX);
-			velX = Math.max(velX, 0.0f);
-			break;
-		case East:
-			posX = Math.max(pos - sizeX, lastPosX);
-			velX = Math.min(velX, 0.0f);
-			break;
-		}
+		
 	}
 	
 	protected void handleCollideWithPlatform(float pos){
-		this.posY = pos - this.sizeY;
-		this.velY = -Math.abs(this.velY);
 	}
 }

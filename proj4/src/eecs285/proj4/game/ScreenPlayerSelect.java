@@ -43,14 +43,15 @@ public class ScreenPlayerSelect implements GameState {
 	public void onDeactivate(){}
 
 	public void getInput(double delta){
-		Input input = null;
+		int inputType = 0;
+		Controller con = null;
 		
 		// Keyboard
 		boolean tempKeyPress = Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE);
 		if(tempKeyPress){
 			enters++;
 			
-			input = new InputKeyboard();
+			inputType = 1;
 		}
 		
 		// Controller
@@ -82,7 +83,8 @@ public class ScreenPlayerSelect implements GameState {
 			
 			if(tempKeyPress){
 				tempKeyPress = true;
-				input = new InputXbox(controllers[i]);
+				inputType = 2;
+				con = controllers[i];
 				
 				enters++;
 			}
@@ -90,7 +92,7 @@ public class ScreenPlayerSelect implements GameState {
 		
 		
 		if(enters >=2){
-			if(input == null){
+			if(inputType == 0){
 				enters = 0;
 				return;
 			}
@@ -100,22 +102,22 @@ public class ScreenPlayerSelect implements GameState {
 			battleInfo.setMinutes(2);
 			Fighter[] fighters = new Fighter[4]; //8
 			fighters[0] = new FighterA(FighterTrait.Normal);
-			fighters[0].SetInput(input);
+			fighters[0].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			fighters[1] = new FighterA(FighterTrait.Normal);
-			fighters[1].SetInput(input);
+			fighters[1].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			fighters[2] = new FighterA(FighterTrait.Normal);
-			fighters[2].SetInput(input);
+			fighters[2].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			fighters[3] = new FighterA(FighterTrait.Normal);
-			fighters[3].SetInput(input);
+			fighters[3].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			
 			//fighters[4] = new FighterA(FighterTrait.Normal);
-			//fighters[4].SetInput(input);
+			//fighters[4].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			//fighters[5] = new FighterA(FighterTrait.Normal);
-			//fighters[5].SetInput(input);
+			//fighters[5].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			//fighters[6] = new FighterA(FighterTrait.Normal);
-			//fighters[6].SetInput(input);
+			//fighters[6].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			//fighters[7] = new FighterA(FighterTrait.Normal);
-			//fighters[7].SetInput(input);
+			//fighters[7].SetInput(inputType == 1? new InputKeyboard() : new InputXbox(con));
 			
 			battleInfo.setFighters(fighters);
 			Game.pushGameState(new ScreenLevelSelect(battleInfo));

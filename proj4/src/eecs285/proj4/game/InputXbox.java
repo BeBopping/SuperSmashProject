@@ -28,6 +28,15 @@ public class InputXbox extends Input {
 	}
 	
 	public void getInput(){
+		xAxisLast = xAxis;
+		yAxisLast = yAxis;
+		primaryAttackLast = primaryAttack;
+		secondaryAttackLast = secondaryAttack;
+		jumpLast = jump;
+		startLast = start;
+		backLast = back;
+		blockLast = block;
+		
 		controller.poll();
 		
 		primaryAttack = controller.getComponent(ATTACK_PRIMARY).getPollData() > 0.75f;

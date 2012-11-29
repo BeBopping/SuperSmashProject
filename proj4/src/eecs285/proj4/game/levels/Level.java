@@ -49,4 +49,7 @@ public abstract class Level extends UtilObject {
 			startY[i] = spawnY[i];
 		}
 	}
+	
+	public abstract void step(double delta);
+	public abstract void render(double delta);
 }

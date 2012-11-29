@@ -1,19 +1,20 @@
 package eecs285.proj4.game.fighter;
 
-import static eecs285.proj4.game.fighter.FighterState.*;
-
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.Input;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Sprite;
+import eecs285.proj4.util.UtilObject;
 
 import org.newdawn.slick.Color;
 
 public abstract class Fighter extends MovingObject {
 	protected static final float GRAVITY = 100.0f;
-	protected static final float MAXHORIZONTAL = 100.0f;
-	protected static final float MAXVERTICAL = 1000.0f;
+	protected static final float MAX_HORIZONTAL = 100.0f;
+	protected static final float MAX_VERTICAL = 1000.0f;
+	protected static final float RECOIL_PERCENT = 0.25f;
+	protected static final float RECOIL_TANGENT_PERCENT = 0.95f;
 	
 	protected String fighterName;
 	protected FighterTrait fighterTrait;
@@ -25,7 +26,7 @@ public abstract class Fighter extends MovingObject {
 	private int deaths;
 	private int suicides;
 	
-	// ALl units use meters and seconds
+	// All units use meters and seconds
 	//protected float minWalkSpeed;
 	protected float maxWalkSpeed;
 	protected float forwardAcceleration;
@@ -41,7 +42,6 @@ public abstract class Fighter extends MovingObject {
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
 
-	//public FighterState fighterState;
 	protected boolean canMove;
 	protected boolean facingLeft;
 	protected boolean onGround;
@@ -49,7 +49,11 @@ public abstract class Fighter extends MovingObject {
 	//protected boolean running;
 	protected boolean canDoubleJump;
 	protected double flightTime;		// Is flying if > 0.0f
+	protected double stunTime;			// Is stunned if > 0.0f
 	protected double jumpTime;			// Is jumping if > 0.0f
+	public Attack currentAttack;
+	protected boolean doPrimaryAttack;
+	protected boolean doSecondaryAttack;
 	
 	protected Sprite currentSprite;
 	protected float visualWidth;
@@ -81,12 +85,32 @@ public abstract class Fighter extends MovingObject {
 		return onGround;
 	}
 	
+	public boolean GetFacingLeft(){
+		return facingLeft;
+	}
+	
 	public String toString(){
 		return fighterName;
 	}
 	
 	public void getInput(double delta){
 		input.getInput();
+		
+		// Update Primary attack
+		if(!input.primaryAttack){
+			doPrimaryAttack = false;
+		}
+		else if(!input.primaryAttackLast){
+			doPrimaryAttack = true;
+		}		
+		
+		// Update Secondary attack
+		if(!input.secondaryAttack){
+			doSecondaryAttack = false;
+		}
+		else if(!input.secondaryAttackLast){
+			doSecondaryAttack = true;
+		}
 	}
 	
 	public void setSpawn(float xCenter, float yBase){
@@ -107,25 +131,42 @@ public abstract class Fighter extends MovingObject {
 			canDoubleJump = true;
 		}
 		
+		if(flightTime > 0.0f){
+			flightTime -= delta;
+			
+			if(currentAttack != null){
+				currentAttack = null;
+			}
+		}
+		
+		if(stunTime > 0.0f){
+			stunTime -= delta;
+		}
+		
 		doDuck(delta);
 		doMovement(delta);
 		doJump(delta);
-		doAction(delta);
+		doAttack(delta);
 		doPlayerDirection(delta);
 		
-		if(velX > MAXHORIZONTAL) velX = MAXHORIZONTAL;
-		if(velX < -MAXHORIZONTAL) velX = -MAXHORIZONTAL;
-		if(velY > MAXVERTICAL) velY = MAXVERTICAL;
-		if(velY < -MAXVERTICAL) velY = -MAXVERTICAL;
+		if(velX > MAX_HORIZONTAL) velX = MAX_HORIZONTAL;
+		if(velX < -MAX_HORIZONTAL) velX = -MAX_HORIZONTAL;
+		if(velY > MAX_VERTICAL) velY = MAX_VERTICAL;
+		if(velY < -MAX_VERTICAL) velY = -MAX_VERTICAL;
 
 		posX += delta * velX;
 		posY += delta * velY;
 		
-		onGround = false;
+		// Don't mess with on ground if we've disabled gravity.
+		if(currentAttack == null || !currentAttack.GetOverrideGravity()){
+			onGround = false;
+		}
 	}
 	
 	private void doJump(double delta){
-		// TODO : return when not allowed to jump
+		if(stunTime > 0.0f || currentAttack != null){
+			return;
+		}
 		
 		if(onGround){
 			if(input.jump){
@@ -167,15 +208,19 @@ public abstract class Fighter extends MovingObject {
 	private void doDuck(double delta){}
 	
 	private void doMovement(double delta){
-		//TODO : return in situations where we don't allow movement
+		if(currentAttack != null && currentAttack.GetOverrideGravity()){
+			velY = 0.0f;
+		}
+		else{
+			velY += delta * GRAVITY;
+		}
 		
-		//velX += (float)((double)input.xAxis * delta * (double)maxWalkSpeed * 10.0d);
-		//velX += input.xAxis * maxWalkSpeed;
-		
-		velY += delta * GRAVITY;
+		if(stunTime > 0.0f || flightTime > 0.0f){
+			return;
+		}
 		
 		if(onGround){
-			if(input.xAxis != 0.0f){
+			if(input.xAxis != 0.0f && !(currentAttack != null && (currentAttack.GetStationaryOnGround() || currentAttack.GetOverrideGravity()))){
 				float desiredSpeed = input.xAxis * maxWalkSpeed;
 				double rateOfChange;
 				
@@ -207,12 +252,14 @@ public abstract class Fighter extends MovingObject {
 			if(velX < -maxWalkSpeed) velX = -maxWalkSpeed;
 		}
 		else{
-			// Check if we are trying to go in the opposite direction that we are moving
-			if(velX * input.xAxis < 0.0f){
-				velX += (double)input.xAxis * (delta * (double)reverseAcceleration);
-			}
-			else{
-				velX += (double)input.xAxis * (delta * (double)forwardAcceleration);
+			if(currentAttack == null || !currentAttack.GetStationaryInAir()){
+				// Check if we are trying to go in the opposite direction that we are moving
+				if(velX * input.xAxis < 0.0f){
+					velX += (double)input.xAxis * (delta * (double)reverseAcceleration);
+				}
+				else{
+					velX += (double)input.xAxis * (delta * (double)forwardAcceleration);
+				}
 			}
 			
 			if(velX > maxFallSpeedHorizontal) velX = maxFallSpeedHorizontal;
@@ -222,26 +269,109 @@ public abstract class Fighter extends MovingObject {
 		}
 	}
 	
-	private void doAction(double delta){
+	private void doAttack(double delta){
+		if(stunTime > 0.0f){
+			return;
+		}
+		
+		// Update current attack
+		if(currentAttack != null){
+			currentAttack.step(delta);
+			if(currentAttack.isComplete()){
+				currentAttack = null;
+			}
+		}
+		
+		// Pick a new attack
+		if(currentAttack == null){
+			if(doPrimaryAttack){
+				doPrimaryAttack = false;
+				
+				// TODO : put this somewhere else
+				CollisionBox[] boxes = new CollisionBox[1];
+				boxes[0] = new CollisionBox();
+				boxes[0].startBox = new UtilObject(0.0f, 1.0f, -1.0f, -0.5f);
+				boxes[0].endBox = new UtilObject(0.0f, 2.0f, -1.0f, -0.5f);
+				boxes[0].delay = 0.0f;
+				boxes[0].duration = 0.1f;
+				boxes[0].damage = 6;
+				boxes[0].hitSpeedX = 10.0f;
+				boxes[0].hitSpeedY = -5.0f;
+				boxes[0].oppositeHitSpeedX = -3.0f;
+				boxes[0].oppositeHitSpeedY = -8.0f;
+				boxes[0].flightTime = 0.25f;
+				boxes[0].stunTime = 0.1f;
+				boxes[0].isStationaryInAir = false;
+				boxes[0].isStationaryOnGround = true;
+				boxes[0].isOverridingGravity = true;
+				boxes[0].canChangeDirection = false;
+				
+				currentAttack = new Attack(boxes);
+			}
+		}
+	}
+	
+	public void doGetHit(double delta, float velX, float velY, float flightTime, float stunTime, int damage){
+		final float scale = 1.0f + (float)hitPercent / 100.0f;
+		velX *= scale;
+		velY *= scale;
+		flightTime *= scale;
+		stunTime *= scale;
+
+		hitPercent += damage;
+		this.flightTime = flightTime;
+		this.stunTime = stunTime;
+		
+		// Update x vel
+		if(Math.abs(this.velX) < Math.abs(velX)){
+			this.velX = velX;
+		}
+		else{
+			if(velX > 0.0f){
+				this.velX = Math.abs(this.velX);
+			}
+			else{
+				this.velX = -Math.abs(this.velX);
+			}
+		}
+	
+		// Update y vel
+		if(Math.abs(this.velY) < Math.abs(velY)){
+			this.velY = velY;
+		}
+		else{
+			if(velY > 0.0f){
+				this.velY = Math.abs(this.velY);
+			}
+			else{
+				this.velY = -Math.abs(this.velY);
+			}
+		}
 		
 	}
 	
 	private void doPlayerDirection(double delta){
-		if(facingLeft){
-			if(velX >= 0 && input.xAxis > 0.0f){
-				facingLeft = false;
+		if(stunTime > 0.0f || flightTime > 0.0f || (currentAttack != null && !currentAttack.GetCanChangeDirection())){
+			return;
+		}
+		
+		if(currentAttack != null && currentAttack.GetCanChangeDirection()){
+			if(input.xAxis != 0.0f){
+				facingLeft = input.xAxis < 0.0f;
 			}
 		}
 		else{
-			if(velX <= 0 && input.xAxis < 0.0f){
-				facingLeft = true;
+			if(facingLeft){
+				if(velX >= 0 && input.xAxis > 0.0f){
+					facingLeft = false;
+				}
+			}
+			else{
+				if(velX <= 0 && input.xAxis < 0.0f){
+					facingLeft = true;
+				}
 			}
 		}
-		
-		// Alternate function
-		//if(input.xAxis != 0.0f){
-		//	facingLeft = input.xAxis < 0.0f;
-		//}
 	}
 	
 	public void render(double delta){
@@ -252,41 +382,71 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	public void collideWithSolid(Direction dir, float pos){
-		/*if(fighterState == Flying){
+		if(flightTime > 0.0f){
 			switch(dir){
 			case North:
 				posY = Math.min(pos, lastPosY);
-				velY = Math.abs(this.velY)*0.5f;
+				velY = Math.abs(this.velY)*RECOIL_PERCENT;
+				velX = velX*RECOIL_TANGENT_PERCENT;
 				break;
 			case South:
 				posY = Math.max(pos - sizeY, lastPosY);
-				velY = -Math.abs(this.velY)*0.5f;
+				velY = -Math.abs(this.velY)*RECOIL_PERCENT;
+				velX = velX*RECOIL_TANGENT_PERCENT;
 				onGround = true;
 				break;
 			case East:
 				posX = Math.min(pos, lastPosX);
-				velX = -Math.abs(this.velX)*0.5f;
+				velX = -Math.abs(this.velX)*RECOIL_PERCENT;
+				velY = velY*RECOIL_TANGENT_PERCENT;
 				break;
 			case West:
 				posX = Math.max(pos - sizeX, lastPosX);
-				velX = Math.abs(this.velX)*0.5f;
+				velX = Math.abs(this.velX)*RECOIL_PERCENT;
+				velY = velY*RECOIL_TANGENT_PERCENT;
 				break;
 			}
-		}*/
-		//else{
-			handleCollideWithSolid(dir, pos);
-		//}
+		}
+		else{
+			switch(dir){
+			case North:
+				posY = Math.min(pos, lastPosY);
+				velY = Math.max(velY, 0.0f);
+				break;
+			case South:
+				posY = Math.max(pos - sizeY, lastPosY);
+				velY = Math.min(velY, 0.0f);
+				onGround = true;
+				//if(fighterState != Flying && fighterState != Ducking){
+				//	fighterState = OnGround;
+				//}
+				break;
+			case West:
+				posX = Math.min(pos, lastPosX);
+				velX = Math.max(velX, 0.0f);
+				break;
+			case East:
+				posX = Math.max(pos - sizeX, lastPosX);
+				velX = Math.min(velX, 0.0f);
+				break;
+			}
+		}
 	}
 	
 	public void collideWithPlatform(float pos){
-		/*if(fighterState == Flying){
+		if(flightTime > 0.0f){
 			posY = Math.max(pos - sizeY, lastPosY);
-			velY = -Math.abs(this.velY)*0.5f;
+			velY = Math.min(velY, 0.0f)*RECOIL_PERCENT;
+			velX = velX*RECOIL_TANGENT_PERCENT;
 			onGround = true;
-		}*/
-		//else{
-			handleCollideWithPlatform(pos);
-		//}
+		}
+		else{
+			if(input.yAxis <= 0.0f){
+				posY = Math.max(pos - sizeY, lastPosY);
+				velY = Math.min(velY, 0.0f);
+				onGround = true;
+			}
+		}
 	}
 
 	protected abstract void handleStep(double delta);
