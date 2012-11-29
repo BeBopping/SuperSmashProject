@@ -7,7 +7,7 @@ import eecs285.proj4.util.UtilObject;
 
 public class LevelHardCoded extends Level {
 	public LevelHardCoded(){
-		super(-20.0f, 20.0f, -20.0f, 10.0f);
+		super(-15.0f, 15.0f, -20.0f, 10.0f);
 		
 		levelName = "First Level";
 		minOutline = new UtilObject(-8.5f, 9.5f, 0.0f, 7.5f);
@@ -17,6 +17,7 @@ public class LevelHardCoded extends Level {
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("floor"), -8.0f, 8.0f, 6.0f, 7.0f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("floor"), 8.0f, 9.0f, 3.0f, 7.0f));
 
+		// Starting points for each character
 		startX[0] = -3.0f;
 		startY[0] = 3.0f;
 		startX[1] = 6.0f;

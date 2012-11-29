@@ -44,15 +44,21 @@ public class Battle implements GameState {
 		
 		if(aspectRatio >= 1.0f){
 			float halfWidth = aspectRatio * 50.0f;
-			float levelHalfWidth = aspectRatio * (level.maxOutline.getSizeX()/2.0f);
+			float levelHalfHeight = (level.minOutline.getSizeX()*0.5f) / aspectRatio;
 			hud = new Window(50.f - halfWidth, 50.f + halfWidth, 0.0f, 100.0f);
-			window = new Window(level.maxOutline.getCenterX() - levelHalfWidth, level.maxOutline.getCenterX() + levelHalfWidth, level.maxOutline.getTopEdge(), level.maxOutline.getBottomEdge());
+			window = new Window(level.minOutline.getLeftEdge(), 
+								level.minOutline.getRightEdge(), 
+								level.minOutline.getCenterY() - levelHalfHeight, 
+								level.minOutline.getCenterY() + levelHalfHeight);
 		}
 		else{
 			float halfHeight = (50.0f / aspectRatio);
-			float levelHalfHeight = (level.maxOutline.getSizeY()/2.0f) / aspectRatio;
+			float levelHalfWidth = aspectRatio / (level.minOutline.getSizeY()*0.5f);
 			hud = new Window(0.0f, 100.0f, 50.0f - halfHeight, 50.0f + halfHeight);
-			window = new Window(level.maxOutline.getLeftEdge(), level.maxOutline.getRightEdge(), level.maxOutline.getCenterY() - levelHalfHeight, level.maxOutline.getCenterY() + levelHalfHeight);
+			window = new Window(level.minOutline.getCenterX() - levelHalfWidth, 
+								level.minOutline.getCenterX() + levelHalfWidth, 
+								level.minOutline.getTopEdge(), 
+								level.minOutline.getBottomEdge());
 		}
 		
 		titleFont = Assets.GetFont("title");

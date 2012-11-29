@@ -44,7 +44,6 @@ public abstract class Fighter extends MovingObject {
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
 
-	protected boolean canMove;
 	protected boolean facingLeft;
 	protected boolean onGround;
 	//protected boolean ducking;
@@ -69,7 +68,8 @@ public abstract class Fighter extends MovingObject {
 		
 		fighterName = name;
 		fighterTrait = trait;
-		canMove = true;
+		
+		jumpTime = 1000.0f;
 	}
 	
 	public void SetInput(Input input){
