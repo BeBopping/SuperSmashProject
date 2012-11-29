@@ -3,8 +3,8 @@ package eecs285.proj4.game;
 public abstract class Input {
 	public float xAxis;
 	public float yAxis;
-	public boolean primaryAttack;
-	public boolean secondaryAttack;
+	public boolean normalAttack;
+	public boolean specialAttack;
 	public boolean jump;
 	public boolean start;
 	public boolean back;
@@ -12,8 +12,8 @@ public abstract class Input {
 	
 	public float xAxisLast;
 	public float yAxisLast;
-	public boolean primaryAttackLast;
-	public boolean secondaryAttackLast;
+	public boolean normalAttackLast;
+	public boolean specialAttackLast;
 	public boolean jumpLast;
 	public boolean startLast;
 	public boolean backLast;

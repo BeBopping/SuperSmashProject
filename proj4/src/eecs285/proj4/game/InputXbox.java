@@ -30,8 +30,8 @@ public class InputXbox extends Input {
 	public void getInput(){
 		xAxisLast = xAxis;
 		yAxisLast = yAxis;
-		primaryAttackLast = primaryAttack;
-		secondaryAttackLast = secondaryAttack;
+		normalAttackLast = normalAttack;
+		specialAttackLast = specialAttack;
 		jumpLast = jump;
 		startLast = start;
 		backLast = back;
@@ -39,8 +39,8 @@ public class InputXbox extends Input {
 		
 		controller.poll();
 		
-		primaryAttack = controller.getComponent(ATTACK_PRIMARY).getPollData() > 0.75f;
-		secondaryAttack = controller.getComponent(ATTACK_SECONDARY).getPollData() > 0.75f;
+		normalAttack = controller.getComponent(ATTACK_PRIMARY).getPollData() > 0.75f;
+		specialAttack = controller.getComponent(ATTACK_SECONDARY).getPollData() > 0.75f;
 		jump = controller.getComponent(JUMP_FIRST).getPollData() > 0.75f
 			|| controller.getComponent(JUMP_SECOND).getPollData() > 0.75f;
 	

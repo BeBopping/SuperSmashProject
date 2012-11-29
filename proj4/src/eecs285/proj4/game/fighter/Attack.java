@@ -7,6 +7,7 @@ import eecs285.proj4.util.Render;
 import eecs285.proj4.util.UtilObject;
 
 public class Attack {
+	private Fighter owner;
 	private CollisionBox[] boxes;
 	private float duration;
 	//private float maxChargeTime;
@@ -14,7 +15,8 @@ public class Attack {
 	private float currentTime;
 	public boolean[] hitPlayers;
 	
-	public Attack(CollisionBox[] boxes){
+	public Attack(CollisionBox[] boxes, Fighter owner){
+		this.owner = owner;
 		this.boxes = boxes;
 		hitPlayers = new boolean[]{false, false, false, false, false, false, false, false};
 		
@@ -32,15 +34,15 @@ public class Attack {
 		currentTime += delta;
 	}
 	
-	public void debugRender(double delta, UtilObject object, boolean facingLeft){
+	public void debugRender(double delta){
 		for(CollisionBox box : boxes){
 			if(box.isAlive(currentTime)){
-				UtilObject collisionBox = box.getBox(currentTime, facingLeft);
+				UtilObject collisionBox = box.getBox(currentTime, owner);
 				Render.render(Assets.GetTexture("square"), 
-								object.getCenterX() + collisionBox.getLeftEdge(), 
-								object.getCenterX() + collisionBox.getRightEdge(), 
-								object.getBottomEdge() + collisionBox.getTopEdge(), 
-								object.getBottomEdge() + collisionBox.getBottomEdge(),
+								collisionBox.getLeftEdge(), 
+								collisionBox.getRightEdge(), 
+								collisionBox.getTopEdge(), 
+								collisionBox.getBottomEdge(),
 								Color.red);
 			}
 		}

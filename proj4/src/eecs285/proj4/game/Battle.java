@@ -207,21 +207,21 @@ public class Battle implements GameState {
 						for(CollisionBox attackerBox : attacker.currentAttack.getCollisionBoxes()){
 							if(hitPlayer == true){ break; }
 							
-							UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker.GetFacingLeft());
+							UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker);
 						
 							for(CollisionBox receiverBox : receiver.currentAttack.getCollisionBoxes()){
 
-								UtilObject rBox = receiverBox.getBox(receiver.currentAttack.getCurrentTime(), receiver.GetFacingLeft());
+								UtilObject rBox = receiverBox.getBox(receiver.currentAttack.getCurrentTime(), receiver);
 								
-								if(attacker.getCenterX() + aBox.getLeftEdge() < receiver.getCenterX() + rBox.getRightEdge()
-								&& attacker.getCenterX() + aBox.getRightEdge() > receiver.getCenterX() + rBox.getLeftEdge()
-								&& attacker.getBottomEdge() + aBox.getTopEdge() < receiver.getBottomEdge() + rBox.getBottomEdge()
-								&& attacker.getBottomEdge() + aBox.getBottomEdge() > receiver.getBottomEdge() + rBox.getTopEdge()){
+								if(aBox.getLeftEdge() < rBox.getRightEdge()
+								&& aBox.getRightEdge() > rBox.getLeftEdge()
+								&& aBox.getTopEdge() < rBox.getBottomEdge()
+								&& aBox.getBottomEdge() > rBox.getTopEdge()){
 									
 									if(attackerBox.attackPriority > receiverBox.attackPriority - 2){
 										float hitSpeedX;
 										float hitSpeedY;
-										if(attacker.getCenterX() + aBox.getCenterX() < receiver.getCenterX() + rBox.getCenterX()){
+										if(aBox.getCenterX() < rBox.getCenterX()){
 											hitSpeedX = attackerBox.hitSpeedX;
 											hitSpeedY = attackerBox.hitSpeedY;
 										}
@@ -236,7 +236,8 @@ public class Battle implements GameState {
 										
 										// Get hit
 										receiver.doGetHit(delta, hitSpeedX, hitSpeedY, 
-														attackerBox.flightTime, attackerBox.stunTime, attackerBox.damage);
+														attackerBox.flightTime, attackerBox.stunTime, attackerBox.healthScaler,
+														attackerBox.damage);
 										
 										attacker.currentAttack.hitPlayers[i] = true;
 										hitPlayer = true;
@@ -251,16 +252,16 @@ public class Battle implements GameState {
 					for(CollisionBox attackerBox : attacker.currentAttack.getCollisionBoxes()){
 						if(hitPlayer == true){ break; }
 						
-						UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker.GetFacingLeft());
+						UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker);
 						
-						if(attacker.getCenterX() + aBox.getLeftEdge() < receiver.getRightEdge()
-						&& attacker.getCenterX() + aBox.getRightEdge() > receiver.getLeftEdge()
-						&& attacker.getBottomEdge() + aBox.getTopEdge() < receiver.getBottomEdge()
-						&& attacker.getBottomEdge() + aBox.getBottomEdge() > receiver.getTopEdge()
+						if(aBox.getLeftEdge() < receiver.getRightEdge()
+						&& aBox.getRightEdge() > receiver.getLeftEdge()
+						&& aBox.getTopEdge() < receiver.getBottomEdge()
+						&& aBox.getBottomEdge() > receiver.getTopEdge()
 						){	
 							float hitSpeedX;
 							float hitSpeedY;
-							if(attacker.getCenterX() + aBox.getCenterX() < receiver.getCenterX() + receiver.getCenterX()){
+							if(aBox.getCenterX() < receiver.getCenterX()){
 								hitSpeedX = attackerBox.hitSpeedX;
 								hitSpeedY = attackerBox.hitSpeedY;
 							}
@@ -275,7 +276,8 @@ public class Battle implements GameState {
 							
 							// Get hit
 							receiver.doGetHit(delta, hitSpeedX, hitSpeedY, 
-											attackerBox.flightTime, attackerBox.stunTime, attackerBox.damage);
+											attackerBox.flightTime, attackerBox.stunTime, attackerBox.healthScaler, 
+											attackerBox.damage);
 							
 							attacker.currentAttack.hitPlayers[i] = true;
 							hitPlayer = true;
@@ -302,7 +304,7 @@ public class Battle implements GameState {
 			for(Fighter fighter : fighters){
 				Render.render(Assets.GetTexture("square"), fighter, Color.blue);
 				if(fighter.currentAttack != null){
-					fighter.currentAttack.debugRender(delta, fighter, fighter.GetFacingLeft());
+					fighter.currentAttack.debugRender(delta);
 				}
 			}
 		}

@@ -11,15 +11,15 @@ public class InputKeyboard extends Input {
 	public void getInput(){
 		xAxisLast = xAxis;
 		yAxisLast = yAxis;
-		primaryAttackLast = primaryAttack;
-		secondaryAttackLast = secondaryAttack;
+		normalAttackLast = normalAttack;
+		specialAttackLast = specialAttack;
 		jumpLast = jump;
 		startLast = start;
 		backLast = back;
 		blockLast = block;
 		
-		primaryAttack = (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_PERIOD) || Keyboard.isKeyDown(Keyboard.KEY_N));
-		secondaryAttack = (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_SLASH) || Keyboard.isKeyDown(Keyboard.KEY_M));
+		normalAttack = (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_PERIOD) || Keyboard.isKeyDown(Keyboard.KEY_N));
+		specialAttack = (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_SLASH) || Keyboard.isKeyDown(Keyboard.KEY_M));
 		jump = (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_SEMICOLON))
 			|| (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_APOSTROPHE))
 			|| (Keyboard.isKeyDown(Keyboard.KEY_SPACE));

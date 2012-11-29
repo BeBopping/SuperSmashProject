@@ -17,6 +17,7 @@ public class CollisionBox {
 	public int damage;
 	public float flightTime;
 	public float stunTime;
+	public float healthScaler;				// scale = 1 + health/healthScaler
 	public boolean isStationaryInAir;
 	public boolean isStationaryOnGround;
 	public boolean isOverridingGravity;
@@ -31,7 +32,7 @@ public class CollisionBox {
 		return false;
 	}
 	
-	public UtilObject getBox(float currentTime, boolean facingLeft){
+	public UtilObject getBox(float currentTime, Fighter owner){
 		float val = (currentTime - delay) / duration;
 		
 		float left = (startBox.getLeftEdge() + (endBox.getLeftEdge() - startBox.getLeftEdge()) * val);
@@ -39,13 +40,14 @@ public class CollisionBox {
 		float top = (startBox.getTopEdge() + (endBox.getTopEdge() - startBox.getTopEdge()) * val);
 		float bottom = (startBox.getBottomEdge() + (endBox.getBottomEdge() - startBox.getBottomEdge()) * val);
 		
-		if(facingLeft){
+		if(owner.GetFacingLeft()){
 			float temp = left;
 			left = -right;
 			right = -temp;
 		}
 		
-		UtilObject result = new UtilObject(left, right, top, bottom);
+		UtilObject result = new UtilObject(	owner.getCenterX() + left, owner.getCenterX() + right, 
+											owner.getBottomEdge() + top, owner.getBottomEdge() + bottom);
 		
 		return result;
 	}

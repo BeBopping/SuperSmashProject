@@ -1,5 +1,6 @@
 package eecs285.proj4.game.fighter;
 
+import static eecs285.proj4.game.Direction.*;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.Input;
 import eecs285.proj4.game.MovingObject;
@@ -52,8 +53,8 @@ public abstract class Fighter extends MovingObject {
 	protected double stunTime;			// Is stunned if > 0.0f
 	protected double jumpTime;			// Is jumping if > 0.0f
 	public Attack currentAttack;
-	protected boolean doPrimaryAttack;
-	protected boolean doSecondaryAttack;
+	protected boolean doNormalAttack;
+	protected boolean doSpecialAttack;
 	
 	protected Sprite currentSprite;
 	protected float visualWidth;
@@ -97,19 +98,19 @@ public abstract class Fighter extends MovingObject {
 		input.getInput();
 		
 		// Update Primary attack
-		if(!input.primaryAttack){
-			doPrimaryAttack = false;
+		if(!input.normalAttack){
+			doNormalAttack = false;
 		}
-		else if(!input.primaryAttackLast){
-			doPrimaryAttack = true;
+		else if(!input.normalAttackLast){
+			doNormalAttack = true;
 		}		
 		
 		// Update Secondary attack
-		if(!input.secondaryAttack){
-			doSecondaryAttack = false;
+		if(!input.specialAttack){
+			doSpecialAttack = false;
 		}
-		else if(!input.secondaryAttackLast){
-			doSecondaryAttack = true;
+		else if(!input.specialAttackLast){
+			doSpecialAttack = true;
 		}
 	}
 	
@@ -133,14 +134,14 @@ public abstract class Fighter extends MovingObject {
 		
 		if(flightTime > 0.0f){
 			flightTime -= delta;
-			
-			if(currentAttack != null){
-				currentAttack = null;
-			}
 		}
 		
 		if(stunTime > 0.0f){
 			stunTime -= delta;
+			
+			if(currentAttack != null){
+				currentAttack = null;
+			}
 		}
 		
 		doDuck(delta);
@@ -164,6 +165,10 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	private void doJump(double delta){
+		if(currentAttack != null && currentAttack.GetOverrideGravity()){
+			jumpTime = 0.0f;
+		}
+		
 		if(stunTime > 0.0f || currentAttack != null){
 			return;
 		}
@@ -284,35 +289,91 @@ public abstract class Fighter extends MovingObject {
 		
 		// Pick a new attack
 		if(currentAttack == null){
-			if(doPrimaryAttack){
-				doPrimaryAttack = false;
+			if(doNormalAttack){
+				doNormalAttack = false;
 				
-				// TODO : put this somewhere else
-				CollisionBox[] boxes = new CollisionBox[1];
-				boxes[0] = new CollisionBox();
-				boxes[0].startBox = new UtilObject(0.0f, 1.0f, -1.0f, -0.5f);
-				boxes[0].endBox = new UtilObject(0.0f, 2.0f, -1.0f, -0.5f);
-				boxes[0].delay = 0.0f;
-				boxes[0].duration = 0.1f;
-				boxes[0].damage = 6;
-				boxes[0].hitSpeedX = 10.0f;
-				boxes[0].hitSpeedY = -5.0f;
-				boxes[0].oppositeHitSpeedX = -3.0f;
-				boxes[0].oppositeHitSpeedY = -8.0f;
-				boxes[0].flightTime = 0.25f;
-				boxes[0].stunTime = 0.1f;
-				boxes[0].isStationaryInAir = false;
-				boxes[0].isStationaryOnGround = true;
-				boxes[0].isOverridingGravity = true;
-				boxes[0].canChangeDirection = false;
+				// Action in x direction
+				if(Math.abs(input.xAxis) > Math.abs(input.yAxis)){
+					if(input.xAxis > 0.0f){
+						if(onGround){
+							currentAttack = GetAttackNormalGround(East);
+						}
+						else{
+							currentAttack = GetAttackNormalAir(East);
+						}
+					}
+					else{
+						if(onGround){
+							currentAttack = GetAttackNormalGround(West);
+						}
+						else{
+							currentAttack = GetAttackNormalAir(West);
+						}
+					}
+					return;
+				}
+				else if(Math.abs(input.xAxis) < Math.abs(input.yAxis)){
+					if(input.yAxis > 0.0f){
+						if(onGround){
+							currentAttack = GetAttackNormalGround(South);
+						}
+						else{
+							currentAttack = GetAttackNormalAir(South);
+						}
+					}
+					else{
+						if(onGround){
+							currentAttack = GetAttackNormalGround(North);
+						}
+						else{
+							currentAttack = GetAttackNormalAir(North);
+						}
+					}
+					return;
+				}
+				else{
+					if(onGround){
+						currentAttack = GetAttackNormalGround(null);
+					}
+					else{
+						currentAttack = GetAttackNormalAir(null);
+					}
+					return;
+				}
+			}
+			
+			if(doSpecialAttack){
+				doSpecialAttack = false;
 				
-				currentAttack = new Attack(boxes);
+				// Action in x direction
+				if(Math.abs(input.xAxis) > Math.abs(input.yAxis)){
+					if(input.xAxis > 0.0f){
+						currentAttack = GetAttackSpecial(East);
+					}
+					else{
+						currentAttack = GetAttackSpecial(West);
+					}
+					return;
+				}
+				else if(Math.abs(input.xAxis) < Math.abs(input.yAxis)){
+					if(input.yAxis > 0.0f){
+						currentAttack = GetAttackSpecial(South);
+					}
+					else{
+						currentAttack = GetAttackSpecial(North);
+					}
+					return;
+				}
+				else{
+					currentAttack = GetAttackSpecial(null);
+					return;
+				}
 			}
 		}
 	}
 	
-	public void doGetHit(double delta, float velX, float velY, float flightTime, float stunTime, int damage){
-		final float scale = 1.0f + (float)hitPercent / 100.0f;
+	public void doGetHit(double delta, float velX, float velY, float flightTime, float stunTime, float healthScaler, int damage){
+		final float scale = 1.0f + (float)hitPercent / healthScaler;
 		velX *= scale;
 		velY *= scale;
 		flightTime *= scale;
@@ -327,12 +388,13 @@ public abstract class Fighter extends MovingObject {
 			this.velX = velX;
 		}
 		else{
-			if(velX > 0.0f){
-				this.velX = Math.abs(this.velX);
-			}
-			else{
-				this.velX = -Math.abs(this.velX);
-			}
+			this.velX += velX;
+			//if(velX > 0.0f){
+			//	this.velX = Math.abs(this.velX);
+			//}
+			//else{
+			//	this.velX = -Math.abs(this.velX);
+			//}
 		}
 	
 		// Update y vel
@@ -340,12 +402,13 @@ public abstract class Fighter extends MovingObject {
 			this.velY = velY;
 		}
 		else{
-			if(velY > 0.0f){
-				this.velY = Math.abs(this.velY);
-			}
-			else{
-				this.velY = -Math.abs(this.velY);
-			}
+			this.velY += velY;
+			//if(velY > 0.0f){
+			//	this.velY = Math.abs(this.velY);
+			//}
+			//else{
+			//	this.velY = -Math.abs(this.velY);
+			//}
 		}
 		
 	}
@@ -449,8 +512,10 @@ public abstract class Fighter extends MovingObject {
 		}
 	}
 
+	protected abstract Attack GetAttackNormalAir(Direction dir);
+	protected abstract Attack GetAttackNormalGround(Direction dir);
+	protected abstract Attack GetAttackSpecial(Direction dir);
+	
 	protected abstract void handleStep(double delta);
 	protected abstract void handleRender(double delta);
-	protected abstract void handleCollideWithSolid(Direction dir, float pos);
-	protected abstract void handleCollideWithPlatform(float pos);
 }
