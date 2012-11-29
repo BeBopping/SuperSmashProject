@@ -221,7 +221,8 @@ public class Battle implements GameState {
 									if(attackerBox.attackPriority > receiverBox.attackPriority - 2){
 										float hitSpeedX;
 										float hitSpeedY;
-										if(aBox.getCenterX() < rBox.getCenterX()){
+										if((aBox.getCenterX() < rBox.getCenterX() && !attacker.GetFacingLeft())
+										|| (aBox.getCenterX() > rBox.getCenterX() && attacker.GetFacingLeft())){
 											hitSpeedX = attackerBox.hitSpeedX;
 											hitSpeedY = attackerBox.hitSpeedY;
 										}
@@ -261,7 +262,8 @@ public class Battle implements GameState {
 						){	
 							float hitSpeedX;
 							float hitSpeedY;
-							if(aBox.getCenterX() < receiver.getCenterX()){
+							if((aBox.getCenterX() < receiver.getCenterX() && !attacker.GetFacingLeft())
+							|| (aBox.getCenterX() > receiver.getCenterX() && attacker.GetFacingLeft())){
 								hitSpeedX = attackerBox.hitSpeedX;
 								hitSpeedY = attackerBox.hitSpeedY;
 							}
