@@ -40,6 +40,7 @@ public abstract class Fighter extends MovingObject {
 	protected float secondJumpSpeed;
 	protected float secondJumpMinTime;
 	protected float secondJumpMaxTime;
+	protected float secondJumpLiniencyTime;
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
 
@@ -49,6 +50,7 @@ public abstract class Fighter extends MovingObject {
 	//protected boolean ducking;
 	//protected boolean running;
 	protected boolean canDoubleJump;
+	protected boolean isDoubleJumping;
 	protected double flightTime;		// Is flying if > 0.0f
 	protected double stunTime;			// Is stunned if > 0.0f
 	protected double jumpTime;			// Is jumping if > 0.0f
@@ -165,19 +167,35 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	private void doJump(double delta){
-		if(currentAttack != null && currentAttack.GetOverrideGravity()){
-			jumpTime = 0.0f;
+		// Stop jumping if we override gravity
+		if(stunTime > 0.0d || (currentAttack != null && currentAttack.GetOverrideGravity())){
+			if(jumpTime > 0.0d){
+				jumpTime = Math.max(firstJumpMaxTime, secondJumpMaxTime);
+			}
 		}
 		
-		if(stunTime > 0.0f || currentAttack != null){
-			return;
-		}
+		// Stop jumping if we are stunned.
+		//if(stunTime > 0.0d){
+		//	if(jumpTime > 0.0d){
+		//		jumpTime = 0.0d;
+		//	}
+		//	else{
+		//		jumpTime -= delta;
+		//	}
+		//	return;
+		//}
 		
 		if(onGround){
 			if(input.jump){
 				if(jumpTime >= -firstJumpLiniencyTime && jumpTime <= 0.0d){
-					jumpTime = delta;
+					if(currentAttack != null || stunTime > 0.0d){
+						jumpTime -= delta;
+					}
+					else{
+						jumpTime = delta;
+					}
 				}
+				// This might nt be needed
 				else if(jumpTime > 0.0d && jumpTime <= firstJumpMaxTime){
 					jumpTime += delta;
 				}
@@ -188,15 +206,36 @@ public abstract class Fighter extends MovingObject {
 		}
 		else{
 			if(input.jump){
-				if(jumpTime >= -firstJumpLiniencyTime && jumpTime <= 0.0d){
-					jumpTime -= delta;
+				if(isDoubleJumping){
+					if(jumpTime > 0.0d && jumpTime <= secondJumpMaxTime){
+						jumpTime += delta;
+					}
+					else{
+						isDoubleJumping = false;
+					}
 				}
-				else if(jumpTime > 0.0d && jumpTime <= firstJumpMaxTime){
-					jumpTime += delta;
+				else{
+					if(jumpTime > 0.0d && jumpTime <= firstJumpMaxTime){
+						jumpTime += delta;
+					}
+					else if(jumpTime <= 0.0d){
+						if(currentAttack != null || stunTime > 0.0d){
+							jumpTime -= delta;
+						}
+						else if(canDoubleJump && jumpTime >= -secondJumpLiniencyTime){
+							jumpTime = delta;
+							canDoubleJump = false;
+							isDoubleJumping = true;
+						}
+						else{
+							jumpTime -= delta;
+						}
+					}
 				}
 			}
 			else{
-				if(jumpTime > 0.0d && jumpTime < firstJumpMinTime){
+				if(jumpTime > 0.0d && ( (isDoubleJumping && jumpTime < secondJumpMinTime)
+								      ||(!isDoubleJumping && jumpTime < firstJumpMinTime))){
 					jumpTime += delta;
 				}
 				else{
