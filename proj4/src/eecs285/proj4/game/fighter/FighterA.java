@@ -75,7 +75,7 @@ public class FighterA extends Fighter {
 			boxes[1].canChangeDirection = false;
 			boxes[1].attackPriority = 0; 			// The higher the better
 			
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if(dir == North){
 			// Punch right
@@ -97,7 +97,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 			
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if(dir == South){
 			// Punch right
@@ -119,9 +119,13 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 			
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
-		else if((dir == East && !facingLeft) || (dir == West && facingLeft)){
+		// On ground, we can only do a move in the direction we are facing.
+		//else if((dir == East && !facingLeft) || (dir == West && facingLeft)){
+		else{
+			facingLeft = input.xAxis < 0.0f;
+			
 			// Punch right
 			CollisionBox[] boxes = new CollisionBox[1];
 			boxes[0] = new CollisionBox();
@@ -141,14 +145,19 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
-		else{ // West
+	}
+	
+	// *******************************************************************
+	// Normal Air
+	protected Attack GetAttackNormalAir(Direction dir){
+		if(dir == null){
 			// Punch right
 			CollisionBox[] boxes = new CollisionBox[1];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(0.0f, 1.0f, -1.0f, -0.5f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-1.0f, 0.0f, -0.5f, 0.0f);		// From players center Base
+			boxes[0].startBox = new UtilObject(-0.45f, 1.00f, -1.5f, 0.05f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(-1.00f, 0.45f, -1.5f, 0.05f);		// From players center Base
 			boxes[0].delay = 0.0f;
 			boxes[0].duration = 0.3f;
 			boxes[0].damage = 6;
@@ -163,34 +172,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
-		}
-	}
-	
-	// *******************************************************************
-	// Normal Air
-	protected Attack GetAttackNormalAir(Direction dir){
-		if(dir == null){
-			// Punch right
-			CollisionBox[] boxes = new CollisionBox[1];
-			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(0.0f, 1.0f, -1.0f, -0.5f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(0.0f, 1.5f, -1.0f, -0.5f);		// From players center Base
-			boxes[0].delay = 0.0f;
-			boxes[0].duration = 0.1f;
-			boxes[0].damage = 4;
-			boxes[0].healthScaler = 500.0f;			// scale = 1 + health/healthScaler
-			boxes[0].hitSpeedX = 10.0f;
-			boxes[0].hitSpeedY = -5.0f;
-			boxes[0].flightTime = 0.25f;
-			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
-			boxes[0].isStationaryOnGround = true;
-			boxes[0].isOverridingGravity = true;
-			boxes[0].canChangeDirection = false;
-			boxes[0].attackPriority = 0; 			// The higher the better
-
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if(dir == North){
 			// Punch right
@@ -212,7 +194,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if(dir == South){
 			// Punch right
@@ -234,7 +216,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 			
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if((dir == East && !facingLeft) || (dir == West && facingLeft)){
 			// Punch right
@@ -256,7 +238,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else{ // West
 			// Punch right
@@ -278,7 +260,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 	}
 
@@ -305,7 +287,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if(dir == North){
 			// Punch right
@@ -327,7 +309,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 		else if(dir == South){
 			// Punch right
@@ -349,9 +331,13 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
-		else if((dir == East && !facingLeft) || (dir == West && facingLeft)){
+		// Special move, we can only do a move in the direction we are facing.
+		//else if((dir == East && !facingLeft) || (dir == West && facingLeft)){
+		else{
+			facingLeft = input.xAxis < 0.0f;
+			
 			// Punch right
 			CollisionBox[] boxes = new CollisionBox[1];
 			boxes[0] = new CollisionBox();
@@ -371,29 +357,7 @@ public class FighterA extends Fighter {
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
 
-			return new Attack(boxes, this);
-		}
-		else{ // West
-			// Punch right
-			CollisionBox[] boxes = new CollisionBox[1];
-			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(0.0f, 1.0f, -1.0f, -0.5f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(0.0f, 2.0f, -1.0f, -0.5f);		// From players center Base
-			boxes[0].delay = 0.0f;
-			boxes[0].duration = 0.1f;
-			boxes[0].damage = 6;
-			boxes[0].healthScaler = 500.0f;			// scale = 1 + health/healthScaler
-			boxes[0].hitSpeedX = 10.0f;
-			boxes[0].hitSpeedY = -5.0f;
-			boxes[0].flightTime = 0.25f;
-			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
-			boxes[0].isStationaryOnGround = true;
-			boxes[0].isOverridingGravity = true;
-			boxes[0].canChangeDirection = false;
-			boxes[0].attackPriority = 0; 			// The higher the better
-
-			return new Attack(boxes, this);
+			return new Attack(boxes, this, 0.1f);	// Delay after moves are done
 		}
 	}
 	

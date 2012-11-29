@@ -30,6 +30,7 @@ public class Battle implements GameState {
 	private Window window;
 	private Window hud;
 	private TrueTypeFont titleFont;
+	private TrueTypeFont percentageFont;
 
 	private Fighter[] fighters;
 	private Level level;
@@ -62,6 +63,7 @@ public class Battle implements GameState {
 		}
 		
 		titleFont = Assets.GetFont("title");
+		percentageFont = Assets.GetFont("percentage");
 		
 		// Setup Characters
 		fighters = battleInfo.getFighters();
@@ -77,6 +79,11 @@ public class Battle implements GameState {
 			stockMatch = true;
 			for(Fighter fighter : fighters){
 				fighter.SetStock(battleInfo.getStock());
+			}
+		}
+		else{
+			for(Fighter fighter : fighters){
+				fighter.SetStock(-1);
 			}
 		}
 		
@@ -105,7 +112,7 @@ public class Battle implements GameState {
 			}
 			
 			if(tempKeyPress){
-				Game.popGameState();
+				endGame();
 			}
 		
 		// Get fighter input
@@ -135,6 +142,8 @@ public class Battle implements GameState {
 		
 		// Check for Fighter->Level collisions
 		for(Fighter fighter : fighters){
+			if(!fighter.isActive){ continue; }
+			
 			// Collide with solid
 			for(LevelObject solid : level.solidObjects){
 				if(fighter.getLeftEdge() < solid.getRightEdge() && fighter.getRightEdge() > solid.getLeftEdge()
@@ -172,7 +181,11 @@ public class Battle implements GameState {
 		
 		// If fighters are overlapping on the ground, move them apart
 		for(int i=1; i<fighters.length; i++){
+			if(!fighters[i].isActive){ continue; }
+			
 			for(int j=0; j<i; j++){
+				if(!fighters[j].isActive){ continue; }
+				
 				// Are they overlapping?
 				if(fighters[i].getLeftEdge() < fighters[j].getRightEdge() && fighters[i].getRightEdge() > fighters[j].getLeftEdge()
 				&& fighters[i].getTopEdge() < fighters[j].getBottomEdge() && fighters[i].getBottomEdge() > fighters[j].getTopEdge()){
@@ -198,11 +211,13 @@ public class Battle implements GameState {
 		
 		// Detecting attack collisions
 		for(Fighter attacker : fighters){
+			if(!attacker.isActive){ continue; }
+			
 			if(attacker.currentAttack != null){
 				for(int i=0; i<fighters.length; i++){
 					Fighter receiver = fighters[i];
-					
-					if(attacker==receiver || attacker.currentAttack.hitPlayers[i]){
+				
+					if(!receiver.isActive || attacker==receiver || attacker.currentAttack.hitPlayers[i]){
 						continue;
 					}
 					
@@ -213,9 +228,12 @@ public class Battle implements GameState {
 						for(CollisionBox attackerBox : attacker.currentAttack.getCollisionBoxes()){
 							if(hitPlayer == true){ break; }
 							
+							if(!attackerBox.isAlive(attacker.currentAttack.getCurrentTime())){ continue; }
+							
 							UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker);
 						
 							for(CollisionBox receiverBox : receiver.currentAttack.getCollisionBoxes()){
+								if(!receiverBox.isAlive(receiver.currentAttack.getCurrentTime())){ continue; }
 
 								UtilObject rBox = receiverBox.getBox(receiver.currentAttack.getCurrentTime(), receiver);
 								
@@ -249,6 +267,7 @@ public class Battle implements GameState {
 					// Check collision with player location
 					for(CollisionBox attackerBox : attacker.currentAttack.getCollisionBoxes()){
 						if(hitPlayer == true){ break; }
+						if(!attackerBox.isAlive(attacker.currentAttack.getCurrentTime())){ continue; }
 						
 						UtilObject aBox = attackerBox.getBox(attacker.currentAttack.getCurrentTime(), attacker);
 						
@@ -278,6 +297,34 @@ public class Battle implements GameState {
 			}
 		}
 		
+		// Handle death
+		boolean anyAlive = false;
+		for(int i=0; i<fighters.length; i++){
+			Fighter fighter = fighters[i];
+
+			if(fighter.isActive){
+				if(fighter.getTopEdge() - 4 > level.maxOutline.getBottomEdge()){
+					// Fighter died
+					if(stockMatch){
+						fighter.stock--;
+					}
+					fighter.hitPercent = 0;
+					fighter.deaths++;
+					
+					fighter.setSpawn(level.spawnX[i], level.spawnY[i]);
+					fighter.setDie();
+				}
+			}
+
+			if(fighter.stock != 0){
+				anyAlive = true;
+			}
+		}
+		
+		if(!anyAlive){
+			endGame();
+		}
+		
 		// Update window
 		float left = level.minOutline.getLeftEdge();
 		float right = level.minOutline.getRightEdge();
@@ -285,7 +332,8 @@ public class Battle implements GameState {
 		float bottom = level.minOutline.getBottomEdge();
 		
 		for(Fighter fighter : fighters){
-			//if(isSpawned())
+			if(!fighter.isVisible){ continue; }
+			
 			left = Math.min(left, fighter.getLeftEdge() - 2.0f);
 			right = Math.max(right, fighter.getRightEdge() + 2.0f);
 			top = Math.min(top, fighter.getTopEdge() - 2.0f);
@@ -312,11 +360,14 @@ public class Battle implements GameState {
 		level.render(delta);
 		
 		for(Fighter fighter : fighters){
+			if(!fighter.isVisible){ continue; }
 			fighter.render(delta);
 		}
 		
 		if(DEBUG_MODE){
 			for(Fighter fighter : fighters){
+				if(!fighter.isActive){ continue; }
+				
 				Render.render(Assets.GetTexture("square"), fighter, Color.blue);
 				if(fighter.currentAttack != null){
 					fighter.currentAttack.debugRender(delta);
@@ -324,11 +375,43 @@ public class Battle implements GameState {
 			}
 		}
 
+		// Render Hud
+		hud.setupRender();
+
 		String text = String.valueOf((int)Math.ceil(timeLeft));
 		Render.render(titleFont, hud, text, 50, 10, 10, 0.5f, 0.5f, Color.black);
+		
+		float segmentSize = hud.getSizeX() / (float)(fighters.length + 1);
+		float posX = hud.getLeft() + segmentSize;
+		float posY = hud.getBottom() - 10;
+		for(Fighter fighter : fighters){
+			String percentage = String.valueOf(fighter.hitPercent) + '%';
+			Render.render(titleFont, hud, percentage, posX, posY, 10, 0.5f, 0.5f, fighter.playerColor);
+			
+			float imageSize = 3.0f;
+			float imageSpacing = 0.5f;
+			float stockPosY = posY + 5.0f;
+			float stockPosX = posX - ((float)(fighter.stock-1) * 0.5f)*(imageSize + imageSpacing);
+			for(int i=0; i<fighter.stock; i++){
+				Render.render(Assets.GetTexture("circle"), 
+								stockPosX, 
+								stockPosX+imageSize, 
+								stockPosY, 
+								stockPosY+imageSize, 
+								fighter.playerColor);
+				stockPosX += imageSize + imageSpacing;
+			}
+			
+			posX += segmentSize;
+		}
+		
 		
 		//Render.render(titleFont, window, "Battle", 
 		//		window.getCenterX(), window.getTop() + window.getSizeY()/4.0f, 
 		//		window.getSizeY()/8.0f, 0.5f, 0.5f, Color.black);
+	}
+	
+	private void endGame(){
+		Game.popGameState();
 	}
 }

@@ -16,16 +16,19 @@ public abstract class Fighter extends MovingObject {
 	protected static final float MAX_VERTICAL = 1000.0f;
 	protected static final float RECOIL_PERCENT = 0.25f;
 	protected static final float RECOIL_TANGENT_PERCENT = 0.95f;
+	protected static final float SPAWN_DELAY = 1.0f;
+	protected static final float SPAWN_TIME = 1.0f;
+	protected static final float SPAWN_LENIENCY = 3.0f;
 	
 	protected String fighterName;
 	protected FighterTrait fighterTrait;
 	protected Input input;
 	
-	private int hitPercent;
-	private int stock;
-	private int kills;
-	private int deaths;
-	private int suicides;
+	public int hitPercent;
+	public int stock;
+	public int kills;
+	public int deaths;
+	public int suicides;
 	
 	// All units use meters and seconds
 	//protected float minWalkSpeed;
@@ -44,6 +47,8 @@ public abstract class Fighter extends MovingObject {
 	protected float maxFallSpeed;
 	protected float maxFallSpeedHorizontal;
 
+	public boolean isVisible;
+	public boolean isActive;
 	protected boolean facingLeft;
 	protected boolean onGround;
 	//protected boolean ducking;
@@ -53,6 +58,7 @@ public abstract class Fighter extends MovingObject {
 	protected double flightTime;		// Is flying if > 0.0f
 	protected double stunTime;			// Is stunned if > 0.0f
 	protected double jumpTime;			// Is jumping if > 0.0f
+	protected double spawnTime;
 	public Attack currentAttack;
 	protected boolean doNormalAttack;
 	protected boolean doSpecialAttack;
@@ -60,7 +66,7 @@ public abstract class Fighter extends MovingObject {
 	protected Sprite currentSprite;
 	protected float visualWidth;
 	protected float visualHeight;
-	protected Color playerColor;
+	public Color playerColor;
 	
 	public Fighter(String name, FighterTrait trait,
 			float left, float right, float top, float bottom) {
@@ -119,6 +125,20 @@ public abstract class Fighter extends MovingObject {
 	public void setSpawn(float xCenter, float yBase){
 		posX = xCenter - sizeX*0.5f;
 		posY = yBase - sizeY;
+		lastPosX = posX;
+		lastPosY = posY;
+		velX = 0.0f;
+		velY = 0.0f;
+		
+		stunTime = SPAWN_TIME;
+	}
+	
+	public void setDie(){
+		spawnTime = SPAWN_DELAY + SPAWN_TIME;
+		stunTime = spawnTime;
+		
+		isVisible = false;
+		isActive = false;
 	}
 
 	public void setVelocity(float velocityX, float velocityY){
@@ -144,6 +164,28 @@ public abstract class Fighter extends MovingObject {
 			if(currentAttack != null){
 				currentAttack = null;
 			}
+		}
+		
+		if(!isActive && stock != 0){
+			if(spawnTime > -SPAWN_LENIENCY){
+				spawnTime -= delta;
+				
+				if(spawnTime < SPAWN_TIME){
+					isVisible = true;
+	
+					if(spawnTime < 0.0d && input.getAnyActivity()){
+						isActive = true;
+					}
+				}
+			}
+			else{
+				isVisible = true;
+				isActive = true;
+			}
+		}
+		
+		if(!isActive){
+			return;
 		}
 		
 		doDuck(delta);

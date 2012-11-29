@@ -31,21 +31,21 @@ public abstract class Level {
 		
 		// Default values... Should be over-written by actual level
 		spawnX[0] = maxOutline.getCenterX() - 2.0f;
-		spawnY[0] = maxOutline.getCenterY();
+		spawnY[0] = maxOutline.getCenterY() + 4.0f;
 		spawnX[1] = maxOutline.getCenterX() + 2.0f;
-		spawnY[1] = maxOutline.getCenterY();
+		spawnY[1] = maxOutline.getCenterY() + 4.0f;
 		spawnX[2] = maxOutline.getCenterX() - 6.0f;
-		spawnY[2] = maxOutline.getCenterY();
+		spawnY[2] = maxOutline.getCenterY() + 4.0f;
 		spawnX[3] = maxOutline.getCenterX() + 6.0f;
-		spawnY[3] = maxOutline.getCenterY();
+		spawnY[3] = maxOutline.getCenterY() + 4.0f;
 		spawnX[4] = maxOutline.getCenterX() - 2.0f;
-		spawnY[4] = maxOutline.getCenterY() - 4.0f;
+		spawnY[4] = maxOutline.getCenterY();
 		spawnX[5] = maxOutline.getCenterX() + 2.0f;
-		spawnY[5] = maxOutline.getCenterY() - 4.0f;
+		spawnY[5] = maxOutline.getCenterY();
 		spawnX[6] = maxOutline.getCenterX() - 6.0f;
-		spawnY[6] = maxOutline.getCenterY() - 4.0f;
+		spawnY[6] = maxOutline.getCenterY();
 		spawnX[7] = maxOutline.getCenterX() + 6.0f;
-		spawnY[7] = maxOutline.getCenterY() - 4.0f;
+		spawnY[7] = maxOutline.getCenterY();
 		
 		for(int i=0; i<8; i++){
 			startX[i] = spawnX[i];

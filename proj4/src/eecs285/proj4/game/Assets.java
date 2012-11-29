@@ -49,6 +49,9 @@ public class Assets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));
 				textures.put("square", texture);
 				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Circle.png"));
+				textures.put("circle", texture);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(0);
@@ -64,6 +67,7 @@ public class Assets {
 			TrueTypeFont font = new TrueTypeFont(awtFont, false);
 			fonts.put("times_bold", font);
 			fonts.put("title", font);
+			fonts.put("precentage", font);
 			
 			fontsInitialized = true;
 		}

@@ -26,4 +26,9 @@ public abstract class Input {
 	}
 	
 	public abstract void getInput();
+	
+	// Must call getInput first
+	public boolean getAnyActivity(){
+		return (xAxis != 0.0f || yAxis != 0.0f || normalAttack || specialAttack || jump);
+	}
 }

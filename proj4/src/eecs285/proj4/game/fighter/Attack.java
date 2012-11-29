@@ -10,14 +10,16 @@ public class Attack {
 	private Fighter owner;
 	private CollisionBox[] boxes;
 	private float duration;
+	private float extraTime;		// Time after all moves are completed. Cannot move on ground
 	//private float maxChargeTime;
 	
 	private float currentTime;
 	public boolean[] hitPlayers;
 	
-	public Attack(CollisionBox[] boxes, Fighter owner){
+	public Attack(CollisionBox[] boxes, Fighter owner, float extraTime){
 		this.owner = owner;
 		this.boxes = boxes;
+		this.extraTime = extraTime;
 		hitPlayers = new boolean[]{false, false, false, false, false, false, false, false};
 		
 		for(CollisionBox box : this.boxes){
@@ -54,7 +56,7 @@ public class Attack {
 				return true;
 			}
 		}
-		return false;
+		return false; //currentTime > duration;
 	}
 	
 	public boolean GetStationaryOnGround(){
@@ -63,7 +65,8 @@ public class Attack {
 				return true;
 			}
 		}
-		return false;
+		// Returns true if we are in the "Extra time" segment.
+		return currentTime > duration;
 	}
 	
 	public boolean GetOverrideGravity(){
@@ -85,7 +88,7 @@ public class Attack {
 	}
 	
 	public boolean isComplete(){
-		return currentTime >= duration;
+		return currentTime >= duration + extraTime;
 	}
 	
 	public CollisionBox[] getCollisionBoxes(){
