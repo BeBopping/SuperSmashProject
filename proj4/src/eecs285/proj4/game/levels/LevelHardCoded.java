@@ -3,13 +3,14 @@ package eecs285.proj4.game.levels;
 import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
+import eecs285.proj4.util.UtilObject;
 
 public class LevelHardCoded extends Level {
 	public LevelHardCoded(){
-		super(-10.0f, 10.0f, -10.0f, 10.0f);
+		super(-20.0f, 20.0f, -20.0f, 10.0f);
 		
 		levelName = "First Level";
-		
+		minOutline = new UtilObject(-8.5f, 9.5f, 0.0f, 7.5f);
 		background = Assets.GetTexture("default_level_background");
 		
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("platform"), -7.0f, 0.0f, 3.0f, 4.0f));

@@ -44,15 +44,15 @@ public class Battle implements GameState {
 		
 		if(aspectRatio >= 1.0f){
 			float halfWidth = aspectRatio * 50.0f;
-			float levelHalfWidth = aspectRatio * (level.getSizeX()/2.0f);
+			float levelHalfWidth = aspectRatio * (level.maxOutline.getSizeX()/2.0f);
 			hud = new Window(50.f - halfWidth, 50.f + halfWidth, 0.0f, 100.0f);
-			window = new Window(level.getCenterX() - levelHalfWidth, level.getCenterX() + levelHalfWidth, level.getTopEdge(), level.getBottomEdge());
+			window = new Window(level.maxOutline.getCenterX() - levelHalfWidth, level.maxOutline.getCenterX() + levelHalfWidth, level.maxOutline.getTopEdge(), level.maxOutline.getBottomEdge());
 		}
 		else{
 			float halfHeight = (50.0f / aspectRatio);
-			float levelHalfHeight = (level.getSizeY()/2.0f) / aspectRatio;
+			float levelHalfHeight = (level.maxOutline.getSizeY()/2.0f) / aspectRatio;
 			hud = new Window(0.0f, 100.0f, 50.0f - halfHeight, 50.0f + halfHeight);
-			window = new Window(level.getLeftEdge(), level.getRightEdge(), level.getCenterY() - levelHalfHeight, level.getCenterY() + levelHalfHeight);
+			window = new Window(level.maxOutline.getLeftEdge(), level.maxOutline.getRightEdge(), level.maxOutline.getCenterY() - levelHalfHeight, level.maxOutline.getCenterY() + levelHalfHeight);
 		}
 		
 		titleFont = Assets.GetFont("title");
@@ -219,17 +219,8 @@ public class Battle implements GameState {
 								&& aBox.getBottomEdge() > rBox.getTopEdge()){
 									
 									if(attackerBox.attackPriority > receiverBox.attackPriority - 2){
-										float hitSpeedX;
-										float hitSpeedY;
-										if((aBox.getCenterX() < rBox.getCenterX() && !attacker.GetFacingLeft())
-										|| (aBox.getCenterX() > rBox.getCenterX() && attacker.GetFacingLeft())){
-											hitSpeedX = attackerBox.hitSpeedX;
-											hitSpeedY = attackerBox.hitSpeedY;
-										}
-										else{
-											hitSpeedX = attackerBox.oppositeHitSpeedX;
-											hitSpeedY = attackerBox.oppositeHitSpeedY;
-										}
+										float hitSpeedX = attackerBox.hitSpeedX;
+										float hitSpeedY = attackerBox.hitSpeedY;
 										
 										if(attacker.GetFacingLeft()){
 											hitSpeedX = -hitSpeedX;
@@ -260,17 +251,8 @@ public class Battle implements GameState {
 						&& aBox.getTopEdge() < receiver.getBottomEdge()
 						&& aBox.getBottomEdge() > receiver.getTopEdge()
 						){	
-							float hitSpeedX;
-							float hitSpeedY;
-							if((aBox.getCenterX() < receiver.getCenterX() && !attacker.GetFacingLeft())
-							|| (aBox.getCenterX() > receiver.getCenterX() && attacker.GetFacingLeft())){
-								hitSpeedX = attackerBox.hitSpeedX;
-								hitSpeedY = attackerBox.hitSpeedY;
-							}
-							else{
-								hitSpeedX = attackerBox.oppositeHitSpeedX;
-								hitSpeedY = attackerBox.oppositeHitSpeedY;
-							}
+							float hitSpeedX = attackerBox.hitSpeedX;
+							float hitSpeedY = attackerBox.hitSpeedY;
 							
 							if(attacker.GetFacingLeft()){
 								hitSpeedX = -hitSpeedX;
@@ -289,6 +271,31 @@ public class Battle implements GameState {
 				}
 			}
 		}
+		
+		// Update window
+		float left = level.minOutline.getLeftEdge();
+		float right = level.minOutline.getRightEdge();
+		float top = level.minOutline.getTopEdge();
+		float bottom = level.minOutline.getBottomEdge();
+		
+		for(Fighter fighter : fighters){
+			//if(isSpawned())
+			left = Math.min(left, fighter.getLeftEdge() - 2.0f);
+			right = Math.max(right, fighter.getRightEdge() + 2.0f);
+			top = Math.min(top, fighter.getTopEdge() - 2.0f);
+			bottom = Math.max(bottom, fighter.getBottomEdge() + 2.0f);
+		}
+		
+		left = Math.max(left, level.maxOutline.getLeftEdge());
+		right = Math.min(right, level.maxOutline.getRightEdge());
+		top = Math.max(top, level.maxOutline.getTopEdge());
+		bottom = Math.min(bottom, level.maxOutline.getBottomEdge());
+		
+		window.doZoom(right - left, bottom - top, 0.5f);
+		window.doMoveCenter(left + (right - left)*0.5f, top + (bottom - top)*0.5f, 0.5f);
+		
+		window.step(delta);
+		hud.step(delta);
 	}
 
 	public void prerender(double delta){}

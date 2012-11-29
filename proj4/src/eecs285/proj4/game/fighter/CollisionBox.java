@@ -12,8 +12,6 @@ public class CollisionBox {
 	
 	public float hitSpeedX;
 	public float hitSpeedY;
-	public float oppositeHitSpeedX;
-	public float oppositeHitSpeedY;
 	public int damage;
 	public float flightTime;
 	public float stunTime;
