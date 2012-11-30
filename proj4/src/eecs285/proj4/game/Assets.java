@@ -52,6 +52,12 @@ public class Assets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Circle.png"));
 				textures.put("circle", texture);
 				
+				// Fighters...
+				// Mario
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterMario.png"));
+				textures.put("fighter_mario", texture);
+				
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.exit(0);

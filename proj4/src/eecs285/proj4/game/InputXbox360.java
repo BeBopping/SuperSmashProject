@@ -4,7 +4,7 @@ import net.java.games.input.Component.Identifier.Button;
 import net.java.games.input.Controller;
 import net.java.games.input.Component.Identifier;
 
-public class InputXbox extends Input {
+public class InputXbox360 extends Input {
 	private Controller controller;
 	
 	private static final Button ATTACK_PRIMARY = Identifier.Button._2;
@@ -12,6 +12,7 @@ public class InputXbox extends Input {
 	private static final Button JUMP_FIRST = Identifier.Button._0;
 	private static final Button JUMP_SECOND = Identifier.Button._1;
 	
+	// Controller (XBOX 360 For Windows)
 	//_0 = A
 	//_1 = B
 	//_2 = X
@@ -21,7 +22,7 @@ public class InputXbox extends Input {
 	//_6 = back
 	//_7 = start
 	
-	public InputXbox(Controller controller){
+	public InputXbox360(Controller controller){
 		this.controller = controller;
 		
 		analogStick = true;

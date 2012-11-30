@@ -5,10 +5,12 @@ import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.Input;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.util.Render;
+import eecs285.proj4.util.SmallSprite;
 import eecs285.proj4.util.Sprite;
 import eecs285.proj4.util.UtilObject;
 
 import org.newdawn.slick.Color;
+import org.newdawn.slick.opengl.Texture;
 
 public abstract class Fighter extends MovingObject {
 	protected static final float GRAVITY = 100.0f;
@@ -63,10 +65,14 @@ public abstract class Fighter extends MovingObject {
 	protected boolean doNormalAttack;
 	protected boolean doSpecialAttack;
 	
-	protected Sprite currentSprite;
+	protected SmallSprite currentSprite;
 	protected float visualWidth;
 	protected float visualHeight;
 	public Color playerColor;
+	
+	protected Texture fighterTexture;
+	protected float distancePerRunSprite;
+	protected double spriteDistance;
 	
 	public Fighter(String name, FighterTrait trait,
 			float left, float right, float top, float bottom) {
@@ -76,6 +82,8 @@ public abstract class Fighter extends MovingObject {
 		fighterTrait = trait;
 		
 		jumpTime = 1000.0f;
+		
+		currentSprite = FighterSprites.jump[0];
 	}
 	
 	public void SetInput(Input input){
@@ -193,6 +201,7 @@ public abstract class Fighter extends MovingObject {
 		doJump(delta);
 		doAttack(delta);
 		doPlayerDirection(delta);
+		doSprite(delta);
 		
 		if(velX > MAX_HORIZONTAL) velX = MAX_HORIZONTAL;
 		if(velX < -MAX_HORIZONTAL) velX = -MAX_HORIZONTAL;
@@ -518,9 +527,44 @@ public abstract class Fighter extends MovingObject {
 		}
 	}
 	
+	private void doSprite(double delta){
+		if(currentAttack == null){
+			if(onGround){
+				if(Math.abs(velX) > 0.5f){// && input.xAxis != 0.0f){
+					// run 1 sprite-frame per half meter
+					spriteDistance += delta * Math.abs(velX);
+					
+					int index = (int)(spriteDistance / (double)distancePerRunSprite);
+					index %= 4;
+					
+					// jump for now - Sprite is in the wrong spot
+					currentSprite = FighterSprites.jump[index];
+					return;
+				}
+				else{
+					spriteDistance = 0.0d;
+					currentSprite = FighterSprites.jump[0];
+					
+				}
+			}
+			else{
+				spriteDistance = 0.0d;
+				currentSprite = FighterSprites.jump[0];
+				
+			}
+		}
+		else{
+			spriteDistance = 0.0d;
+			currentSprite = FighterSprites.jump[0];
+			
+		}
+	}
+	
 	public void render(double delta){
-		Render.render(currentSprite, getCenterX()-visualWidth*0.5f, getCenterX()+visualWidth*0.5f,
-									 getBottomEdge()-visualHeight, getBottomEdge(), playerColor, facingLeft);
+		Render.startBatchRender(fighterTexture, playerColor);
+		Render.batchRender(currentSprite, getCenterX()-visualWidth*0.5f, getCenterX()+visualWidth*0.5f,
+									 getBottomEdge()-visualHeight, getBottomEdge(), facingLeft);
+		Render.stopBatchRender();
 		
 		handleRender(delta);
 	}
@@ -592,7 +636,7 @@ public abstract class Fighter extends MovingObject {
 			}
 		}
 	}
-
+	
 	protected abstract Attack GetAttackNormalAir(Direction dir);
 	protected abstract Attack GetAttackNormalGround(Direction dir);
 	protected abstract Attack GetAttackSpecial(Direction dir);

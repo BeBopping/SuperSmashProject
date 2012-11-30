@@ -14,7 +14,7 @@ public class FighterA extends Fighter {
 	
 	public FighterA(FighterTrait trait){
 		super("Fighter A", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
-		normalStance = Assets.GetSprite("floor");
+		//normalStance = Assets.GetSprite("floor");
 		
 		maxWalkSpeed = 7.0f;
 		forwardAcceleration = 20.0f;
@@ -30,9 +30,12 @@ public class FighterA extends Fighter {
 		maxFallSpeed = 20.0f;
 		maxFallSpeedHorizontal = 7.0f;
 		
-		currentSprite = normalStance;
-		visualWidth = 1.0f;
-		visualHeight = 1.4f;
+		//currentSprite = normalStance;
+		visualWidth = 3.0f;
+		visualHeight = 3.0f;
+		
+		fighterTexture = Assets.GetTexture("fighter_mario");
+		distancePerRunSprite = 0.5f;
 	}
 
 	// *******************************************************************

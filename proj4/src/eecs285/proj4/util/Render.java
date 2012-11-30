@@ -87,18 +87,24 @@ public class Render {
 	}
 	
 	// Batch render sprite
-	public static void batchRender(Sprite sprite, UtilObject gameObject){
-		batchRender(sprite, gameObject.getLeftEdge(), gameObject.getRightEdge(), gameObject.getTopEdge(), gameObject.getBottomEdge());
+	public static void batchRender(SmallSprite sprite, UtilObject gameObject, boolean flipX){
+		batchRender(sprite, gameObject.getLeftEdge(), gameObject.getRightEdge(), gameObject.getTopEdge(), gameObject.getBottomEdge(), flipX);
 	}
 
-	public static void batchRender(Sprite sprite, float left, float right, float top, float bottom){
-		glTexCoord2f(sprite.getLeft(),sprite.getTop());
+	public static void batchRender(SmallSprite sprite, float left, float right, float top, float bottom, boolean flipX){
+		if(flipX){
+			float temp = right;
+			right = left;
+			left = temp;
+		}
+		
+		glTexCoord2f(sprite.left, sprite.top);
 		glVertex2f(left,top);
-		glTexCoord2f(sprite.getRight(),sprite.getTop());
+		glTexCoord2f(sprite.right, sprite.top);
 		glVertex2f(right,top);
-		glTexCoord2f(sprite.getRight(),sprite.getBottom());
+		glTexCoord2f(sprite.right, sprite.bottom);
 		glVertex2f(right,bottom);
-		glTexCoord2f(sprite.getLeft(),sprite.getBottom());
+		glTexCoord2f(sprite.left, sprite.bottom);
 		glVertex2f(left,bottom);
 	}
 	

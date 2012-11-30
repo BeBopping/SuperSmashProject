@@ -39,7 +39,6 @@ public class ScreenMenu implements GameState{
 	public ScreenMenu(Window window){
 		this.window = window;
 		currentMenuItem = 0;
-		//firstFrame = true;
 	}
 	
 	protected void initMenuItems(ArrayList<SelectableObject> menuItems){
@@ -118,6 +117,7 @@ public class ScreenMenu implements GameState{
 			Component component = controller.getComponent(Identifier.Button._0);
 			if(component != null){
 				if(component.getPollData() >= 0.75f){
+					System.out.println(controller);
 					tempKeyPress = true;
 				}
 			}
