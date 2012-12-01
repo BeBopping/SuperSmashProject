@@ -68,9 +68,20 @@ public class Game {
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClearDepth(1);
 			
+			glDisable(GL_DITHER);
+			
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			
+			//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+			//glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+			
+			//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			//glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			
+			//glPixelStorei( GL_UNPACK_ALIGNMENT,1 ); //this line already is in there
+			//glPixelStorei( GL_PACK_ALIGNMENT,1 ); //add this line
 			
 			//glViewport(0,0,DisplayInfo.GetWidth(),DisplayInfo.GetHeight());
 			//glMatrixMode(GL_MODELVIEW);
@@ -124,6 +135,10 @@ public class Game {
 						continue;
 					}
 					lastTime = currentTime;
+					
+					if(delta > SPF){
+						continue;
+					}
 				}
 				
 				GameState currentState = gameStates.peek();

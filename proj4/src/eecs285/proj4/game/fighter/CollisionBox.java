@@ -23,26 +23,37 @@ public class CollisionBox {
 	
 	public int attackPriority; // The higher the better
 	
-	public boolean isAlive(float currentTime){
+	public boolean isAlive(double currentTime){
 		if(currentTime >= delay && currentTime < duration + delay){
 			return true;
 		}
 		return false;
 	}
 	
-	public UtilObject getBox(float currentTime, Fighter owner){
-		float val = (currentTime - delay) / duration;
+	public UtilObject getBox(double currentTime, Fighter owner){
+		float val = (float)((currentTime - (double)delay) / (double)duration);
 		
 		float left = (startBox.getLeftEdge() + (endBox.getLeftEdge() - startBox.getLeftEdge()) * val);
 		float right = (startBox.getRightEdge() + (endBox.getRightEdge() - startBox.getRightEdge()) * val);
 		float top = (startBox.getTopEdge() + (endBox.getTopEdge() - startBox.getTopEdge()) * val);
 		float bottom = (startBox.getBottomEdge() + (endBox.getBottomEdge() - startBox.getBottomEdge()) * val);
 		
+		/*
+		// Heisenbug!!!!
 		if(owner.GetFacingLeft()){
 			float temp = left;
 			left = -right;
 			right = -temp;
 		}
+		*/
+		
+		// Solution to heisenbug
+		if(owner.GetFacingLeft()){
+			left += right;
+			right -= left;
+			left = -(left + right);
+		}
+		
 		
 		UtilObject result = new UtilObject(	owner.getCenterX() + left, owner.getCenterX() + right, 
 											owner.getBottomEdge() + top, owner.getBottomEdge() + bottom);

@@ -82,8 +82,11 @@ public abstract class Fighter extends MovingObject {
 		fighterTrait = trait;
 		
 		jumpTime = 1000.0f;
+		onGround = true;
+		isActive = true;
+		isVisible = true;
 		
-		currentSprite = FighterSprites.jump[0];
+		currentSprite = FighterSprites.stand[0];
 	}
 	
 	public void SetInput(Input input){
@@ -528,42 +531,85 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	private void doSprite(double delta){
-		if(currentAttack == null){
+		//if(stunTime > 0.0d){
+		//	spriteDistance += delta * Math.abs(velX);
+		//	currentSprite = FighterSprites.stun[0];
+		//	return;
+		//}
+		
+		if(currentAttack != null){
+			spriteDistance = 0.0d;
+			
+			// Sprite can be null if attack is over
+			currentSprite = currentAttack.getSmallSprite();
+		}
+		
+		if(currentAttack == null || currentSprite == null){
 			if(onGround){
 				if(Math.abs(velX) > 0.5f){// && input.xAxis != 0.0f){
 					// run 1 sprite-frame per half meter
 					spriteDistance += delta * Math.abs(velX);
 					
-					int index = (int)(spriteDistance / (double)distancePerRunSprite);
-					index %= 4;
+					int index = 1 + (int)(spriteDistance / (double)distancePerRunSprite);
+					index %= 8;
 					
 					// jump for now - Sprite is in the wrong spot
-					currentSprite = FighterSprites.jump[index];
+					currentSprite = FighterSprites.walk[index];
 					return;
 				}
 				else{
 					spriteDistance = 0.0d;
-					currentSprite = FighterSprites.jump[0];
-					
+					currentSprite = FighterSprites.stand[0];
 				}
 			}
+			// In Air
 			else{
 				spriteDistance = 0.0d;
-				currentSprite = FighterSprites.jump[0];
 				
+				// Jumping up
+				if(jumpTime > 0.0f && ((isDoubleJumping && jumpTime < secondJumpMaxTime) || (!isDoubleJumping && jumpTime < firstJumpMaxTime))){
+					//float fraction;
+					//if(isDoubleJumping){
+					//	fraction = (float)jumpTime / secondJumpMaxTime;
+					//}
+					//else{
+					//	fraction = (float)jumpTime / firstJumpMaxTime;
+					//}
+						
+					//int index = Math.min((int)(fraction * 3), 2);
+					
+					currentSprite = FighterSprites.jump[0];
+				}
+				// Falling
+				else{
+					currentSprite = FighterSprites.fall[0];
+					// Falling up
+					//if(velY < 0.0f){
+					//	currentSprite = FighterSprites.fall[0];
+					//}
+					// Falling down
+					//else{
+					//	float fraction = (float)velY / maxFallSpeed;
+					//	
+					//	int index = 1 + Math.min((int)(fraction * 3), 2);
+					//	
+					//	currentSprite = FighterSprites.fall[0];
+					//}
+				}
 			}
-		}
-		else{
-			spriteDistance = 0.0d;
-			currentSprite = FighterSprites.jump[0];
-			
 		}
 	}
 	
 	public void render(double delta){
 		Render.startBatchRender(fighterTexture, playerColor);
-		Render.batchRender(currentSprite, getCenterX()-visualWidth*0.5f, getCenterX()+visualWidth*0.5f,
-									 getBottomEdge()-visualHeight, getBottomEdge(), facingLeft);
+		
+		Render.batchRender(	currentSprite, 
+							getCenterX() - visualWidth*0.5f, 
+							getCenterX() + visualWidth*0.5f,
+							getBottomEdge() - visualHeight, 
+							getBottomEdge(), 
+							facingLeft);
+		
 		Render.stopBatchRender();
 		
 		handleRender(delta);
@@ -629,7 +675,7 @@ public abstract class Fighter extends MovingObject {
 			onGround = true;
 		}
 		else{
-			if(input.yAxis <= 0.0f){
+			if(input.yAxis <= 0.75f){
 				posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
 				onGround = true;

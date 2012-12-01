@@ -1,35 +1,45 @@
 package eecs285.proj4.game.fighter;
 
 import org.newdawn.slick.Color;
+import org.omg.PortableServer.CurrentOperations;
 
 import eecs285.proj4.game.Assets;
 import eecs285.proj4.util.Render;
+import eecs285.proj4.util.SmallSprite;
 import eecs285.proj4.util.UtilObject;
 
 public class Attack {
 	private Fighter owner;
 	private CollisionBox[] boxes;
+	private SpriteTimer[] sprites;
+	
 	private float duration;
-	private float extraTime;		// Time after all moves are completed. Cannot move on ground
+	private float extraTime;		// After the last sprite, the player cannot perform another action 
 	//private float maxChargeTime;
 	
 	private float currentTime;
 	public boolean[] hitPlayers;
 	
-	public Attack(CollisionBox[] boxes, Fighter owner, float extraTime){
+	public Attack(CollisionBox[] boxes, SpriteTimer[] sprites, Fighter owner, float extraTime){
 		this.owner = owner;
 		this.boxes = boxes;
+		this.sprites = sprites;
 		this.extraTime = extraTime;
 		hitPlayers = new boolean[]{false, false, false, false, false, false, false, false};
 		
+		for(SpriteTimer spriteTimer : sprites){
+			duration += spriteTimer.delay;
+		}
+		
 		for(CollisionBox box : this.boxes){
 			if(duration < box.delay + box.duration){
-				duration = box.delay + box.duration;
+				System.out.println(owner + " Has an attack with a collision box that lasts longer than it's sprites...");
+				System.exit(1);
 			}
 		}
 		
 		// This allows for things like changing direction imediately after the move is complete.
-		duration += 0.01f;
+		duration += 0.001f;
 	}
 	
 	public void step(double delta){
@@ -97,5 +107,17 @@ public class Attack {
 	
 	public float getCurrentTime(){
 		return currentTime;
+	}
+	
+	public SmallSprite getSmallSprite(){
+		float total = 0.0f;
+		for(int i=0; i<sprites.length; i++){
+			total += sprites[i].delay;
+			if(currentTime < total){
+				return sprites[i].sprite;
+			}
+		}
+		//System.exit(1);
+		return null;
 	}
 }

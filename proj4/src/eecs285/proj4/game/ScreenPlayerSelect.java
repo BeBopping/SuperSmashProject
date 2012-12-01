@@ -102,7 +102,7 @@ public class ScreenPlayerSelect implements GameState {
 			battleInfo.setMinutes(2);
 			Fighter[] fighters = new Fighter[4]; //8
 			fighters[0] = new FighterA(FighterTrait.Normal);
-			fighters[0].SetInput(inputType == 1? new InputKeyboard() : new InputXbox360(con));
+			fighters[0].SetInput(new InputKeyboard());
 			fighters[1] = new FighterA(FighterTrait.Normal);
 			fighters[1].SetInput(inputType == 1? new InputKeyboard() : new InputXbox360(con));
 			fighters[2] = new FighterA(FighterTrait.Normal);

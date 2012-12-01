@@ -7,8 +7,8 @@ import net.java.games.input.Component.Identifier;
 public class InputXbox360 extends Input {
 	private Controller controller;
 	
-	private static final Button ATTACK_PRIMARY = Identifier.Button._2;
-	private static final Button ATTACK_SECONDARY = Identifier.Button._3;
+	private static final Button NORMAL_ATTACK = Identifier.Button._2;
+	private static final Button SPECIAL_ATTACK = Identifier.Button._3;
 	private static final Button JUMP_FIRST = Identifier.Button._0;
 	private static final Button JUMP_SECOND = Identifier.Button._1;
 	
@@ -40,8 +40,8 @@ public class InputXbox360 extends Input {
 		
 		controller.poll();
 		
-		normalAttack = controller.getComponent(ATTACK_PRIMARY).getPollData() > 0.75f;
-		specialAttack = controller.getComponent(ATTACK_SECONDARY).getPollData() > 0.75f;
+		normalAttack = controller.getComponent(NORMAL_ATTACK).getPollData() > 0.75f;
+		specialAttack = controller.getComponent(SPECIAL_ATTACK).getPollData() > 0.75f;
 		jump = controller.getComponent(JUMP_FIRST).getPollData() > 0.75f
 			|| controller.getComponent(JUMP_SECOND).getPollData() > 0.75f;
 	
