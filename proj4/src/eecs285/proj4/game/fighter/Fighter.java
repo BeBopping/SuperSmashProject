@@ -306,11 +306,17 @@ public abstract class Fighter extends MovingObject {
 	private void doDuck(double delta){}
 	
 	private void doMovement(double delta){
+
 		if(currentAttack != null && currentAttack.GetOverrideGravity()){
 			velY = 0.0f;
 		}
 		else{
-			velY += delta * GRAVITY;
+			if(flightTime > 0.0f){
+				velY += delta * (GRAVITY*0.5f);
+			}
+			else{
+				velY += delta * GRAVITY;
+			}
 		}
 		
 		if(stunTime > 0.0f || flightTime > 0.0f){
@@ -475,6 +481,10 @@ public abstract class Fighter extends MovingObject {
 		hitPercent += damage;
 		this.flightTime = flightTime;
 		this.stunTime = stunTime;
+		
+		if(onGround && velY > 0.0f){
+			velY = -velY;
+		}
 		
 		// Update x vel
 		if(Math.abs(this.velX) < Math.abs(velX)){

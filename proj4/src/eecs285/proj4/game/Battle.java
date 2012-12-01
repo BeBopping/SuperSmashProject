@@ -22,7 +22,7 @@ import eecs285.proj4.util.Window;
 import eecs285.proj4.util.Render;
 
 public class Battle implements GameState {
-	private static final boolean DEBUG_MODE = true;
+	private static final boolean DEBUG_MODE = false;
 	public static final Color[] PLAYER_COLORS = new Color[]{
 		Color.red, Color.blue, Color.green, Color.yellow, Color.pink, Color.magenta, Color.gray, Color.orange
 	};
