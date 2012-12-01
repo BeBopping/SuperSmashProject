@@ -1,4 +1,4 @@
-package eecs285.proj4.game;
+package eecs285.proj4.input;
 
 public abstract class Input {
 	public float xAxis;
@@ -9,6 +9,8 @@ public abstract class Input {
 	public boolean start;
 	public boolean back;
 	public boolean block;
+	public boolean menuSelect;
+	public boolean menuBack;
 	
 	public float xAxisLast;
 	public float yAxisLast;
@@ -18,6 +20,8 @@ public abstract class Input {
 	public boolean startLast;
 	public boolean backLast;
 	public boolean blockLast;
+	public boolean menuSelectLast;
+	public boolean menuBackLast;
 	
 	protected boolean analogStick;
 	

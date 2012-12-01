@@ -15,6 +15,8 @@ import org.newdawn.slick.opengl.Texture;
 import eecs285.proj4.game.fighter.Fighter;
 import eecs285.proj4.game.fighter.FighterMario;
 import eecs285.proj4.game.fighter.FighterTrait;
+import eecs285.proj4.input.InputKeyboard;
+import eecs285.proj4.input.InputXbox360;
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.Window;
 import eecs285.proj4.util.Render;

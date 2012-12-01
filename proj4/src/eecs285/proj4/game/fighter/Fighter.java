@@ -2,8 +2,8 @@ package eecs285.proj4.game.fighter;
 
 import static eecs285.proj4.game.Direction.*;
 import eecs285.proj4.game.Direction;
-import eecs285.proj4.game.Input;
 import eecs285.proj4.game.MovingObject;
+import eecs285.proj4.input.Input;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.SmallSprite;
 

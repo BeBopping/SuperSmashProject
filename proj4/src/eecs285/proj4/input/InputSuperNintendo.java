@@ -1,4 +1,4 @@
-package eecs285.proj4.game;
+package eecs285.proj4.input;
 
 import net.java.games.input.Component.Identifier.Button;
 import net.java.games.input.Controller;

@@ -1,4 +1,4 @@
-package eecs285.proj4.game;
+package eecs285.proj4.input;
 
 import org.lwjgl.input.Keyboard;
 
@@ -16,6 +16,11 @@ public class InputKeyboard extends Input {
 		startLast = start;
 		backLast = back;
 		blockLast = block;
+		menuSelectLast = menuSelect;
+		menuBackLast = menuBack;
+		
+		menuSelect = (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE));
+		menuBack = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
 		
 		normalAttack = (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_PERIOD) || Keyboard.isKeyDown(Keyboard.KEY_N));
 		specialAttack = (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_SLASH) || Keyboard.isKeyDown(Keyboard.KEY_M));

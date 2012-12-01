@@ -6,6 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
+import eecs285.proj4.input.Input;
 import eecs285.proj4.util.Window;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;

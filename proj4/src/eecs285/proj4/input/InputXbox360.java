@@ -1,4 +1,6 @@
-package eecs285.proj4.game;
+package eecs285.proj4.input;
+
+import org.lwjgl.input.Keyboard;
 
 import net.java.games.input.Component.Identifier.Button;
 import net.java.games.input.Controller;
@@ -37,8 +39,15 @@ public class InputXbox360 extends Input {
 		startLast = start;
 		backLast = back;
 		blockLast = block;
+		menuSelectLast = menuSelect;
+		menuBackLast = menuBack;
 		
 		controller.poll();
+
+		menuSelect = controller.getComponent(Identifier.Button._0).getPollData() > 0.75f
+				  || controller.getComponent(Identifier.Button._7).getPollData() > 0.75f;
+		menuBack = controller.getComponent(Identifier.Button._1).getPollData() > 0.75f
+				|| controller.getComponent(Identifier.Button._6).getPollData() > 0.75f;
 		
 		normalAttack = controller.getComponent(NORMAL_ATTACK).getPollData() > 0.75f;
 		specialAttack = controller.getComponent(SPECIAL_ATTACK).getPollData() > 0.75f;
