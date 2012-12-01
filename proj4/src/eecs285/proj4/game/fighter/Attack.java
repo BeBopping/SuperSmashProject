@@ -1,7 +1,6 @@
 package eecs285.proj4.game.fighter;
 
 import org.newdawn.slick.Color;
-import org.omg.PortableServer.CurrentOperations;
 
 import eecs285.proj4.game.Assets;
 import eecs285.proj4.util.Render;

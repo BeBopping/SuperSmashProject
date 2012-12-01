@@ -6,8 +6,6 @@ import eecs285.proj4.game.Input;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.SmallSprite;
-import eecs285.proj4.util.Sprite;
-import eecs285.proj4.util.UtilObject;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -308,7 +306,9 @@ public abstract class Fighter extends MovingObject {
 	private void doMovement(double delta){
 
 		if(currentAttack != null && currentAttack.GetOverrideGravity()){
-			velY = 0.0f;
+			velY += delta * (GRAVITY*0.25f);
+			velY *= 0.85f;
+			velX *= 0.95f;
 		}
 		else{
 			if(flightTime > 0.0f){

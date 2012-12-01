@@ -1,7 +1,5 @@
 package eecs285.proj4.game;
 
-import java.util.ArrayList;
-
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
@@ -386,7 +384,7 @@ public class Battle implements GameState {
 		float posY = hud.getBottom() - 10;
 		for(Fighter fighter : fighters){
 			String percentage = String.valueOf(fighter.hitPercent) + '%';
-			Render.render(titleFont, hud, percentage, posX, posY, 10, 0.5f, 0.5f, fighter.playerColor);
+			Render.render(percentageFont, hud, percentage, posX, posY, 10, 0.5f, 0.5f, fighter.playerColor);
 			
 			float imageSize = 3.0f;
 			float imageSpacing = 0.5f;

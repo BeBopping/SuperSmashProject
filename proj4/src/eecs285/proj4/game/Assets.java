@@ -10,7 +10,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import eecs285.proj4.game.levels.Level;
-import eecs285.proj4.game.levels.LevelHardCoded;
+import eecs285.proj4.game.levels.LevelMario;
 import eecs285.proj4.util.Sprite;
 
 public class Assets {
@@ -37,14 +37,14 @@ public class Assets {
 				textures.put("title_screen_background", texture);
 				textures.put("about_screen_background", texture);
 				textures.put("how_to_play_screen_background", texture);
-				textures.put("default_level_background", texture);
+				textures.put("level_mario_background", texture);
 				
 				sprites.put("example_sprite", new Sprite(texture, 0.0f, 0.1f, 0.0f, 0.1f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Platforms.png"));
 				textures.put("platforms", texture);
-				sprites.put("floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
-				sprites.put("platform", new Sprite(texture, 0.0625f, 0.125f, 0.0f, 0.0625f));
+				sprites.put("level_mario_floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
+				sprites.put("level_mario_platform", new Sprite(texture, 0.0625f, 0.125f, 0.0f, 0.0625f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));
 				textures.put("square", texture);
@@ -73,7 +73,7 @@ public class Assets {
 			TrueTypeFont font = new TrueTypeFont(awtFont, false);
 			fonts.put("times_bold", font);
 			fonts.put("title", font);
-			fonts.put("precentage", font);
+			fonts.put("percentage", font);
 			
 			fontsInitialized = true;
 		}
@@ -104,7 +104,7 @@ public class Assets {
 		//	return new LevelHardCoded();
 		//}
 		
-		return new LevelHardCoded();
+		return new LevelMario();
 	}
 	
 	private Assets(){}

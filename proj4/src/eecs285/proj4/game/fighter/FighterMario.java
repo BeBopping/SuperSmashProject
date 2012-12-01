@@ -3,18 +3,14 @@ package eecs285.proj4.game.fighter;
 import static eecs285.proj4.game.Direction.*;
 import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Direction;
-import eecs285.proj4.util.Render;
-import eecs285.proj4.util.Sprite;
 import eecs285.proj4.util.UtilObject;
 
-public class FighterA extends Fighter {
+public class FighterMario extends Fighter {
 	private static final float WIDTH = 0.8f;
 	private static final float HEIGHT = 1.4f;
-	private Sprite normalStance;
 	
-	public FighterA(FighterTrait trait){
+	public FighterMario(FighterTrait trait){
 		super("Fighter A", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
-		//normalStance = Assets.GetSprite("floor");
 		
 		maxWalkSpeed = 7.0f;
 		forwardAcceleration = 20.0f;
@@ -158,7 +154,7 @@ public class FighterA extends Fighter {
 		else{
 			facingLeft = input.xAxis < 0.0f;
 			
-			CollisionBox[] boxes = new CollisionBox[1];
+			CollisionBox[] boxes = new CollisionBox[2];
 			boxes[0] = new CollisionBox();
 			boxes[0].startBox = new UtilObject(0.5f, 1.5f, -2.0f, 0.01f); 	// From players center Base
 			boxes[0].endBox = new UtilObject(0.5f, 1.5f, -2.0f, 0.01f);		// From players center Base
@@ -175,6 +171,23 @@ public class FighterA extends Fighter {
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
+			
+			boxes[1] = new CollisionBox();
+			boxes[1].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
+			boxes[1].delay = 0.0f;
+			boxes[1].duration = 1.0f;
+			boxes[1].damage = 0;
+			boxes[1].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
+			boxes[1].hitSpeedX = 0.0f;
+			boxes[1].hitSpeedY = 0.0f;
+			boxes[1].flightTime = 0.0f;
+			boxes[1].stunTime = 0.0f;
+			boxes[1].isStationaryInAir = true;
+			boxes[1].isStationaryOnGround = true;
+			boxes[1].isOverridingGravity = false;
+			boxes[1].canChangeDirection = false;
+			boxes[1].attackPriority = 0; 			// The higher the better
 			
 			SpriteTimer[] sprites = new SpriteTimer[3];
 			sprites[0] = new SpriteTimer(FighterSprites.normalAttackGroundForward[0], 0.25f);
@@ -475,7 +488,7 @@ public class FighterA extends Fighter {
 			boxes[0].stunTime = 0.1f;
 			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
-			boxes[0].isOverridingGravity = true;
+			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 2; 			// The higher the better
 
@@ -483,7 +496,7 @@ public class FighterA extends Fighter {
 			boxes[1].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
 			boxes[1].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
 			boxes[1].delay = 0.0f;
-			boxes[1].duration = 0.6f;
+			boxes[1].duration = boxes[0].delay;
 			boxes[1].damage = 0;
 			boxes[1].healthScaler = 200.0f;			// scale = 1 + health/healthScaler
 			boxes[1].hitSpeedX = 0.00f;
@@ -521,7 +534,7 @@ public class FighterA extends Fighter {
 			boxes[0].hitSpeedY = -0.5f;
 			boxes[0].flightTime = 0.3f;
 			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = true;
+			boxes[0].isStationaryInAir = false;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = true;
 			boxes[0].canChangeDirection = false;
@@ -547,8 +560,8 @@ public class FighterA extends Fighter {
 			boxes[2] = new CollisionBox();
 			boxes[2].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
 			boxes[2].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
-			boxes[2].delay = 0.0f;
-			boxes[2].duration = 0.85f;
+			boxes[2].delay = boxes[1].delay + boxes[1].duration;
+			boxes[2].duration = 0.85f - boxes[2].delay;
 			boxes[2].damage = 0;
 			boxes[2].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
 			boxes[2].hitSpeedX = 0.f;

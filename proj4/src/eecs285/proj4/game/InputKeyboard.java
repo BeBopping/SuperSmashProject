@@ -1,7 +1,6 @@
 package eecs285.proj4.game;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 public class InputKeyboard extends Input {
 	public InputKeyboard(){

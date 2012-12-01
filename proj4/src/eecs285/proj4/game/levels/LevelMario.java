@@ -5,17 +5,17 @@ import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.UtilObject;
 
-public class LevelHardCoded extends Level {
-	public LevelHardCoded(){
+public class LevelMario extends Level {
+	public LevelMario(){
 		super(-15.0f, 15.0f, -20.0f, 10.0f);
 		
 		levelName = "First Level";
 		minOutline = new UtilObject(-8.5f, 9.5f, 0.0f, 7.5f);
-		background = Assets.GetTexture("default_level_background");
+		background = Assets.GetTexture("level_mario_background");
 		
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("platform"), -7.0f, 0.0f, 3.0f, 4.0f));
-		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("floor"), -8.0f, 8.0f, 6.0f, 7.0f));
-		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("floor"), 8.0f, 9.0f, 3.0f, 7.0f));
+		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_mario_platform"), -7.0f, 0.0f, 3.0f, 4.0f));
+		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_mario_floor"), -8.0f, 8.0f, 6.0f, 7.0f));
+		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_mario_floor"), 8.0f, 9.0f, 3.0f, 7.0f));
 
 		// Starting points for each character
 		startX[0] = -3.0f;
