@@ -1,6 +1,7 @@
 package eecs285.proj4.game.fighter;
 
 import static eecs285.proj4.game.Direction.*;
+import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.game.input.Input;
@@ -52,6 +53,7 @@ public abstract class Fighter extends MovingObject {
 	public boolean isActive;
 	protected boolean facingLeft;
 	protected boolean onGround;
+	protected boolean onGroundLast;
 	//protected boolean ducking;
 	//protected boolean running;
 	protected boolean canDoubleJump;
@@ -158,6 +160,7 @@ public abstract class Fighter extends MovingObject {
 	}
 	
 	public void step(double delta){
+		onGroundLast = onGround;
 		lastPosX = posX;
 		lastPosY = posY;
 		
@@ -247,6 +250,8 @@ public abstract class Fighter extends MovingObject {
 					}
 					else{
 						jumpTime = delta;
+						
+						Assets.GetSound("jump").playAsSoundEffect(1.0f, 1.0f, false);
 					}
 				}
 				// This might nt be needed
@@ -277,6 +282,8 @@ public abstract class Fighter extends MovingObject {
 							jumpTime -= delta;
 						}
 						else if(canDoubleJump && jumpTime >= -secondJumpLiniencyTime){
+							Assets.GetSound("jump_air").playAsSoundEffect(1.0f, 1.0f, false);
+							
 							jumpTime = delta;
 							canDoubleJump = false;
 							isDoubleJumping = true;
@@ -664,7 +671,7 @@ public abstract class Fighter extends MovingObject {
 				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = -Math.abs(this.velY)*RECOIL_PERCENT;
 				velX = velX*RECOIL_TANGENT_PERCENT;
-				onGround = true;
+				hitGround();
 				currentStandingPlatform = object;
 				break;
 			case East:
@@ -692,7 +699,7 @@ public abstract class Fighter extends MovingObject {
 				posY = pos - sizeY;
 				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
-				onGround = true;
+				hitGround();
 				currentStandingPlatform = object;
 				break;
 			case West:
@@ -715,7 +722,7 @@ public abstract class Fighter extends MovingObject {
 			//posY = Math.max(pos - sizeY, lastPosY);
 			velY = Math.min(velY, 0.0f)*RECOIL_PERCENT;
 			velX = velX*RECOIL_TANGENT_PERCENT;
-			onGround = true;
+			hitGround();
 			currentStandingPlatform = object;
 		}
 		else{
@@ -723,9 +730,16 @@ public abstract class Fighter extends MovingObject {
 				posY = pos - sizeY;
 				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
-				onGround = true;
+				hitGround();
 				currentStandingPlatform = object;
 			}
+		}
+	}
+	
+	private void hitGround(){
+		onGround = true;
+		if(!onGroundLast){
+			Assets.GetSound("hit_ground").playAsSoundEffect(1.0f, 1.0f, false);
 		}
 	}
 	

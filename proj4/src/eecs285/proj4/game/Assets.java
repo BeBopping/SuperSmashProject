@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import eecs285.proj4.game.fighter.Fighter;
 import eecs285.proj4.game.fighter.FighterMario;
+import eecs285.proj4.game.fighter.FighterSpyro;
 import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelMario;
@@ -26,6 +29,8 @@ public class Assets {
 	private static HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	private static HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
 	private static HashMap<String, TrueTypeFont> fonts = new HashMap<String, TrueTypeFont>();
+	private static HashMap<String, Audio> sounds = new HashMap<String, Audio>();
+	private static HashMap<String, Audio> music = new HashMap<String, Audio>();
 	
 	public static void InitializeTextures(){
 		if(!texturesInitialized){
@@ -97,6 +102,9 @@ public class Assets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterMario.png"));
 				textures.put("fighter_mario", texture);
 				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterSpyro.png"));
+				textures.put("fighter_spyro", texture);
+				
 				// Player select fighters
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Fighters.png"));
 				textures.put("fighters", texture);
@@ -127,13 +135,71 @@ public class Assets {
 		}
 	}
 	
+
 	// TODO: figure out how to use sounds (Online)
 	public static void InitializeSounds(){
 		if(!soundsInitialized){
-		
+			
+			try {
+				Audio oggEffect;
+				
+				// Sound effects
+				// Menu
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Menu1.ogg"));
+				sounds.put("menu_move", oggEffect);
+				sounds.put("menu_select", oggEffect);
+				sounds.put("menu_new_player", oggEffect);
+
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Menu2.ogg"));
+				sounds.put("menu_move_2", oggEffect);
+				
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/MenuBack.ogg"));
+				sounds.put("menu_back", oggEffect);
+				
+				// Game sounds
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Explode.ogg"));
+				sounds.put("explode", oggEffect);
+				
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/SurgeContact.ogg"));
+				sounds.put("electric", oggEffect);
+				
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Explode.ogg"));
+				sounds.put("hit_ground", oggEffect);
+
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Jump.ogg"));
+				sounds.put("jump", oggEffect);
+				
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Jump2.ogg"));
+				sounds.put("jump_air", oggEffect);
+				
+				
+				
+				// Music
+				oggEffect = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Hybrid Orchestral Rock.ogg"));
+				music.put("music_menu", oggEffect);
+
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Pipes.ogg"));
+				music.put("music_mario", oggEffect);
+				
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Chemical Juice.ogg"));
+				music.put("music_sonic", oggEffect);
+				
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Disconnected.ogg"));
+				music.put("music_rayman", oggEffect);
+				
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Dark Hollow Moonlight.ogg"));
+				music.put("music_spyro", oggEffect);
+				
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+			
 			soundsInitialized = true;
 		}
 	}
+
 
 	public static Texture GetTexture(String label){
 		return textures.get(label);
@@ -145,6 +211,14 @@ public class Assets {
 	
 	public static TrueTypeFont GetFont(String label){
 		return fonts.get(label);
+	}
+	
+	public static Audio GetSound(String label){
+		return sounds.get(label);
+	}
+	
+	public static Audio GetMusic(String label){
+		return music.get(label);
 	}
 	
 	public static Level GetLevel(String string){
@@ -171,7 +245,7 @@ public class Assets {
 			//return new FighterRayman(trait)();
 		}
 		else if(string.equals("fighter_sonic")){
-			//return new FighterSpyro(trait)();
+			return new FighterSpyro(trait);
 		}
 		return new FighterMario(trait);
 	}

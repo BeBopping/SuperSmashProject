@@ -7,8 +7,11 @@ import java.util.Stack;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.SoundStore;
 
 import eecs285.proj4.game.screens.ScreenTitle;
 import eecs285.proj4.util.GameState;
@@ -26,6 +29,8 @@ public class Game {
 	private static int FPS = 60;
 	private static double SPF = (1.0d/(double)FPS);
 	private static Game thisGame;
+	
+	private static Audio currentMusic;
 	
 	public static void pushGameState(GameState gameState){
 		thisGame.stateChange = true;
@@ -47,6 +52,13 @@ public class Game {
 		thisGame.savedGameState = gameState;
 		
 		return gameState;
+	}
+	
+	public static void setMusic(Audio music){
+		if(currentMusic != music){
+			currentMusic = music;
+			currentMusic.playAsMusic(1.0f, 1.0f, true);
+		}
 	}
 	
 	// Initialize game
@@ -102,6 +114,7 @@ public class Game {
 		Assets.InitializeTextures();
 		Assets.InitializeSounds();
 		Assets.InitializeFonts();
+		Assets.InitializeSounds();
 	}
 	
 	private void resetScreenPos(){
@@ -165,12 +178,15 @@ public class Game {
 				
 				// Finalize display
 				Display.update();
+
+				SoundStore.get().poll(0);
 			}
 		}
 		catch(EmptyStackException except){
 			// Not an error
 		}
 		finally{
+			AL.destroy();
 			Display.destroy();
 		}
 	}

@@ -25,17 +25,20 @@ public class InputDetector {
 		Controller[] con = ControllerEnvironment.getDefaultEnvironment().getControllers();
 		for(Controller controller : con){
 			String controllerName = controller.toString();
+			controllerName = controllerName.toLowerCase();
+			
+			System.out.println(controllerName);
 			
 			//.indexOf("mouse") != -1
 			if(controllerName.contains("mouse")){
 				// We don't want the mouse
 			}
 			// Xbox 360 controller
-			else if(controllerName.contains("XBOX")){
+			else if(controllerName.contains("xbox")){
 				inputs.add(new InputXbox360(controller));
 			}
 			// Super nintendo controller
-			else if(controllerName.contains("Super")){
+			else if(controllerName.contains("super")){
 				inputs.add(new InputSuperNintendo(controller));
 			}
 		}

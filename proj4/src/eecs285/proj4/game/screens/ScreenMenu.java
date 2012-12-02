@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
 
+import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Game;
+import eecs285.proj4.game.SelectableObject;
 import eecs285.proj4.game.input.Input;
 import eecs285.proj4.game.input.InputDetector;
 import eecs285.proj4.util.DisplayInfo;
 import eecs285.proj4.util.GameState;
-import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Window;
 
 public class ScreenMenu implements GameState{
@@ -70,6 +71,8 @@ public class ScreenMenu implements GameState{
 		for(SelectableObject object : menuItems){
 			object.resetState();
 		}
+		
+		Game.setMusic(Assets.GetMusic("music_menu"));
 	}
 	
 	public void onDeactivate(){}
@@ -107,6 +110,7 @@ public class ScreenMenu implements GameState{
 		window.step(delta);
 		
 		if(exitState){
+			Assets.GetSound("menu_back").playAsSoundEffect(1.0f, 1.0f, false);
 			Game.popGameState();
 			return;
 		}

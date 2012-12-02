@@ -1,4 +1,6 @@
-package eecs285.proj4.util;
+package eecs285.proj4.game;
+
+import eecs285.proj4.util.UtilObject;
 
 public abstract class SelectableObject extends UtilObject {
 	public enum State {NONE, HOVERING, BEGIN_MOUSE_PRESS, CONTINUE_MOUSE_PRESS, END_MOUSE_PRESS}
@@ -14,6 +16,8 @@ public abstract class SelectableObject extends UtilObject {
 		if(clicked){
 			if(currentState != State.BEGIN_MOUSE_PRESS && currentState != State.CONTINUE_MOUSE_PRESS){
 				currentState = State.BEGIN_MOUSE_PRESS;
+
+				Assets.GetSound("menu_select").playAsSoundEffect(1.0f, 1.0f, false);
 			}
 			else{
 				currentState = State.CONTINUE_MOUSE_PRESS;
@@ -30,6 +34,8 @@ public abstract class SelectableObject extends UtilObject {
 		if(hovering){
 			if(currentState == State.NONE || currentState == State.END_MOUSE_PRESS){
 				currentState = State.HOVERING;
+				
+				Assets.GetSound("menu_move").playAsSoundEffect(1.0f, 1.0f, false);
 			}
 		}
 		else{

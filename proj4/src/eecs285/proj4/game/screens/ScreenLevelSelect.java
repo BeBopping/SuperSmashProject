@@ -10,9 +10,9 @@ import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Battle;
 import eecs285.proj4.game.BattleInfo;
 import eecs285.proj4.game.Game;
+import eecs285.proj4.game.SelectableObject;
 import eecs285.proj4.game.screens.ScreenMenu;
 import eecs285.proj4.util.Window;
-import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;
 
 public class ScreenLevelSelect extends ScreenMenu {
