@@ -17,6 +17,7 @@ import eecs285.proj4.game.fighter.FighterSpyro;
 import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelMario;
+import eecs285.proj4.game.levels.LevelRayman;
 import eecs285.proj4.game.levels.LevelSonic;
 import eecs285.proj4.game.levels.LevelSpyro;
 import eecs285.proj4.util.Sprite;
@@ -246,6 +247,9 @@ public class Assets {
 		}
 		else if(string.equals("level_spyro")){
 			return new LevelSpyro();
+		}
+		else if(string.equals("level_rayman")){
+			return new LevelRayman();
 		}
 		return null;
 	}
