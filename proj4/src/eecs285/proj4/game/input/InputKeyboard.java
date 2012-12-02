@@ -1,4 +1,4 @@
-package eecs285.proj4.input;
+package eecs285.proj4.game.input;
 
 import org.lwjgl.input.Keyboard;
 

@@ -1,4 +1,4 @@
-package eecs285.proj4.input;
+package eecs285.proj4.game.input;
 
 import net.java.games.input.Component.Identifier.Button;
 import net.java.games.input.Controller;
@@ -25,7 +25,7 @@ public class InputSuperNintendo extends Input {
 	public InputSuperNintendo(Controller controller){
 		this.controller = controller;
 		
-		analogStick = true;
+		analogStick = false;
 	}
 	
 	public void getInput(){
@@ -37,8 +37,15 @@ public class InputSuperNintendo extends Input {
 		startLast = start;
 		backLast = back;
 		blockLast = block;
+		menuSelectLast = menuSelect;
+		menuBackLast = menuBack;
 		
 		controller.poll();
+		
+		menuSelect = controller.getComponent(Identifier.Button._2).getPollData() > 0.75f
+				  || controller.getComponent(Identifier.Button._5).getPollData() > 0.75f;
+		menuBack = controller.getComponent(Identifier.Button._1).getPollData() > 0.75f
+				|| controller.getComponent(Identifier.Button._4).getPollData() > 0.75f;
 		
 		normalAttack = controller.getComponent(ATTACK_PRIMARY).getPollData() > 0.75f;
 		specialAttack = controller.getComponent(ATTACK_SECONDARY).getPollData() > 0.75f;
@@ -47,5 +54,12 @@ public class InputSuperNintendo extends Input {
 	
 		xAxis = controller.getComponent(Identifier.Axis.X).getPollData();
 		yAxis = controller.getComponent(Identifier.Axis.Y).getPollData();
+		
+
+		// only allow values from 0.5f to 1.0f;
+		if(xAxis > -0.5f && xAxis < 0.5f) xAxis = 0.0f;
+		if(yAxis > -0.5f && yAxis < 0.5f) yAxis = 0.0f;
+		
+
 	}
 }

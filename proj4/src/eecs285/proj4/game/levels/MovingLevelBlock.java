@@ -7,6 +7,9 @@ import eecs285.proj4.util.Sprite;
 
 public class MovingLevelBlock extends LevelObjectStretch{
 	
+	private float lastX;
+	private float lastY;
+	
 	private float velX;
 	private float accelX; //How quickly it turns around.
 	private boolean isFlipped; //True if the sprite is flipped.
@@ -19,6 +22,9 @@ public class MovingLevelBlock extends LevelObjectStretch{
 	}
 	
 	public void step(double delta){
+		lastX = posX;
+		lastY = posY;
+		
 		if(posX > 5.0f){
 			this.velX -= delta * accelX;
 		}
@@ -45,4 +51,8 @@ public class MovingLevelBlock extends LevelObjectStretch{
 		//Render.render()
 	}
 
+	public float getPreviousLeftEdge(){ return lastX; }
+	public float getPreviousRightEdge(){ return lastX + sizeX; }
+	public float getPreviousTopEdge(){ return lastY; }
+	public float getPreviousBottomEdge(){ return lastY + sizeY; }
 }

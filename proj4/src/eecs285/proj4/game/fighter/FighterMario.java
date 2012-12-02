@@ -10,7 +10,7 @@ public class FighterMario extends Fighter {
 	private static final float HEIGHT = 1.4f;
 	
 	public FighterMario(FighterTrait trait){
-		super("Fighter A", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
+		super("Fighter Mario", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
 		
 		maxWalkSpeed = 7.0f;
 		forwardAcceleration = 20.0f;
@@ -26,7 +26,6 @@ public class FighterMario extends Fighter {
 		maxFallSpeed = 20.0f;
 		maxFallSpeedHorizontal = 7.0f;
 		
-		//currentSprite = normalStance;
 		visualWidth = 3.0f;
 		visualHeight = 3.0f;
 		

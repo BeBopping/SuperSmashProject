@@ -122,9 +122,7 @@ public class Battle implements GameState {
 	public void step(double delta){
 		if(timedMatch){
 			if(timeLeft <= 0.0f){
-				// TODO : Handle endGame
-				Game.popGameState();
-				//Game.pushGameState(gameState);
+				endGame();
 			}
 			
 			timeLeft -= delta;
@@ -147,22 +145,22 @@ public class Battle implements GameState {
 				if(fighter.getLeftEdge() < solid.getRightEdge() && fighter.getRightEdge() > solid.getLeftEdge()
 				&& fighter.getTopEdge() < solid.getBottomEdge() && fighter.getBottomEdge() > solid.getTopEdge()){
 					//Left
-					if(fighter.getPreviousLeftEdge() >= solid.getRightEdge()){
+					if(fighter.getPreviousLeftEdge() >= solid.getPreviousRightEdge()){
 						fighter.collideWithSolid(Direction.West, solid.getRightEdge());
 					}
 					
 					//Right
-					if(fighter.getPreviousRightEdge() <= solid.getLeftEdge()){
+					if(fighter.getPreviousRightEdge() <= solid.getPreviousLeftEdge()){
 						fighter.collideWithSolid(Direction.East, solid.getLeftEdge());
 					}
 					
 					//Top
-					if(fighter.getPreviousTopEdge() >= solid.getBottomEdge()){
+					if(fighter.getPreviousTopEdge() >= solid.getPreviousBottomEdge()){
 						fighter.collideWithSolid(Direction.North, solid.getBottomEdge());
 					}
 					
 					//Bottom
-					if(fighter.getPreviousBottomEdge() <= solid.getTopEdge()){
+					if(fighter.getPreviousBottomEdge() <= solid.getPreviousTopEdge()){
 						fighter.collideWithSolid(Direction.South, solid.getTopEdge());
 					}
 				}
@@ -296,7 +294,7 @@ public class Battle implements GameState {
 		}
 		
 		// Handle death
-		boolean anyAlive = false;
+		int numAlive = 0;
 		for(int i=0; i<fighters.length; i++){
 			Fighter fighter = fighters[i];
 
@@ -315,11 +313,11 @@ public class Battle implements GameState {
 			}
 
 			if(fighter.stock != 0){
-				anyAlive = true;
+				++numAlive;
 			}
 		}
 		
-		if(!anyAlive){
+		if(numAlive < 2){
 			endGame();
 		}
 		
@@ -357,6 +355,7 @@ public class Battle implements GameState {
 		
 		level.render(delta);
 		
+		// Render fighters
 		for(Fighter fighter : fighters){
 			if(!fighter.isVisible){ continue; }
 			fighter.render(delta);
@@ -376,9 +375,6 @@ public class Battle implements GameState {
 		// Render Hud
 		hud.setupRender();
 
-		String text = String.valueOf((int)Math.ceil(timeLeft));
-		Render.render(titleFont, hud, text, 50, 10, 10, 0.5f, 0.5f, Color.black);
-		
 		float segmentSize = hud.getSizeX() / (float)(fighters.length + 1);
 		float posX = hud.getLeft() + segmentSize;
 		float posY = hud.getBottom() - 10;
@@ -402,11 +398,27 @@ public class Battle implements GameState {
 			
 			posX += segmentSize;
 		}
-		
-		
-		//Render.render(titleFont, window, "Battle", 
-		//		window.getCenterX(), window.getTop() + window.getSizeY()/4.0f, 
-		//		window.getSizeY()/8.0f, 0.5f, 0.5f, Color.black);
+
+		// Render Clock
+		int timeVal = (int)Math.ceil(timeLeft);
+		String text = "";
+		if(timeVal >= 60){
+			text += String.valueOf((int)((float)timeVal / 60.0f)) + ":";
+			
+			if(timeVal % 60 < 10){
+				text += "0" + timeVal % 60;
+			}
+			else{
+				text += timeVal % 60;
+			}
+		}
+		else{
+			text += timeVal % 60;
+		}
+		text += "  ";
+
+		Render.render(Assets.GetTexture("white"), 40, 60, 1, 11, Color.gray);
+		Render.render(titleFont, hud, text, 50, 6, 10, 0.5f, 0.5f, Color.black);
 	}
 	
 	private void endGame(){

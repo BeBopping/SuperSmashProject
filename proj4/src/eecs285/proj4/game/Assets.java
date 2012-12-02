@@ -68,10 +68,20 @@ public class Assets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Circle.png"));
 				textures.put("circle", texture);
 				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Pointer.png"));
+				textures.put("pointer", texture);
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("White.png"));
+				textures.put("white", texture);
+				
 				// Fighters...
-				// Mario
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterMario.png"));
 				textures.put("fighter_mario", texture);
+				
+				// Player select fighters
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Fighters.png"));
+				textures.put("fighters", texture);
+				sprites.put("fighter_mario", new Sprite(texture, 0.0f, 0.125f, 0.0f, 0.125f));
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -115,12 +125,13 @@ public class Assets {
 	}
 	
 	public static Level GetLevel(String string){
-		//if(string.equals("Hard Coded")){
-		//	return new LevelHardCoded();
-		//}
-		
-		//return new LevelMario();
-		return new LevelSonic();
+		if(string.equals("level_mario")){
+			return new LevelMario();
+		}
+		else if(string.equals("level_sonic")){
+			return new LevelSonic();
+		}
+		return null;
 	}
 	
 	private Assets(){}

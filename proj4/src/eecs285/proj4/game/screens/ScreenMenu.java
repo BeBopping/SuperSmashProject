@@ -1,12 +1,13 @@
-package eecs285.proj4.game;
+package eecs285.proj4.game.screens;
 
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import eecs285.proj4.input.Input;
-import eecs285.proj4.input.InputDetector;
+import eecs285.proj4.game.Game;
+import eecs285.proj4.game.input.Input;
+import eecs285.proj4.game.input.InputDetector;
 import eecs285.proj4.util.DisplayInfo;
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.SelectableObject;
@@ -42,6 +43,23 @@ public class ScreenMenu implements GameState{
 		this.controllers = InputDetector.getAllInputDevices();
 		currentMenuItem = 0;
 		mouseEnabled = false;
+		
+		float aspectRatio = (float)DisplayInfo.GetWidth() / (float) DisplayInfo.GetHeight();
+		
+		if(aspectRatio >= 1.0f){
+			float levelHalfHeight = (window.getSizeX()*0.5f) / aspectRatio;
+			window = new Window(window.getLeft(), 
+								window.getRight(), 
+								window.getCenterY() - levelHalfHeight, 
+								window.getCenterY() + levelHalfHeight);
+		}
+		else{
+			float levelHalfWidth = aspectRatio / (window.getSizeY()*0.5f);
+			window = new Window(window.getCenterX() - levelHalfWidth, 
+								window.getCenterX() + levelHalfWidth, 
+								window.getTop(), 
+								window.getBottom());
+		}
 	}
 	
 	protected void initMenuItems(ArrayList<SelectableObject> menuItems){

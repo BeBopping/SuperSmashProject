@@ -7,6 +7,11 @@ import eecs285.proj4.util.SelectableObject;
 public class PlayerInfoVis extends SelectableObject {
 	Controller controller;
 	
+
+	public PlayerInfoVis() {
+		this(0,0,0,0);
+	}
+	
 	public PlayerInfoVis(float left, float right, float top, float bottom) {
 		super(left, right, top, bottom);
 	}

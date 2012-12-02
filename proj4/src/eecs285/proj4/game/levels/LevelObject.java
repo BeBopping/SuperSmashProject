@@ -9,4 +9,9 @@ public abstract class LevelObject extends UtilObject {
 
 	public abstract void step(double delta);
 	public abstract void render(double delta);
+	
+	public float getPreviousLeftEdge(){ return getLeftEdge(); }
+	public float getPreviousRightEdge(){ return getRightEdge(); }
+	public float getPreviousTopEdge(){ return getTopEdge(); }
+	public float getPreviousBottomEdge(){ return getBottomEdge(); }
 }

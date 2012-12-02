@@ -3,7 +3,7 @@ package eecs285.proj4.game.fighter;
 import static eecs285.proj4.game.Direction.*;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.MovingObject;
-import eecs285.proj4.input.Input;
+import eecs285.proj4.game.input.Input;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.SmallSprite;
 
@@ -629,23 +629,27 @@ public abstract class Fighter extends MovingObject {
 		if(flightTime > 0.0f){
 			switch(dir){
 			case North:
-				posY = Math.min(pos, lastPosY);
+				posY = pos;
+				//posY = Math.min(pos, lastPosY);
 				velY = Math.abs(this.velY)*RECOIL_PERCENT;
 				velX = velX*RECOIL_TANGENT_PERCENT;
 				break;
 			case South:
-				posY = Math.max(pos - sizeY, lastPosY);
+				posY = pos - sizeY;
+				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = -Math.abs(this.velY)*RECOIL_PERCENT;
 				velX = velX*RECOIL_TANGENT_PERCENT;
 				onGround = true;
 				break;
 			case East:
-				posX = Math.min(pos, lastPosX);
+				posX = pos;
+				//posX = Math.min(pos, lastPosX);
 				velX = -Math.abs(this.velX)*RECOIL_PERCENT;
 				velY = velY*RECOIL_TANGENT_PERCENT;
 				break;
 			case West:
-				posX = Math.max(pos - sizeX, lastPosX);
+				posX = pos - sizeX;
+				//posX = Math.max(pos - sizeX, lastPosX);
 				velX = Math.abs(this.velX)*RECOIL_PERCENT;
 				velY = velY*RECOIL_TANGENT_PERCENT;
 				break;
@@ -654,11 +658,13 @@ public abstract class Fighter extends MovingObject {
 		else{
 			switch(dir){
 			case North:
-				posY = Math.min(pos, lastPosY);
+				posY = pos;
+				//posY = Math.min(pos, lastPosY);
 				velY = Math.max(velY, 0.0f);
 				break;
 			case South:
-				posY = Math.max(pos - sizeY, lastPosY);
+				posY = pos - sizeY;
+				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
 				onGround = true;
 				//if(fighterState != Flying && fighterState != Ducking){
@@ -666,11 +672,13 @@ public abstract class Fighter extends MovingObject {
 				//}
 				break;
 			case West:
-				posX = Math.min(pos, lastPosX);
+				posX = pos;
+				//posX = Math.min(pos, lastPosX);
 				velX = Math.max(velX, 0.0f);
 				break;
 			case East:
-				posX = Math.max(pos - sizeX, lastPosX);
+				posX = pos - sizeX;
+				//posX = Math.max(pos - sizeX, lastPosX);
 				velX = Math.min(velX, 0.0f);
 				break;
 			}
@@ -679,14 +687,16 @@ public abstract class Fighter extends MovingObject {
 	
 	public void collideWithPlatform(float pos){
 		if(flightTime > 0.0f){
-			posY = Math.max(pos - sizeY, lastPosY);
+			posY = pos - sizeY;
+			//posY = Math.max(pos - sizeY, lastPosY);
 			velY = Math.min(velY, 0.0f)*RECOIL_PERCENT;
 			velX = velX*RECOIL_TANGENT_PERCENT;
 			onGround = true;
 		}
 		else{
 			if(input.yAxis <= 0.75f){
-				posY = Math.max(pos - sizeY, lastPosY);
+				posY = pos - sizeY;
+				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
 				onGround = true;
 			}

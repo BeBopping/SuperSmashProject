@@ -10,6 +10,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import eecs285.proj4.game.screens.ScreenTitle;
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.DisplayInfo;
 
