@@ -10,29 +10,36 @@ import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Window;
 
 public class Pointer extends MovingObject {
-	private static final float MAX_VEL = 30.0f;
-	private static final float MAX_ACCEL = 1.5f;
+	private static final float MAX_VEL = 1.5f;
+	private static final float MAX_ACCEL = 2.0f;
 	
 	private Input input;
 	private Window window;
 	private Texture texture;
 	private Color color;
+	private Color returnColor;
 	
 	public Pointer(Input input, Window window, Color color, float left, float top) {
 		super(left, left + 4.0f, top, top + 4.0f);
 		
 		this.input = input;
 		this.window = window;
-		this.color = color;
 		
 		texture = Assets.GetTexture("pointer");
+
+		setColor(color);
+	}
+	
+	public void setColor(Color color){
+		this.color = color;
+		returnColor = new Color((0.5f + color.r*0.5f), (0.5f + color.g*0.5f), (0.5f + color.b*0.5f), 1.0f);
 	}
 	
 	public void step(double delta){
 		// Assume input has already been polled
 		if(input.usesAnalogStick()){
-			velX = (float)((input.xAxis * MAX_VEL) * delta);
-			velY = (float)((input.yAxis * MAX_VEL) * delta);
+			velX = (float)(input.xAxis * MAX_VEL);
+			velY = (float)(input.yAxis * MAX_VEL);
 		}
 		else{
 			if(Math.abs(input.xAxis) >= 0.75){
@@ -76,5 +83,9 @@ public class Pointer extends MovingObject {
 	
 	public void render(double delta){
 		Render.render(texture, this, color);
+	}
+	
+	public Color getColor(){
+		return returnColor;
 	}
 }

@@ -1,7 +1,8 @@
-package eecs285.proj4.game;
+package eecs285.proj4.game.screens;
 
 import org.newdawn.slick.Color;
 
+import eecs285.proj4.game.Assets;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Sprite;
 import eecs285.proj4.util.UtilObject;
@@ -12,6 +13,7 @@ public class SelectableFighter extends UtilObject {
 	private Sprite fighterImage;
 	private float selectTimer;
 	private boolean hovering;
+	private Color hoverColor;
 	
 	public SelectableFighter(String fighterName, Sprite fighterImage, float left, float right, float top, float bottom) {
 		super(left, right, top, bottom);
@@ -29,8 +31,12 @@ public class SelectableFighter extends UtilObject {
 	}
 
 	public void render(double delta){
-		float hoverValue = hovering? 0.8f : 1.0f;
-		Color c = new Color(1.0f, hoverValue, hoverValue, 1.0f);
+		Color c = Color.white;
+		if(hovering){
+			c = hoverColor;
+		}
+		//float hoverValue = hovering? 0.8f : 1.0f;
+		//Color c = new Color(1.0f, hoverValue, hoverValue, 1.0f);
 		
 		Render.render(fighterImage, this, c, false);
 
@@ -44,8 +50,9 @@ public class SelectableFighter extends UtilObject {
 		selectTimer = MAX_SELECTION_TIME;
 	}
 	
-	public void setHover(){
+	public void setHover(Color color){
 		hovering = true;
+		hoverColor = color;
 	}
 	
 	public String getFighterName(){

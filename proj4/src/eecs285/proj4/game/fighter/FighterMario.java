@@ -217,7 +217,7 @@ public class FighterMario extends Fighter {
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
-			boxes[0].attackPriority = 0; 			// The higher the better
+			boxes[0].attackPriority = 10; 			// The higher the better
 
 			SpriteTimer[] sprites = new SpriteTimer[1];
 			sprites[0] = new SpriteTimer(FighterSprites.normalAttackAir[0], 0.3f);

@@ -326,7 +326,11 @@ public abstract class Fighter extends MovingObject {
 		}
 		
 		if(onGround){
-			float platformSpeed = currentStandingPlatform.getGroundSpeed();
+			float platformSpeed = 0;
+			if(currentStandingPlatform != null){
+				platformSpeed = currentStandingPlatform.getGroundSpeed();
+			}
+			
 			if(input.xAxis != 0.0f && !(currentAttack != null && (currentAttack.GetStationaryOnGround() || currentAttack.GetOverrideGravity()))){
 				float desiredSpeed = input.xAxis * maxWalkSpeed + platformSpeed;
 				double rateOfChange;

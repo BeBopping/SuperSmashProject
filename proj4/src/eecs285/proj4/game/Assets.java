@@ -9,6 +9,9 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import eecs285.proj4.game.fighter.Fighter;
+import eecs285.proj4.game.fighter.FighterMario;
+import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelMario;
 import eecs285.proj4.game.levels.LevelSonic;
@@ -81,7 +84,11 @@ public class Assets {
 				// Player select fighters
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Fighters.png"));
 				textures.put("fighters", texture);
-				sprites.put("fighter_mario", new Sprite(texture, 0.0f, 0.125f, 0.0f, 0.125f));
+				sprites.put("fighter_mario",  new Sprite(texture, 0.000f, 0.125f, 0.0f, 0.125f));
+				sprites.put("fighter_sonic",  new Sprite(texture, 0.125f, 0.250f, 0.0f, 0.125f));
+				sprites.put("fighter_rayman", new Sprite(texture, 0.250f, 0.375f, 0.0f, 0.125f));
+				sprites.put("fighter_spyro",  new Sprite(texture, 0.375f, 0.500f, 0.0f, 0.125f));
+				sprites.put("fighter_empty",  new Sprite(texture, 0.875f, 1.000f, 0.875f, 1.000f));
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -132,6 +139,22 @@ public class Assets {
 			return new LevelSonic();
 		}
 		return null;
+	}
+	
+	public static Fighter GetFighter(String string, FighterTrait trait){
+		if(string.equals("fighter_mario")){
+			return new FighterMario(trait);
+		}
+		else if(string.equals("fighter_sonic")){
+			//return new FighterSonic(trait)();
+		}
+		else if(string.equals("fighter_sonic")){
+			//return new FighterRayman(trait)();
+		}
+		else if(string.equals("fighter_sonic")){
+			//return new FighterSpyro(trait)();
+		}
+		return new FighterMario(trait);
 	}
 	
 	private Assets(){}

@@ -11,10 +11,7 @@ import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Battle;
 import eecs285.proj4.game.BattleInfo;
 import eecs285.proj4.game.Game;
-import eecs285.proj4.game.PlayerInfoVis;
-import eecs285.proj4.game.SelectableFighter;
 import eecs285.proj4.game.fighter.Fighter;
-import eecs285.proj4.game.fighter.FighterMario;
 import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.input.Input;
 import eecs285.proj4.game.input.InputDetector;
@@ -34,7 +31,7 @@ public class ScreenPlayerSelect implements GameState {
 	private ArrayList<SelectableFighter> selectableFighters;
 	private ArrayList<Input> activePlayers;
 	private ArrayList<Pointer> pointers;
-	private ArrayList<PlayerInfoVis> playerInfoVis;
+	private ArrayList<String> playerFighters;
 	private BattleInfo battleInfo;
 	private UtilObject stockArea;
 	private UtilObject timeArea;
@@ -55,7 +52,6 @@ public class ScreenPlayerSelect implements GameState {
 								0.0f, 100.0f);
 		}
 		
-		//window = new Window(0.0f, 100.0f, 0.0f, 100.0f);
 		battleInfo = new BattleInfo();
 		battleInfo.setMinutes(5);
 		battleInfo.setStock(3);
@@ -72,13 +68,13 @@ public class ScreenPlayerSelect implements GameState {
 		selectableFighters = new ArrayList<SelectableFighter>();
 		activePlayers = new ArrayList<Input>();
 		pointers = new ArrayList<Pointer>();
-		playerInfoVis = new ArrayList<PlayerInfoVis>();
+		playerFighters = new ArrayList<String>();
 		
 		// Add selectable fighters
-		selectableFighters.add(new SelectableFighter("Mario", Assets.GetSprite("fighter_mario"), 10.0f, 25.0f, 20.0f, 35.0f));
-		selectableFighters.add(new SelectableFighter("Mario", Assets.GetSprite("fighter_mario"), 30.0f, 45.0f, 20.0f, 35.0f));
-		selectableFighters.add(new SelectableFighter("Mario", Assets.GetSprite("fighter_mario"), 10.0f, 25.0f, 40.0f, 55.0f));
-		selectableFighters.add(new SelectableFighter("Mario", Assets.GetSprite("fighter_mario"), 30.0f, 45.0f, 40.0f, 55.0f));
+		selectableFighters.add(new SelectableFighter("fighter_mario", Assets.GetSprite("fighter_mario"), 10.0f, 25.0f, 20.0f, 35.0f));
+		selectableFighters.add(new SelectableFighter("fighter_sonic", Assets.GetSprite("fighter_sonic"), 30.0f, 45.0f, 20.0f, 35.0f));
+		selectableFighters.add(new SelectableFighter("fighter_rayman", Assets.GetSprite("fighter_rayman"), 10.0f, 25.0f, 40.0f, 55.0f));
+		selectableFighters.add(new SelectableFighter("fighter_spyro", Assets.GetSprite("fighter_spyro"), 30.0f, 45.0f, 40.0f, 55.0f));
 	}
 	
 	public void onActivate(){ }//enters = 0; }
@@ -112,7 +108,7 @@ public class ScreenPlayerSelect implements GameState {
 													Battle.PLAYER_COLORS[playerNum],
 													window.getCenterX() + ((float)playerNum - 3.5f) * 10.0f,
 													window.getCenterY() + 10.0f));
-						playerInfoVis.add(new PlayerInfoVis());
+						playerFighters.add(new String());
 					}
 				}
 			}
@@ -121,16 +117,6 @@ public class ScreenPlayerSelect implements GameState {
 			if(input.menuBack && !input.menuBackLast){
 				if(activePlayers.isEmpty()){
 					Game.popGameState();
-				}
-				
-				// Remove a player if they are already part of the list
-				for(int i=0; i<activePlayers.size(); ++i){
-					if(activePlayers.get(i) == input){
-						activePlayers.remove(i);
-						pointers.remove(i);
-						playerInfoVis.remove(i);
-						--i;
-					}
 				}
 			}
 		}
@@ -145,19 +131,34 @@ public class ScreenPlayerSelect implements GameState {
 			fighter.step(delta);
 		}
 		
-		//Check for selecting player
 		for(int i=0; i<activePlayers.size(); i++){
-			Pointer pointer = pointers.get(i);
+			//Check for 
+			if(activePlayers.get(i).menuBack && !activePlayers.get(i).menuBackLast){
+				if(playerFighters.get(i).isEmpty()){
+					activePlayers.remove(i);
+					pointers.remove(i);
+					playerFighters.remove(i);
+					resetColor();
+					--i;
+					continue;
+				}
+				else{
+					playerFighters.set(i, new String());
+				}
+			}
 			
+			//Check for selecting player
+			Pointer pointer = pointers.get(i);
 			for(SelectableFighter fighter : selectableFighters){
 				if(pointer.getLeftEdge() > fighter.getLeftEdge() && pointer.getLeftEdge() < fighter.getRightEdge()
 				&& pointer.getTopEdge() > fighter.getTopEdge() && pointer.getTopEdge() < fighter.getBottomEdge()){
 					Input input = activePlayers.get(i);
 					
-					fighter.setHover();
+					fighter.setHover(pointer.getColor());
 					
 					if(input.menuSelect && !input.menuSelectLast){
 						fighter.setClick();
+						playerFighters.set(i, fighter.getFighterName());
 					}
 				}
 			}
@@ -193,30 +194,32 @@ public class ScreenPlayerSelect implements GameState {
 			}
 			
 			// Start game
-			if(pointer.getLeftEdge() > startArea.getLeftEdge() && pointer.getLeftEdge() < startArea.getRightEdge()
-			&& pointer.getTopEdge() > startArea.getTopEdge() && pointer.getTopEdge() < startArea.getBottomEdge()){
-				Input input = activePlayers.get(i);
-				
-				if(input.menuSelect && !input.menuSelectLast){
-					int numPlayers = activePlayers.size();
+			if(readyToStart()){
+				if(pointer.getLeftEdge() > startArea.getLeftEdge() && pointer.getLeftEdge() < startArea.getRightEdge()
+				&& pointer.getTopEdge() > startArea.getTopEdge() && pointer.getTopEdge() < startArea.getBottomEdge()){
+					Input input = activePlayers.get(i);
 					
-					//TODO: CHANGE!
-					Fighter[] fighters = new Fighter[Math.max(numPlayers,4)]; //8
-					
-					for(int j=0; j<numPlayers; ++j){
-						fighters[j] = new FighterMario(FighterTrait.Normal);
-						fighters[j].SetInput(activePlayers.get(j));
+					if(input.menuSelect && !input.menuSelectLast){
+						int numPlayers = activePlayers.size();
+						
+						//TODO: CHANGE!
+						Fighter[] fighters = new Fighter[Math.max(numPlayers,4)]; //8
+						
+						for(int j=0; j<numPlayers; ++j){
+							fighters[j] = Assets.GetFighter(playerFighters.get(j), FighterTrait.Normal);
+							fighters[j].SetInput(activePlayers.get(j));
+						}
+	
+						//TODO: CHANGE!
+						for(int j=numPlayers; j<4; ++j){
+							fighters[j] = Assets.GetFighter("fighter_mario", FighterTrait.Normal);
+							fighters[j].SetInput(new InputKeyboard());
+						}
+						
+						battleInfo.setFighters(fighters);
+						Game.pushGameState(new ScreenLevelSelect(battleInfo));
+						return;
 					}
-
-					//TODO: CHANGE!
-					for(int j=numPlayers; j<4; ++j){
-						fighters[j] = new FighterMario(FighterTrait.Normal);
-						fighters[j].SetInput(new InputKeyboard());
-					}
-					
-					battleInfo.setFighters(fighters);
-					Game.pushGameState(new ScreenLevelSelect(battleInfo));
-					return;
 				}
 			}
 		}
@@ -266,16 +269,58 @@ public class ScreenPlayerSelect implements GameState {
 				stockArea.getLeftEdge() + 1.0f, timeArea.getTopEdge(), 
 				stockArea.getSizeY(), 0.0f, 0.0f, textColor);
 
+		// Display start button
+		if(readyToStart()){
+			Render.render(Assets.GetTexture("white"), startArea, Color.red);
+			Render.render(titleFont, window, "Start!",
+					startArea.getCenterX(), startArea.getCenterY(), 
+					startArea.getSizeY(), 0.65f, 0.5f, Color.black);
+		}
 		
-		// Render start button
-		Render.render(Assets.GetTexture("white"), startArea, Color.red);
-		Render.render(titleFont, window, "Start!",
-				startArea.getCenterX(), startArea.getCenterY(), 
-				startArea.getSizeY(), 0.65f, 0.5f, Color.black);
+		// Display selected character...
+		int numPlayers = activePlayers.size();
+		final float maxWidth = 23.0f;
+		final float separation = 2.0f;
+		float width = Math.min((window.getSizeX() / (float)numPlayers) - separation, maxWidth);
+		float pos = window.getLeft() + separation;
+		if(numPlayers > 4){
+			 pos = window.getCenterX() - (float)(numPlayers - 1)*(0.5f * width + 0.5f*separation) - width*0.5f;
+		}
+		for(int i=0; i<numPlayers; i++){
+			String fighterName = "fighter_empty";
+			if(!playerFighters.get(i).isEmpty()){
+				fighterName = playerFighters.get(i);
+			}
+			
+			Render.render(Assets.GetSprite(fighterName), pos, pos+width, 75 - width*0.5f, 75 + width*0.5f, pointers.get(i).getColor(), false);
+			
+			pos += width + separation;
+		}
 		
 		// Display pointers
 		for(Pointer pointer : pointers){
 			pointer.render(delta);
+		}
+	}
+	
+	private boolean readyToStart(){
+		// TODO : Add this!!
+		//if(activePlayers.size() < 2){
+		//	return false;
+		//}
+		
+		boolean allPlayersReady = true;
+		for(String str : playerFighters){
+			if(str.isEmpty()){
+				allPlayersReady = false;
+			}
+		}
+		return allPlayersReady;
+	}
+	
+	private void resetColor(){
+		for(int i=0; i<pointers.size(); ++i){
+			pointers.get(i).setColor(Battle.PLAYER_COLORS[i]);
 		}
 	}
 }
