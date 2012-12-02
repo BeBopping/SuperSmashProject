@@ -29,6 +29,8 @@ public class LevelRayman extends Level {
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 12.2f, 13.2f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 13.2f, 14.2f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 14.2f, 15.2f));
+		
+		platformObjects.add(new MovingBalloon(Assets.GetSprite("level_rayman_balloon"), 0.0f, 1.5f, 5.0f, 6.5f));
 
 		// Starting points for each character
 		startX[0] = -5.0f;

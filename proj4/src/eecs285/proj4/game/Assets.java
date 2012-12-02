@@ -100,7 +100,7 @@ public class Assets {
 				sprites.put("level_rayman_groundR", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.75f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("raymanLevelBalloon.png"));
-				sprites.put("level_rayman_balloon", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.75f));
+				sprites.put("level_rayman_balloon", new Sprite(texture, 0.0f, 1.0f, 0.0f, 1.0f));
 				
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));

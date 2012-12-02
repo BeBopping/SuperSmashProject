@@ -12,7 +12,7 @@ public class LevelSpyro extends Level {
 		super(-15.0f, 15.0f, -20.0f, 10.0f);
 		
 		levelName = "Spyro Level";
-		minOutline = new UtilObject(-8.5f, 9.5f, 0.0f, 7.5f);
+		minOutline = new UtilObject(-9.5f, 9.5f, 0.0f, 7.5f);
 		background = Assets.GetTexture("level_spyro_background");
 		
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_spyro_bridge"), -4.5f, 4.5f, 1.0f, 2.0f));
