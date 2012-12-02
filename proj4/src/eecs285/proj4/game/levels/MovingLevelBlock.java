@@ -14,18 +14,21 @@ public class MovingLevelBlock extends LevelObjectStretch{
 	private float accelX; //How quickly it turns around.
 	private boolean isFlipped; //True if the sprite is flipped.
 	
-	MovingLevelBlock(Sprite sprite, float left, float right, float top, float bottom){
+	MovingLevelBlock(Sprite sprite, float left, float right, float top, float bottom, boolean isFlipped){
 		super(sprite, left, right, top, bottom);
 		this.velX = 2.0f;
 		this.accelX = 1.0f;
-		this.isFlipped = false;
+		this.isFlipped = isFlipped;
+		if(this.isFlipped){
+			this.velX *= -1;
+		}
 	}
 	
 	public void step(double delta){
 		lastX = posX;
 		lastY = posY;
 		
-		if(posX > 5.0f){
+		if(posX > 3.5f){
 			this.velX -= delta * accelX;
 		}
 		if(posX < -5.0f){
