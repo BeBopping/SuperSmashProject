@@ -86,6 +86,22 @@ public class Assets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelWall.png"));
 				sprites.put("level_spyro_wall", new Sprite(texture, 0.0f, .74f, 0.0f, 0.624f));
 				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("raymanLevelBG.png"));
+				textures.put("level_rayman_background", texture);
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("raymanLevelGround.png"));
+				sprites.put("level_rayman_ground", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.75f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("raymanLevelGroundLeft.png"));
+				sprites.put("level_rayman_groundL", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.75f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("raymanLevelGroundRight.png"));
+				sprites.put("level_rayman_groundR", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.75f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("raymanLevelBalloon.png"));
+				sprites.put("level_rayman_balloon", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.75f));
+				
+				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));
 				textures.put("square", texture);
 				
