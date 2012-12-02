@@ -77,7 +77,10 @@ public class ScreenPlayerSelect implements GameState {
 		selectableFighters.add(new SelectableFighter("fighter_spyro", Assets.GetSprite("fighter_spyro"), 30.0f, 45.0f, 40.0f, 55.0f));
 	}
 	
-	public void onActivate(){ }//enters = 0; }
+	public void onActivate(){
+		Game.setMusic(Assets.GetMusic("music_menu"));
+	}
+	
 	public void onDeactivate(){}
 
 	public void getInput(double delta){

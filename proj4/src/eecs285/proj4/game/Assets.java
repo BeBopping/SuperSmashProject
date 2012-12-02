@@ -241,10 +241,10 @@ public class Assets {
 		else if(string.equals("fighter_sonic")){
 			//return new FighterSonic(trait)();
 		}
-		else if(string.equals("fighter_sonic")){
+		else if(string.equals("fighter_rayman")){
 			//return new FighterRayman(trait)();
 		}
-		else if(string.equals("fighter_sonic")){
+		else if(string.equals("fighter_spyro")){
 			return new FighterSpyro(trait);
 		}
 		return new FighterMario(trait);
