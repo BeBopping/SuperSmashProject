@@ -11,6 +11,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelMario;
+import eecs285.proj4.game.levels.LevelSonic;
 import eecs285.proj4.util.Sprite;
 
 public class Assets {
@@ -46,6 +47,21 @@ public class Assets {
 				sprites.put("level_mario_floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
 				sprites.put("level_mario_platform", new Sprite(texture, 0.0625f, 0.125f, 0.0f, 0.0625f));
 				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelBG.png"));
+				textures.put("level_sonic_background", texture);
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelBG2.png"));
+				textures.put("level_sonic_background2", texture);
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelBlock.png"));
+				sprites.put("level_sonic_block", new Sprite(texture, 0.0f, 1.0f, 0.0f, 1.0f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelGround.png"));
+				sprites.put("level_sonic_ground", new Sprite(texture, 0.0f, 0.625f, 0.0f, 1.0f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelPlatform.png"));
+				sprites.put("level_sonic_platform", new Sprite(texture, 0.0f, 1.0f, 0.0f, 0.5f));
+				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));
 				textures.put("square", texture);
 				
@@ -56,7 +72,6 @@ public class Assets {
 				// Mario
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterMario.png"));
 				textures.put("fighter_mario", texture);
-				
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -104,7 +119,8 @@ public class Assets {
 		//	return new LevelHardCoded();
 		//}
 		
-		return new LevelMario();
+		//return new LevelMario();
+		return new LevelSonic();
 	}
 	
 	private Assets(){}
