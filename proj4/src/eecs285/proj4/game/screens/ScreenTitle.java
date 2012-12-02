@@ -8,7 +8,6 @@ import org.newdawn.slick.opengl.Texture;
 
 import eecs285.proj4.game.Assets;
 import eecs285.proj4.game.Game;
-import eecs285.proj4.game.input.Input;
 import eecs285.proj4.util.Window;
 import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.Render;

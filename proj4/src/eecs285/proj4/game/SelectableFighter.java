@@ -4,7 +4,6 @@ import org.newdawn.slick.Color;
 
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Sprite;
-import eecs285.proj4.util.SelectableObject;
 import eecs285.proj4.util.UtilObject;
 
 public class SelectableFighter extends UtilObject {

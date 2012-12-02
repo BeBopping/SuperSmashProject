@@ -4,6 +4,7 @@ import static eecs285.proj4.game.Direction.*;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.game.input.Input;
+import eecs285.proj4.game.levels.LevelObject;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.SmallSprite;
 
@@ -62,6 +63,7 @@ public abstract class Fighter extends MovingObject {
 	public Attack currentAttack;
 	protected boolean doNormalAttack;
 	protected boolean doSpecialAttack;
+	protected LevelObject currentStandingPlatform;
 	
 	protected SmallSprite currentSprite;
 	protected float visualWidth;
@@ -324,13 +326,14 @@ public abstract class Fighter extends MovingObject {
 		}
 		
 		if(onGround){
+			float platformSpeed = currentStandingPlatform.getGroundSpeed();
 			if(input.xAxis != 0.0f && !(currentAttack != null && (currentAttack.GetStationaryOnGround() || currentAttack.GetOverrideGravity()))){
-				float desiredSpeed = input.xAxis * maxWalkSpeed;
+				float desiredSpeed = input.xAxis * maxWalkSpeed + platformSpeed;
 				double rateOfChange;
 				
 				// Change speed faster if we are "in reverse"
-				if(velX < desiredSpeed && velX < 0.0f
-				|| velX > desiredSpeed && velX > 0.0f){
+				if(velX < desiredSpeed && velX < platformSpeed
+				|| velX > desiredSpeed && velX > platformSpeed){
 					rateOfChange = reverseAcceleration * delta;
 				}
 				else{
@@ -349,7 +352,20 @@ public abstract class Fighter extends MovingObject {
 				}
 			}
 			else{
-				velX *= 0.75f;
+				double rateOfChange = forwardAcceleration * delta;
+				
+				// Move closer to desired speed
+				if(velX - rateOfChange > platformSpeed){
+					velX -= rateOfChange;
+				}
+				else if(velX + rateOfChange < platformSpeed){
+					velX += rateOfChange;
+				}
+				else{
+					velX = platformSpeed;
+				}
+				
+				//velX *= 0.75f;
 			}
 			
 			if(velX > maxWalkSpeed) velX = maxWalkSpeed;
@@ -556,9 +572,14 @@ public abstract class Fighter extends MovingObject {
 		
 		if(currentAttack == null || currentSprite == null){
 			if(onGround){
-				if(Math.abs(velX) > 0.5f){// && input.xAxis != 0.0f){
+				float tempVelX = velX;
+				if(currentStandingPlatform != null){
+					tempVelX -= currentStandingPlatform.getGroundSpeed();
+				}
+				
+				if(Math.abs(tempVelX) > 0.5f){// && input.xAxis != 0.0f){
 					// run 1 sprite-frame per half meter
-					spriteDistance += delta * Math.abs(velX);
+					spriteDistance += delta * Math.abs(tempVelX);
 					
 					int index = 1 + (int)(spriteDistance / (double)distancePerRunSprite);
 					index %= 8;
@@ -625,7 +646,7 @@ public abstract class Fighter extends MovingObject {
 		handleRender(delta);
 	}
 	
-	public void collideWithSolid(Direction dir, float pos){
+	public void collideWithSolid(Direction dir, float pos, LevelObject object){
 		if(flightTime > 0.0f){
 			switch(dir){
 			case North:
@@ -640,16 +661,17 @@ public abstract class Fighter extends MovingObject {
 				velY = -Math.abs(this.velY)*RECOIL_PERCENT;
 				velX = velX*RECOIL_TANGENT_PERCENT;
 				onGround = true;
+				currentStandingPlatform = object;
 				break;
 			case East:
-				posX = pos;
-				//posX = Math.min(pos, lastPosX);
+				posX = pos - sizeX;
+				//posX = Math.min(pos - sizeX, lastPosX);
 				velX = -Math.abs(this.velX)*RECOIL_PERCENT;
 				velY = velY*RECOIL_TANGENT_PERCENT;
 				break;
 			case West:
-				posX = pos - sizeX;
-				//posX = Math.max(pos - sizeX, lastPosX);
+				posX = pos;
+				//posX = Math.max(pos, lastPosX);
 				velX = Math.abs(this.velX)*RECOIL_PERCENT;
 				velY = velY*RECOIL_TANGENT_PERCENT;
 				break;
@@ -667,9 +689,7 @@ public abstract class Fighter extends MovingObject {
 				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
 				onGround = true;
-				//if(fighterState != Flying && fighterState != Ducking){
-				//	fighterState = OnGround;
-				//}
+				currentStandingPlatform = object;
 				break;
 			case West:
 				posX = pos;
@@ -685,13 +705,14 @@ public abstract class Fighter extends MovingObject {
 		}
 	}
 	
-	public void collideWithPlatform(float pos){
+	public void collideWithPlatform(float pos, LevelObject object){
 		if(flightTime > 0.0f){
 			posY = pos - sizeY;
 			//posY = Math.max(pos - sizeY, lastPosY);
 			velY = Math.min(velY, 0.0f)*RECOIL_PERCENT;
 			velX = velX*RECOIL_TANGENT_PERCENT;
 			onGround = true;
+			currentStandingPlatform = object;
 		}
 		else{
 			if(input.yAxis <= 0.75f){
@@ -699,6 +720,7 @@ public abstract class Fighter extends MovingObject {
 				//posY = Math.max(pos - sizeY, lastPosY);
 				velY = Math.min(velY, 0.0f);
 				onGround = true;
+				currentStandingPlatform = object;
 			}
 		}
 	}

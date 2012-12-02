@@ -1,7 +1,5 @@
 package eecs285.proj4.game.input;
 
-import org.lwjgl.input.Keyboard;
-
 import net.java.games.input.Component.Identifier.Button;
 import net.java.games.input.Controller;
 import net.java.games.input.Component.Identifier;

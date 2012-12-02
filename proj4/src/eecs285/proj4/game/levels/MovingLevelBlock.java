@@ -55,4 +55,5 @@ public class MovingLevelBlock extends LevelObjectStretch{
 	public float getPreviousRightEdge(){ return lastX + sizeX; }
 	public float getPreviousTopEdge(){ return lastY; }
 	public float getPreviousBottomEdge(){ return lastY + sizeY; }
+	public float getGroundSpeed(){ return velX; }
 }

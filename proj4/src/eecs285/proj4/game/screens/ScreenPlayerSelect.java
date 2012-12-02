@@ -2,12 +2,7 @@ package eecs285.proj4.game.screens;
 
 import java.util.ArrayList;
 
-import net.java.games.input.Component;
-import net.java.games.input.Component.Identifier;
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
 
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
@@ -24,7 +19,6 @@ import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.input.Input;
 import eecs285.proj4.game.input.InputDetector;
 import eecs285.proj4.game.input.InputKeyboard;
-import eecs285.proj4.game.input.InputXbox360;
 import eecs285.proj4.util.DisplayInfo;
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.UtilObject;
@@ -206,12 +200,20 @@ public class ScreenPlayerSelect implements GameState {
 				if(input.menuSelect && !input.menuSelectLast){
 					int numPlayers = activePlayers.size();
 					
-					Fighter[] fighters = new Fighter[numPlayers]; //8
+					//TODO: CHANGE!
+					Fighter[] fighters = new Fighter[Math.max(numPlayers,4)]; //8
+					
 					for(int j=0; j<numPlayers; ++j){
 						fighters[j] = new FighterMario(FighterTrait.Normal);
 						fighters[j].SetInput(activePlayers.get(j));
 					}
 
+					//TODO: CHANGE!
+					for(int j=numPlayers; j<4; ++j){
+						fighters[j] = new FighterMario(FighterTrait.Normal);
+						fighters[j].SetInput(new InputKeyboard());
+					}
+					
 					battleInfo.setFighters(fighters);
 					Game.pushGameState(new ScreenLevelSelect(battleInfo));
 					return;

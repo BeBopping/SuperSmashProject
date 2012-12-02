@@ -146,22 +146,22 @@ public class Battle implements GameState {
 				&& fighter.getTopEdge() < solid.getBottomEdge() && fighter.getBottomEdge() > solid.getTopEdge()){
 					//Left
 					if(fighter.getPreviousLeftEdge() >= solid.getPreviousRightEdge()){
-						fighter.collideWithSolid(Direction.West, solid.getRightEdge());
+						fighter.collideWithSolid(Direction.West, solid.getRightEdge(), solid);
 					}
 					
 					//Right
 					if(fighter.getPreviousRightEdge() <= solid.getPreviousLeftEdge()){
-						fighter.collideWithSolid(Direction.East, solid.getLeftEdge());
+						fighter.collideWithSolid(Direction.East, solid.getLeftEdge(), solid);
 					}
 					
 					//Top
 					if(fighter.getPreviousTopEdge() >= solid.getPreviousBottomEdge()){
-						fighter.collideWithSolid(Direction.North, solid.getBottomEdge());
+						fighter.collideWithSolid(Direction.North, solid.getBottomEdge(), solid);
 					}
 					
 					//Bottom
 					if(fighter.getPreviousBottomEdge() <= solid.getPreviousTopEdge()){
-						fighter.collideWithSolid(Direction.South, solid.getTopEdge());
+						fighter.collideWithSolid(Direction.South, solid.getTopEdge(), solid);
 					}
 				}
 			}
@@ -170,7 +170,7 @@ public class Battle implements GameState {
 			for(LevelObject platform : level.platformObjects){
 				if(fighter.getBottomEdge() > platform.getTopEdge() && fighter.getPreviousBottomEdge() <= platform.getTopEdge()
 				&& fighter.getLeftEdge() < platform.getRightEdge() && fighter.getRightEdge() > platform.getLeftEdge()){
-					fighter.collideWithPlatform(platform.getTopEdge());
+					fighter.collideWithPlatform(platform.getTopEdge(), platform);
 				}
 			}
 		}

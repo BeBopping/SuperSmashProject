@@ -14,4 +14,5 @@ public abstract class LevelObject extends UtilObject {
 	public float getPreviousRightEdge(){ return getRightEdge(); }
 	public float getPreviousTopEdge(){ return getTopEdge(); }
 	public float getPreviousBottomEdge(){ return getBottomEdge(); }
+	public float getGroundSpeed(){ return 0.0f; }
 }
