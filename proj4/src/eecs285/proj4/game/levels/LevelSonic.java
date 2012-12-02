@@ -14,7 +14,7 @@ public class LevelSonic extends Level{
 		minOutline = new UtilObject(-6.0f, 6.0f, 0.0f, 7.5f);
 		background = Assets.GetTexture("level_sonic_background2");
 		
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), -6.5f, -3.5f, 3.50f, 4.0f));
+		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), -6.5f, -3.5f, 3.5f, 4.0f));
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), 3.5f, 6.5f, 3.5f, 4.0f));
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), -1.5f, 1.5f, 1.0f, 1.5f));
 		solidObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_ground"), -8.0f, 8.0f, 6.0f, 7.0f));

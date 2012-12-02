@@ -27,7 +27,7 @@ public class ScreenLevelSelect extends ScreenMenu {
 		ArrayList<SelectableObject> menuItems = new ArrayList<SelectableObject>();
 		menuItems.add(new LevelItem(25.0f, 75.0f, 10.0f, 25.0f, "Mario's Level", "level_mario"));
 		menuItems.add(new LevelItem(25.0f, 75.0f, 30.0f, 45.0f, "Sonic's Level", "level_sonic"));
-		menuItems.add(new LevelItem(25.0f, 75.0f, 50.0f, 65.0f, "Mario's Level", "level_mario"));
+		menuItems.add(new LevelItem(25.0f, 75.0f, 50.0f, 65.0f, "Spyro's Level", "level_spyro"));
 		menuItems.add(new LevelItem(25.0f, 75.0f, 70.0f, 85.0f, "Sonic's Level", "level_sonic"));
 	
 		initMenuItems(menuItems);

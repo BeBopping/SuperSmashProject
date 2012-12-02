@@ -15,6 +15,7 @@ import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelMario;
 import eecs285.proj4.game.levels.LevelSonic;
+import eecs285.proj4.game.levels.LevelSpyro;
 import eecs285.proj4.util.Sprite;
 
 public class Assets {
@@ -64,6 +65,21 @@ public class Assets {
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelPlatform.png"));
 				sprites.put("level_sonic_platform", new Sprite(texture, 0.0f, 1.0f, 0.0f, 0.5f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelBG.png"));
+				textures.put("level_spyro_background", texture);
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelBlock.png"));
+				sprites.put("level_spyro_block", new Sprite(texture, 0.0f, .75f, 0.0f, .75f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelBridge.png"));
+				sprites.put("level_spyro_bridge", new Sprite(texture, 0.0f, .75f, 0.0f, .75f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelGround.png"));
+				sprites.put("level_spyro_ground", new Sprite(texture, 0.0f, 0.75f, 0.0f, 0.5f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelWall.png"));
+				sprites.put("level_spyro_wall", new Sprite(texture, 0.0f, .74f, 0.0f, 0.624f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Square.png"));
 				textures.put("square", texture);
@@ -137,6 +153,9 @@ public class Assets {
 		}
 		else if(string.equals("level_sonic")){
 			return new LevelSonic();
+		}
+		else if(string.equals("level_spyro")){
+			return new LevelSpyro();
 		}
 		return null;
 	}
