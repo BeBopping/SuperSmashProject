@@ -1,6 +1,7 @@
 package eecs285.proj4.game.levels;
 
 import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.Game;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.UtilObject;
@@ -38,6 +39,8 @@ public class LevelSpyro extends Level {
 		startY[2] = 7.0f;
 		startX[3] = 3.0f;
 		startY[3] = 7.0f;
+
+		Game.setMusic(Assets.GetMusic("music_spyro"));
 	}
 
 	public void step(double delta){

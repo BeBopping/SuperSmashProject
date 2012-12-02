@@ -1,6 +1,7 @@
 package eecs285.proj4.game.levels;
 
 import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.Game;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.UtilObject;
@@ -29,7 +30,8 @@ public class LevelSonic extends Level{
 		startY[2] = 6.0f;
 		startX[3] = -2.0f;
 		startY[3] = 6.0f;
-		
+
+		Game.setMusic(Assets.GetMusic("music_sonic"));
 	}
 	public void step(double delta){
 		for(LevelObject object : solidObjects){
