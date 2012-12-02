@@ -67,6 +67,7 @@ public class ScreenLevelSelect extends ScreenMenu {
 		public void step(double delta){
 			if(currentState == State.BEGIN_MOUSE_PRESS){
 				battleInfo.setLevel(key);
+				Game.popGameState();
 				Game.pushGameState(new Battle(battleInfo));
 			}
 		}
