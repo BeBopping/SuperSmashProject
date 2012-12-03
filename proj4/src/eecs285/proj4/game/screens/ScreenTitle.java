@@ -50,7 +50,7 @@ public class ScreenTitle extends ScreenMenu {
 
 		public void step(double delta){
 			if(currentState == State.BEGIN_MOUSE_PRESS){
-				Game.pushGameState(new ScreenStartMenu());
+				Game.pushGameState(new ScreenPlayerSelect());
 			}
 		}
 
