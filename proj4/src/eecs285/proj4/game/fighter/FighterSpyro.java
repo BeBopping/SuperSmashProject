@@ -104,9 +104,9 @@ public class FighterSpyro extends Fighter {
 			boxes[0].delay = 0.2f;
 			boxes[0].duration = 0.3f;
 			boxes[0].damage = 10;
-			boxes[0].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
+			boxes[0].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
 			boxes[0].hitSpeedX = -0.2f;
-			boxes[0].hitSpeedY = -10.0f;
+			boxes[0].hitSpeedY = -12.0f;
 			boxes[0].flightTime = 0.35f;
 			boxes[0].stunTime = 0.2f;
 			boxes[0].isStationaryInAir = true;
@@ -121,9 +121,9 @@ public class FighterSpyro extends Fighter {
 			boxes[1].delay = 0.2f;
 			boxes[1].duration = 0.3f;
 			boxes[1].damage = 10;
-			boxes[1].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
+			boxes[1].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
 			boxes[1].hitSpeedX = 0.2f;
-			boxes[1].hitSpeedY = -10.0f;
+			boxes[1].hitSpeedY = -12.0f;
 			boxes[1].flightTime = 0.35f;
 			boxes[1].stunTime = 0.2f;
 			boxes[1].isStationaryInAir = true;
@@ -278,7 +278,7 @@ public class FighterSpyro extends Fighter {
 			boxes[0].damage = 7;
 			boxes[0].healthScaler = 600.0f;			// scale = 1 + health/healthScaler
 			boxes[0].hitSpeedX = 0.0f;
-			boxes[0].hitSpeedY = -3.0f;
+			boxes[0].hitSpeedY = -5.0f;
 			boxes[0].flightTime = 0.45f;
 			boxes[0].stunTime = 0.1f;
 			boxes[0].isStationaryInAir = false;
@@ -305,7 +305,7 @@ public class FighterSpyro extends Fighter {
 			boxes[0].damage = 10;
 			boxes[0].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
 			boxes[0].hitSpeedX = -0.2f;
-			boxes[0].hitSpeedY = -10.0f;
+			boxes[0].hitSpeedY = -15.0f;
 			boxes[0].flightTime = 0.35f;
 			boxes[0].stunTime = 0.2f;
 			boxes[0].isStationaryInAir = false;
@@ -322,7 +322,7 @@ public class FighterSpyro extends Fighter {
 			boxes[1].damage = 10;
 			boxes[1].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
 			boxes[1].hitSpeedX = -0.2f;
-			boxes[1].hitSpeedY = -10.0f;
+			boxes[1].hitSpeedY = -15.0f;
 			boxes[1].flightTime = 0.35f;
 			boxes[1].stunTime = 0.2f;
 			boxes[1].isStationaryInAir = false;
@@ -459,28 +459,46 @@ public class FighterSpyro extends Fighter {
 			return new Attack(boxes, sprites, this, 0.1f);	// Delay after moves are done
 		}
 		else{ // West
-			CollisionBox[] boxes = new CollisionBox[1];
+			CollisionBox[] boxes = new CollisionBox[2];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-0.5f, -0.0f, -1.1f, -0.6f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-1.2f, -0.5f, -1.1f, -0.6f);		// From players center Base
-			boxes[0].delay = 0.0f;
-			boxes[0].duration = 0.25f;
-			boxes[0].damage = 8;
-			boxes[0].healthScaler = 450.0f;			// scale = 1 + health/healthScaler
-			boxes[0].hitSpeedX = -10.0f;
-			boxes[0].hitSpeedY = -8.0f;
-			boxes[0].flightTime = 0.35f;
+			boxes[0].startBox = new UtilObject(-2.0f, -0.25f, -3.00f, -0.05f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(-2.0f, -0.25f, -3.0f, 0.05f);		// From players center Base
+			boxes[0].delay = 0.1f;
+			boxes[0].duration = 0.35f;
+			boxes[0].damage = 9;
+			boxes[0].healthScaler = 350.0f;			// scale = 1 + health/healthScaler
+			boxes[0].hitSpeedX = -8.0f;
+			boxes[0].hitSpeedY = -6.0f;
+			boxes[0].flightTime = 0.25f;
 			boxes[0].stunTime = 0.1f;
 			boxes[0].isStationaryInAir = false;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 0; 			// The higher the better
+			
+			boxes[1] = new CollisionBox();
+			boxes[1].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
+			boxes[1].delay = 0.0f;
+			boxes[1].duration = 0.55f;
+			boxes[1].damage = 0;
+			boxes[1].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
+			boxes[1].hitSpeedX = 0.0f;
+			boxes[1].hitSpeedY = 0.0f;
+			boxes[1].flightTime = 0.0f;
+			boxes[1].stunTime = 0.0f;
+			boxes[1].isStationaryInAir = true;
+			boxes[1].isStationaryOnGround = true;
+			boxes[1].isOverridingGravity = false;
+			boxes[1].canChangeDirection = false;
+			boxes[1].attackPriority = 0; 			// The higher the better
 
-			SpriteTimer[] sprites = new SpriteTimer[3];
-			sprites[0] = new SpriteTimer(FighterSprites.normalAttackAirBackward[0], 0.075f);
+			SpriteTimer[] sprites = new SpriteTimer[4];
+			sprites[0] = new SpriteTimer(FighterSprites.normalAttackAirBackward[0], 0.100f);
 			sprites[1] = new SpriteTimer(FighterSprites.normalAttackAirBackward[1], 0.175f);
-			sprites[2] = new SpriteTimer(FighterSprites.normalAttackAirBackward[2], 0.225f);
+			sprites[2] = new SpriteTimer(FighterSprites.normalAttackAirBackward[2], 0.175f);
+			sprites[3] = new SpriteTimer(FighterSprites.normalAttackAirBackward[0], 0.100f);
 			
 			return new Attack(boxes, sprites, this, 0.0f);	// Delay after moves are done
 		}
