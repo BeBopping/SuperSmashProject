@@ -15,8 +15,8 @@ public class LevelMario extends Level {
 		background = Assets.GetTexture("level_mario_background");
 		
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_mario_platform"), -7.0f, 0.0f, 3.0f, 4.0f));
-		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_mario_floor"), -8.0f, 8.0f, 6.0f, 7.0f));
-		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_mario_floor"), 8.0f, 9.0f, 3.0f, 7.0f));
+		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_mario_floor"), -8.0f, 9.0f, 6.0f, 7.0f));
+		solidObjects.add(new LevelObjectStretch(Assets.GetSprite("level_mario_pipe"), 8.0f, 9.0f, 3.0f, 6.0f));
 
 		// Starting points for each character
 		startX[0] = -3.0f;

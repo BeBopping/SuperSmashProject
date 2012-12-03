@@ -48,14 +48,23 @@ public class Assets {
 				textures.put("title_screen_background", texture);
 				textures.put("about_screen_background", texture);
 				textures.put("how_to_play_screen_background", texture);
-				textures.put("level_mario_background", texture);
+				//textures.put("level_mario_background", texture);
 				
 				sprites.put("example_sprite", new Sprite(texture, 0.0f, 0.1f, 0.0f, 0.1f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Platforms.png"));
 				textures.put("platforms", texture);
-				sprites.put("level_mario_floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
+				//sprites.put("level_mario_floor", new Sprite(texture, 0.0f, 0.0625f, 0.0f, 0.0625f));
 				sprites.put("level_mario_platform", new Sprite(texture, 0.0625f, 0.125f, 0.0f, 0.0625f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("marioStageBackground.png"));
+				textures.put("level_mario_background", texture);
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("marioStageGround.png"));
+				sprites.put("level_mario_floor", new Sprite(texture, 0.0f, 1.0f, 0.0f, 1.0f));
+				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("marioStagePipe.png"));
+				sprites.put("level_mario_pipe", new Sprite(texture, 0.0f, 1.0f, 0.0f, 0.75f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelBG.png"));
 				textures.put("level_sonic_background", texture);
