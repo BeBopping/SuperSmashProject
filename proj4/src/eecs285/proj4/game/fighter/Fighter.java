@@ -24,7 +24,7 @@ public abstract class Fighter extends MovingObject {
 	
 	protected String fighterName;
 	protected FighterTrait fighterTrait;
-	protected Input input;
+	public Input input;
 	
 	public int hitPercent;
 	public int stock;

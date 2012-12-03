@@ -71,8 +71,6 @@ public class ScreenMenu implements GameState{
 		for(SelectableObject object : menuItems){
 			object.resetState();
 		}
-		
-		Game.setMusic(GameAssets.GetMusic("music_menu"));
 	}
 	
 	public void onDeactivate(){}

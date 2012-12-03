@@ -205,19 +205,17 @@ public class ScreenPlayerSelect implements GameState {
 					if(input.menuSelect && !input.menuSelectLast){
 						int numPlayers = activePlayers.size();
 						
-						//TODO: CHANGE!
-						Fighter[] fighters = new Fighter[Math.max(numPlayers,4)]; //8
+						Fighter[] fighters = new Fighter[numPlayers];
 						
 						for(int j=0; j<numPlayers; ++j){
 							fighters[j] = GameAssets.GetFighter(playerFighters.get(j), FighterTrait.Normal);
 							fighters[j].SetInput(activePlayers.get(j));
 						}
 	
-						//TODO: CHANGE!
-						for(int j=numPlayers; j<4; ++j){
-							fighters[j] = GameAssets.GetFighter("fighter_mario", FighterTrait.Normal);
-							fighters[j].SetInput(new InputKeyboard());
-						}
+						//for(int j=numPlayers; j<4; ++j){
+						//	fighters[j] = GameAssets.GetFighter("fighter_mario", FighterTrait.Normal);
+						//	fighters[j].SetInput(new InputKeyboard());
+						//}
 						
 						battleInfo.setFighters(fighters);
 						Game.pushGameState(new ScreenLevelSelect(battleInfo));
@@ -307,10 +305,9 @@ public class ScreenPlayerSelect implements GameState {
 	}
 	
 	private boolean readyToStart(){
-		// TODO : Add this!!
-		//if(activePlayers.size() < 2){
-		//	return false;
-		//}
+		if(activePlayers.size() < 2){
+			return false;
+		}
 		
 		boolean allPlayersReady = true;
 		for(String str : playerFighters){

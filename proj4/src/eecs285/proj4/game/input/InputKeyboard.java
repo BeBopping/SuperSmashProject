@@ -19,6 +19,8 @@ public class InputKeyboard extends Input {
 		menuSelectLast = menuSelect;
 		menuBackLast = menuBack;
 		
+		back = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
+		
 		menuSelect = (Keyboard.isKeyDown(Keyboard.KEY_RETURN) || Keyboard.isKeyDown(Keyboard.KEY_SPACE));
 		menuBack = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
 		

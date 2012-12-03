@@ -42,6 +42,8 @@ public class InputXbox360 extends Input {
 		
 		controller.poll();
 
+		back = controller.getComponent(Identifier.Button._6).getPollData() > 0.75f;
+		
 		menuSelect = controller.getComponent(Identifier.Button._0).getPollData() > 0.75f
 				  || controller.getComponent(Identifier.Button._7).getPollData() > 0.75f;
 		menuBack = controller.getComponent(Identifier.Button._1).getPollData() > 0.75f

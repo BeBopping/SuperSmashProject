@@ -1,11 +1,5 @@
 package eecs285.proj4.game;
 
-import net.java.games.input.Component;
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
-import net.java.games.input.Component.Identifier;
-
-import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
@@ -13,6 +7,7 @@ import eecs285.proj4.game.fighter.CollisionBox;
 import eecs285.proj4.game.fighter.Fighter;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.game.levels.LevelObject;
+import eecs285.proj4.game.screens.ScreenPause;
 import eecs285.proj4.util.DisplayInfo;
 import eecs285.proj4.util.GameState;
 import eecs285.proj4.util.UtilObject;
@@ -108,6 +103,18 @@ public class Battle implements GameState {
 			}
 			
 			timeLeft -= delta;
+		}
+		
+		// Check for player pause:
+		boolean pause = false;
+		for(Fighter fighter : fighters){
+			if(fighter.input.back && ! fighter.input.backLast){
+				pause = true;
+			}
+		}
+		
+		if(pause){
+			Game.pushGameState(new ScreenPause());
 		}
 		
 		// Update level

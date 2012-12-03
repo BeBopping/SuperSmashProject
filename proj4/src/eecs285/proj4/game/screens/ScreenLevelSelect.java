@@ -38,6 +38,11 @@ public class ScreenLevelSelect extends ScreenMenu {
 		titleFont = GameAssets.GetFont("title");
 	}
 
+	public void onActivate(){
+		super.onActivate();
+		Game.setMusic(GameAssets.GetMusic("music_menu"));
+	}
+	
 	public void render(double delta){
 		Render.renderBackground(background);
 		

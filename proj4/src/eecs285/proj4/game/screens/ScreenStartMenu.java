@@ -27,6 +27,11 @@ public class ScreenStartMenu extends ScreenMenu {
 		
 		background = GameAssets.GetTexture("title_screen_background");
 	}
+
+	public void onActivate(){
+		super.onActivate();
+		Game.setMusic(GameAssets.GetMusic("music_menu"));
+	}
 	
 	public void render(double delta){
 		Render.renderBackground(background);

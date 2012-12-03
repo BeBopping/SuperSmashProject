@@ -1,5 +1,7 @@
 package eecs285.proj4.game.input;
 
+import org.lwjgl.input.Keyboard;
+
 import net.java.games.input.Component.Identifier.Button;
 import net.java.games.input.Controller;
 import net.java.games.input.Component.Identifier;
@@ -41,6 +43,8 @@ public class InputSuperNintendo extends Input {
 		menuBackLast = menuBack;
 		
 		controller.poll();
+
+		back = controller.getComponent(Identifier.Button._4).getPollData() > 0.75f;
 		
 		menuSelect = controller.getComponent(Identifier.Button._2).getPollData() > 0.75f
 				  || controller.getComponent(Identifier.Button._5).getPollData() > 0.75f;

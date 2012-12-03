@@ -14,7 +14,6 @@ import eecs285.proj4.util.Render;
 
 public class ScreenTitle extends ScreenMenu {
 	private Texture background;
-	private TrueTypeFont titleFont;
 	
 	public ScreenTitle(){
 		super(new Window(0.0f, 100.0f, 0.0f, 100.0f));
@@ -23,8 +22,12 @@ public class ScreenTitle extends ScreenMenu {
 		
 		initMenuItems(menuItems);
 		
-		background = GameAssets.GetTexture("title_screen_background"); 
-		titleFont = GameAssets.GetFont("title");
+		background = GameAssets.GetTexture("title_screen_background");
+	}
+
+	public void onActivate(){
+		super.onActivate();
+		Game.setMusic(GameAssets.GetMusic("music_menu"));
 	}
 	
 	public void render(double delta){
