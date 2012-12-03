@@ -31,7 +31,7 @@ public class MovingBalloon extends LevelObjectStretch{
 		this.posX += delta * velX;
 		this.posY += delta * velY;
 		if(this.posY < -15.0f){
-			this.posY = 12.0f;
+			this.posY = 15.0f;
 			this.posX = (float) ((Math.random() * 2 - 1) * 11.0f);
 		}
 	}
