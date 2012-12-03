@@ -20,7 +20,7 @@ import eecs285.proj4.util.Window;
 import eecs285.proj4.util.Render;
 
 public class Battle implements GameState {
-	private static final boolean DEBUG_MODE = false;
+	private static final boolean DEBUG_MODE = true;
 	public static final Color[] PLAYER_COLORS = new Color[]{
 		Color.red, Color.blue, Color.green, Color.yellow, Color.pink, Color.magenta, Color.gray, Color.orange
 	};
@@ -146,31 +146,31 @@ public class Battle implements GameState {
 				&& fighter.getTopEdge() < solid.getBottomEdge() && fighter.getBottomEdge() > solid.getTopEdge()){
 					//Left
 					if(fighter.getPreviousLeftEdge() >= solid.getPreviousRightEdge()){
-						fighter.collideWithSolid(Direction.West, solid.getRightEdge(), solid);
+						fighter.collideWithSolid(Direction.West, solid.getRightEdge() + 0.001f, solid);
 					}
 					
 					//Right
 					if(fighter.getPreviousRightEdge() <= solid.getPreviousLeftEdge()){
-						fighter.collideWithSolid(Direction.East, solid.getLeftEdge(), solid);
+						fighter.collideWithSolid(Direction.East, solid.getLeftEdge() - 0.001f, solid);
 					}
 					
 					//Top
 					if(fighter.getPreviousTopEdge() >= solid.getPreviousBottomEdge()){
-						fighter.collideWithSolid(Direction.North, solid.getBottomEdge(), solid);
+						fighter.collideWithSolid(Direction.North, solid.getBottomEdge() + 0.001f, solid);
 					}
 					
 					//Bottom
 					if(fighter.getPreviousBottomEdge() <= solid.getPreviousTopEdge()){
-						fighter.collideWithSolid(Direction.South, solid.getTopEdge(), solid);
+						fighter.collideWithSolid(Direction.South, solid.getTopEdge() - 0.001f, solid);
 					}
 				}
 			}
 			
 			// Collide with platform
 			for(LevelObject platform : level.platformObjects){
-				if(fighter.getBottomEdge() > platform.getTopEdge() && fighter.getPreviousBottomEdge() <= platform.getTopEdge()
+				if(fighter.getBottomEdge() > platform.getTopEdge() && fighter.getPreviousBottomEdge() <= platform.getPreviousTopEdge()
 				&& fighter.getLeftEdge() < platform.getRightEdge() && fighter.getRightEdge() > platform.getLeftEdge()){
-					fighter.collideWithPlatform(platform.getTopEdge(), platform);
+					fighter.collideWithPlatform(platform.getTopEdge() - 0.001f, platform);
 				}
 			}
 		}

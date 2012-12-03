@@ -27,7 +27,8 @@ public class MovingBalloon extends LevelObjectStretch{
 		lastY = posY;
 		totalTime += delta;
 		
-		this.posX += .01 * Math.sin(totalTime * velX);
+		velX = (float)Math.sin(totalTime * 1.0f);
+		this.posX += delta * velX;
 		this.posY += delta * velY;
 		if(this.posY < -15.0f){
 			this.posY = 12.0f;
@@ -36,7 +37,12 @@ public class MovingBalloon extends LevelObjectStretch{
 	}
 	
 	public void render(double delta){
-		Render.render(sprite, this);
+		float extraWidth = 0.3333f * getSizeX();
+		Render.render(sprite, 
+				getLeftEdge() - extraWidth, 
+				getRightEdge() + extraWidth, 
+				getTopEdge() - extraWidth*0.5f,
+				getBottomEdge() + extraWidth*1.5f);
 	}
 
 	public float getPreviousLeftEdge(){ return lastX; }

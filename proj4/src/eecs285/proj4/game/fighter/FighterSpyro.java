@@ -6,11 +6,11 @@ import eecs285.proj4.game.Direction;
 import eecs285.proj4.util.UtilObject;
 
 public class FighterSpyro extends Fighter {
-	private static final float WIDTH = 1.2f;
+	private static final float WIDTH = 1.0f;
 	private static final float HEIGHT = 2.1f;
 	
 	public FighterSpyro(FighterTrait trait){
-		super("Fighter Spyro", trait, 0.0f - WIDTH*0.5f, 0.0f + WIDTH*0.5f, 0.0f - HEIGHT, 0.0f);
+		super("Fighter Spyro", trait, 0.0f - WIDTH, 0.0f + WIDTH, 0.0f - HEIGHT, 0.0f);
 		
 		maxWalkSpeed = 5.0f;
 		forwardAcceleration = 15.0f;
