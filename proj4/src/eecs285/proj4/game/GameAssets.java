@@ -38,8 +38,6 @@ public class GameAssets {
 		if(!texturesInitialized){
 			try {
 				Texture texture; 
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Button.png"));
-				textures.put("button", texture);
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Menu_Selector.png"));
 				textures.put("select", texture);
@@ -178,49 +176,49 @@ public class GameAssets {
 				
 				// Sound effects
 				// Menu
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Menu1.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Menu1.ogg"));
 				sounds.put("menu_move", oggEffect);
 				sounds.put("menu_select", oggEffect);
 				sounds.put("menu_new_player", oggEffect);
 
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Menu2.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Menu2.ogg"));
 				sounds.put("menu_move_2", oggEffect);
 				
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/MenuBack.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("MenuBack.ogg"));
 				sounds.put("menu_back", oggEffect);
 				
 				// Game sounds
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Explode.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Explode.ogg"));
 				sounds.put("explode", oggEffect);
 				
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/SurgeContact.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Surgecontact.ogg"));
 				sounds.put("electric", oggEffect);
 				
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/HitGround.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("HitGround.ogg"));
 				sounds.put("hit_ground", oggEffect);
 
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Jump.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Jump.ogg"));
 				sounds.put("jump", oggEffect);
 				
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Jump2.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("Jump2.ogg"));
 				sounds.put("jump_air", oggEffect);
 				
 				
 				
 				// Music
-				oggEffect = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Hybrid Orchestral Rock.ogg"));
+				oggEffect = AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("Hybrid Orchestral Rock.ogg"));
 				music.put("music_menu", oggEffect);
 
-				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Pipes.ogg"));
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("Pipes.ogg"));
 				music.put("music_mario", oggEffect);
 				
-				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Chemical Juice.ogg"));
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("Chemical Juice.ogg"));
 				music.put("music_sonic", oggEffect);
 				
-				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Disconnected.ogg"));
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("Disconnected.ogg"));
 				music.put("music_rayman", oggEffect);
 				
-				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("audio/Dark Hollow Moonlight.ogg"));
+				oggEffect =  AudioLoader.getStreamingAudio("OGG", ResourceLoader.getResource("Dark Hollow Moonlight.ogg"));
 				music.put("music_spyro", oggEffect);
 				
 				
