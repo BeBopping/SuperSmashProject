@@ -235,7 +235,7 @@ public class FighterMario extends Fighter {
 			boxes[0].healthScaler = 400.0f;			// scale = 1 + health/healthScaler
 			boxes[0].hitSpeedX = 0.05f;
 			boxes[0].hitSpeedY = -10.0f;
-			boxes[0].flightTime = 10.35f;
+			boxes[0].flightTime = 0.35f;
 			boxes[0].stunTime = 0.1f;
 			boxes[0].isStationaryInAir = false;
 			boxes[0].isStationaryOnGround = true;
