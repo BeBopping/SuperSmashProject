@@ -122,6 +122,9 @@ public class Assets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterSpyro.png"));
 				textures.put("fighter_spyro", texture);
 				
+				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("FighterSonic.png"));
+				textures.put("fighter_sonic", texture);
+				
 				// Player select fighters
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Fighters.png"));
 				textures.put("fighters", texture);
