@@ -95,24 +95,6 @@ public class Battle implements GameState {
 	public void onDeactivate(){}
 
 	public void getInput(double delta){
-		// TODO : Get rid of this
-			boolean tempKeyPress = (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Keyboard.isKeyDown(Keyboard.KEY_BACK));
-			
-			Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
-			for(Controller controller : controllers){
-				controller.poll();
-				Component component = controller.getComponent(Identifier.Button._6);
-				if(component != null){
-					if(component.getPollData() >= 0.75f){
-						tempKeyPress = true;
-					}
-				}
-			}
-			
-			if(tempKeyPress){
-				endGame();
-			}
-		
 		// Get fighter input
 		for(Fighter fighter : fighters){
 			fighter.getInput(delta);
