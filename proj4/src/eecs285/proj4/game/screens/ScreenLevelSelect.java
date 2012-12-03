@@ -34,7 +34,7 @@ public class ScreenLevelSelect extends ScreenMenu {
 		
 		this.battleInfo = battleInfo;
 		
-		background = GameAssets.GetTexture("title_screen_background");
+		background = GameAssets.GetTexture("level_screen_background");
 		titleFont = GameAssets.GetFont("title");
 	}
 
@@ -43,7 +43,7 @@ public class ScreenLevelSelect extends ScreenMenu {
 		
 		Render.render(titleFont, window, "Level Select", 
 				window.getCenterX(), window.getTop() + 1.0f, 
-				window.getSizeY()/16.0f, 0.5f, 0.0f, Color.black);
+				window.getSizeY()/16.0f, 0.5f, 0.0f, Color.red);
 		
 		super.render(delta);
 	}

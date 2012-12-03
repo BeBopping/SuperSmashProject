@@ -61,7 +61,7 @@ public class ScreenPlayerSelect implements GameState {
 		timeArea = new UtilObject(70.0f, 82.0f, 30.0f, 35.0f);
 		startArea = new UtilObject(60.0f, 90.0f, 40.0f, 50.0f);
 		
-		background = GameAssets.GetTexture("title_screen_background"); 
+		background = GameAssets.GetTexture("player_screen_background"); 
 		titleFont = GameAssets.GetFont("title");
 		
 		controllers = InputDetector.getAllInputDevices();
@@ -237,7 +237,7 @@ public class ScreenPlayerSelect implements GameState {
 		
 		Render.render(titleFont, window, "Player Select", 
 				window.getCenterX(), window.getTop() + 1.0f, 
-				window.getSizeY()/16.0f, 0.5f, 0.0f, Color.black);
+				window.getSizeY()/16.0f, 0.5f, 0.0f, Color.blue);
 		
 		// Render selectable fighters
 		for(SelectableFighter fighter : selectableFighters){
@@ -247,7 +247,7 @@ public class ScreenPlayerSelect implements GameState {
 		// Render Stock settings
 		Render.render(titleFont, window, "Stock: ", 
 				stockArea.getLeftEdge() - 5.0f, stockArea.getTopEdge(), 
-				stockArea.getSizeY(), 1.0f, 0.0f, Color.black);
+				stockArea.getSizeY(), 1.0f, 0.0f, Color.blue);
 		
 		Render.render(GameAssets.GetTexture("white"), stockArea, Color.gray);
 		
@@ -261,7 +261,7 @@ public class ScreenPlayerSelect implements GameState {
 		// Render Time settings
 		Render.render(titleFont, window, "Time: ", 
 				stockArea.getLeftEdge() - 5.0f, timeArea.getTopEdge(), 
-				stockArea.getSizeY(), 1.0f, 0.0f, Color.black);
+				stockArea.getSizeY(), 1.0f, 0.0f, Color.blue);
 
 		Render.render(GameAssets.GetTexture("white"), timeArea, Color.gray);
 		

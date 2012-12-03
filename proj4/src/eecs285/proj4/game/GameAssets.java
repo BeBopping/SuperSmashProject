@@ -43,14 +43,15 @@ public class GameAssets {
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Menu_Selector.png"));
 				textures.put("select", texture);
 				
-				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Sky.png"));
+				texture = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("GrayBackground.jpg"));
 				textures.put("start_menu_background", texture);
+				textures.put("player_screen_background", texture);
+				textures.put("level_screen_background", texture);
+				textures.put("about_screen_background", texture);
+				textures.put("how_to_play_screen_background", texture);
 
 				texture = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("TitleScreen.jpg"));
 				textures.put("title_screen_background", texture);
-				textures.put("about_screen_background", texture);
-				textures.put("how_to_play_screen_background", texture);
-				//textures.put("level_mario_background", texture);
 				
 				sprites.put("example_sprite", new Sprite(texture, 0.0f, 0.1f, 0.0f, 0.1f));
 				
