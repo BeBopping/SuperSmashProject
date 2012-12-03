@@ -37,7 +37,7 @@ public class Battle implements GameState {
 	float timeLeft;
 	
 	public Battle(BattleInfo battleInfo){
-		level = Assets.GetLevel(battleInfo.getLevel());
+		level = GameAssets.GetLevel(battleInfo.getLevel());
 		
 		float aspectRatio = (float)DisplayInfo.GetWidth() / (float) DisplayInfo.GetHeight();
 		
@@ -60,8 +60,8 @@ public class Battle implements GameState {
 								level.minOutline.getBottomEdge());
 		}
 		
-		titleFont = Assets.GetFont("title");
-		percentageFont = Assets.GetFont("percentage");
+		titleFont = GameAssets.GetFont("title");
+		percentageFont = GameAssets.GetFont("percentage");
 		
 		// Setup Characters
 		fighters = battleInfo.getFighters();
@@ -347,7 +347,7 @@ public class Battle implements GameState {
 			for(Fighter fighter : fighters){
 				if(!fighter.isActive){ continue; }
 				
-				Render.render(Assets.GetTexture("square"), fighter, Color.blue);
+				Render.render(GameAssets.GetTexture("square"), fighter, Color.blue);
 				if(fighter.currentAttack != null){
 					fighter.currentAttack.debugRender(delta);
 				}
@@ -369,7 +369,7 @@ public class Battle implements GameState {
 			float stockPosY = posY + 5.0f;
 			float stockPosX = posX - ((float)(fighter.stock-1) * 0.5f)*(imageSize + imageSpacing);
 			for(int i=0; i<fighter.stock; i++){
-				Render.render(Assets.GetTexture("circle"), 
+				Render.render(GameAssets.GetTexture("circle"), 
 								stockPosX, 
 								stockPosX+imageSize, 
 								stockPosY, 
@@ -400,7 +400,7 @@ public class Battle implements GameState {
 			}
 			text += "  ";
 	
-			Render.render(Assets.GetTexture("white"), 40, 60, 1, 11, Color.gray);
+			Render.render(GameAssets.GetTexture("white"), 40, 60, 1, 11, Color.gray);
 			Render.render(titleFont, hud, text, 50, 6, 10, 0.5f, 0.5f, Color.black);
 		}
 	}

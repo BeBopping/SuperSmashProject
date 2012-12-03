@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Game;
 import eecs285.proj4.game.SelectableObject;
 import eecs285.proj4.game.input.Input;
@@ -72,7 +72,7 @@ public class ScreenMenu implements GameState{
 			object.resetState();
 		}
 		
-		Game.setMusic(Assets.GetMusic("music_menu"));
+		Game.setMusic(GameAssets.GetMusic("music_menu"));
 	}
 	
 	public void onDeactivate(){}
@@ -110,7 +110,7 @@ public class ScreenMenu implements GameState{
 		window.step(delta);
 		
 		if(exitState){
-			Assets.GetSound("menu_back").playAsSoundEffect(1.0f, 1.0f, false);
+			GameAssets.GetSound("menu_back").playAsSoundEffect(1.0f, 1.0f, false);
 			Game.popGameState();
 			return;
 		}

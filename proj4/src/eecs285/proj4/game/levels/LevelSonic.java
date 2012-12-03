@@ -1,6 +1,6 @@
 package eecs285.proj4.game.levels;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Game;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
@@ -13,14 +13,14 @@ public class LevelSonic extends Level{
 		
 		levelName = "Second Level";
 		minOutline = new UtilObject(-6.0f, 6.0f, 0.0f, 7.5f);
-		background = Assets.GetTexture("level_sonic_background2");
+		background = GameAssets.GetTexture("level_sonic_background2");
 		
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), -6.5f, -3.5f, 3.5f, 4.0f));
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), 3.5f, 6.5f, 3.5f, 4.0f));
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_platform"), -1.5f, 1.5f, 1.0f, 1.5f));
-		solidObjects.add(new LevelObjectStretch(Assets.GetSprite("level_sonic_ground"), -8.0f, 8.0f, 6.0f, 7.0f));
-		solidObjects.add(new MovingLevelBlock(Assets.GetSprite("level_sonic_block"), -2.5f, -1.0f, -0.5f, 1.0f, false));
-		solidObjects.add(new MovingLevelBlock(Assets.GetSprite("level_sonic_block"), 1.0f, 2.5f, 2.0f, 3.5f, true));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_sonic_platform"), -6.5f, -3.5f, 3.5f, 4.0f));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_sonic_platform"), 3.5f, 6.5f, 3.5f, 4.0f));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_sonic_platform"), -1.5f, 1.5f, 1.0f, 1.5f));
+		solidObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_sonic_ground"), -8.0f, 8.0f, 6.0f, 7.0f));
+		solidObjects.add(new MovingLevelBlock(GameAssets.GetSprite("level_sonic_block"), -2.5f, -1.0f, -0.5f, 1.0f, false));
+		solidObjects.add(new MovingLevelBlock(GameAssets.GetSprite("level_sonic_block"), 1.0f, 2.5f, 2.0f, 3.5f, true));
 		
 		startX[0] = -5.0f;
 		startY[0] = 3.5f;
@@ -31,7 +31,7 @@ public class LevelSonic extends Level{
 		startX[3] = -2.0f;
 		startY[3] = 6.0f;
 
-		Game.setMusic(Assets.GetMusic("music_sonic"));
+		Game.setMusic(GameAssets.GetMusic("music_sonic"));
 	}
 	public void step(double delta){
 		for(LevelObject object : solidObjects){

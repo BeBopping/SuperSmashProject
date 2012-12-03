@@ -22,7 +22,7 @@ import eecs285.proj4.game.levels.LevelSonic;
 import eecs285.proj4.game.levels.LevelSpyro;
 import eecs285.proj4.util.Sprite;
 
-public class Assets {
+public class GameAssets {
 	private static boolean texturesInitialized = false;
 	private static boolean soundsInitialized = false;
 	private static boolean fontsInitialized = false;
@@ -284,5 +284,5 @@ public class Assets {
 		return new FighterMario(trait);
 	}
 	
-	private Assets(){}
+	private GameAssets(){}
 }

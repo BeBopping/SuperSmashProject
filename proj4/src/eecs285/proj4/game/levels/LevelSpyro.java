@@ -1,6 +1,6 @@
 package eecs285.proj4.game.levels;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Game;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
@@ -13,15 +13,15 @@ public class LevelSpyro extends Level {
 		
 		levelName = "Spyro Level";
 		minOutline = new UtilObject(-9.5f, 9.5f, 0.0f, 7.5f);
-		background = Assets.GetTexture("level_spyro_background");
+		background = GameAssets.GetTexture("level_spyro_background");
 		
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_spyro_bridge"), -4.5f, 4.5f, 1.0f, 2.0f));
-		platformObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), 4.5f, 6.5f, 1.0f, 7.0f));
-		platformObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -6.5f, -4.5f, 1.0f, 7.0f));
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_spyro_block"), 4.5f, 6.5f, 1.0f, 2.0f));
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_spyro_block"), -6.5f, -4.5f, 1.0f, 2.0f));
-		solidObjects.add(new LevelObjectRepeating2D(Assets.GetSprite("level_spyro_ground"), -8.5f, 8.5f, 7.0f, 15.2f, 1.0f, 1.0f));
-		platformObjects.add(new LevelObjectRepeating2D(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 7.2f, 15.2f, 2.833333f, 2.833333f));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_spyro_bridge"), -4.5f, 4.5f, 1.0f, 2.0f));
+		platformObjects.add(new LevelObjectRepeating(GameAssets.GetSprite("level_spyro_wall"), 4.5f, 6.5f, 1.0f, 7.0f));
+		platformObjects.add(new LevelObjectRepeating(GameAssets.GetSprite("level_spyro_wall"), -6.5f, -4.5f, 1.0f, 7.0f));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_spyro_block"), 4.5f, 6.5f, 1.0f, 2.0f));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_spyro_block"), -6.5f, -4.5f, 1.0f, 2.0f));
+		solidObjects.add(new LevelObjectRepeating2D(GameAssets.GetSprite("level_spyro_ground"), -8.5f, 8.5f, 7.0f, 15.2f, 1.0f, 1.0f));
+		platformObjects.add(new LevelObjectRepeating2D(GameAssets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 7.2f, 15.2f, 2.833333f, 2.833333f));
 		/*
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_ground"), -8.5f, 8.5f, 7.0f, 8.0f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 7.2f, 8.2f));
@@ -43,7 +43,7 @@ public class LevelSpyro extends Level {
 		startX[3] = 3.0f;
 		startY[3] = 7.0f;
 
-		Game.setMusic(Assets.GetMusic("music_spyro"));
+		Game.setMusic(GameAssets.GetMusic("music_spyro"));
 	}
 
 	public void step(double delta){

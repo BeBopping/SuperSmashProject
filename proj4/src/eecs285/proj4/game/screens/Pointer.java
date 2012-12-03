@@ -3,7 +3,7 @@ package eecs285.proj4.game.screens;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.game.input.Input;
 import eecs285.proj4.util.Render;
@@ -25,7 +25,7 @@ public class Pointer extends MovingObject {
 		this.input = input;
 		this.window = window;
 		
-		texture = Assets.GetTexture("pointer");
+		texture = GameAssets.GetTexture("pointer");
 
 		setColor(color);
 	}

@@ -1,7 +1,7 @@
 package eecs285.proj4.game.fighter;
 
 import static eecs285.proj4.game.Direction.*;
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.util.UtilObject;
 
@@ -29,7 +29,7 @@ public class FighterMario extends Fighter {
 		visualWidth = 3.0f;
 		visualHeight = 3.0f;
 		
-		fighterTexture = Assets.GetTexture("fighter_mario");
+		fighterTexture = GameAssets.GetTexture("fighter_mario");
 		distancePerRunSprite = 0.5f;
 	}
 

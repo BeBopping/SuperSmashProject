@@ -1,7 +1,7 @@
 package eecs285.proj4.game.fighter;
 
 import static eecs285.proj4.game.Direction.*;
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.game.MovingObject;
 import eecs285.proj4.game.input.Input;
@@ -251,7 +251,7 @@ public abstract class Fighter extends MovingObject {
 					else{
 						jumpTime = delta;
 						
-						Assets.GetSound("jump").playAsSoundEffect(1.0f, 1.0f, false);
+						GameAssets.GetSound("jump").playAsSoundEffect(1.0f, 1.0f, false);
 					}
 				}
 				// This might nt be needed
@@ -282,7 +282,7 @@ public abstract class Fighter extends MovingObject {
 							jumpTime -= delta;
 						}
 						else if(canDoubleJump && jumpTime >= -secondJumpLiniencyTime){
-							Assets.GetSound("jump_air").playAsSoundEffect(1.0f, 1.0f, false);
+							GameAssets.GetSound("jump_air").playAsSoundEffect(1.0f, 1.0f, false);
 							
 							jumpTime = delta;
 							canDoubleJump = false;
@@ -739,7 +739,7 @@ public abstract class Fighter extends MovingObject {
 	private void hitGround(){
 		onGround = true;
 		if(!onGroundLast){
-			Assets.GetSound("hit_ground").playAsSoundEffect(1.0f, 1.0f, false);
+			GameAssets.GetSound("hit_ground").playAsSoundEffect(1.0f, 1.0f, false);
 		}
 	}
 	

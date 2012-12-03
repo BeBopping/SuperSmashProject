@@ -7,7 +7,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Battle;
 import eecs285.proj4.game.BattleInfo;
 import eecs285.proj4.game.Game;
@@ -61,8 +61,8 @@ public class ScreenPlayerSelect implements GameState {
 		timeArea = new UtilObject(70.0f, 82.0f, 30.0f, 35.0f);
 		startArea = new UtilObject(60.0f, 90.0f, 40.0f, 50.0f);
 		
-		background = Assets.GetTexture("title_screen_background"); 
-		titleFont = Assets.GetFont("title");
+		background = GameAssets.GetTexture("title_screen_background"); 
+		titleFont = GameAssets.GetFont("title");
 		
 		controllers = InputDetector.getAllInputDevices();
 		selectableFighters = new ArrayList<SelectableFighter>();
@@ -71,14 +71,14 @@ public class ScreenPlayerSelect implements GameState {
 		playerFighters = new ArrayList<String>();
 		
 		// Add selectable fighters
-		selectableFighters.add(new SelectableFighter("fighter_mario", Assets.GetSprite("fighter_mario"), 10.0f, 25.0f, 20.0f, 35.0f));
-		selectableFighters.add(new SelectableFighter("fighter_sonic", Assets.GetSprite("fighter_sonic"), 30.0f, 45.0f, 20.0f, 35.0f));
-		selectableFighters.add(new SelectableFighter("fighter_rayman", Assets.GetSprite("fighter_rayman"), 10.0f, 25.0f, 40.0f, 55.0f));
-		selectableFighters.add(new SelectableFighter("fighter_spyro", Assets.GetSprite("fighter_spyro"), 30.0f, 45.0f, 40.0f, 55.0f));
+		selectableFighters.add(new SelectableFighter("fighter_mario", GameAssets.GetSprite("fighter_mario"), 10.0f, 25.0f, 20.0f, 35.0f));
+		selectableFighters.add(new SelectableFighter("fighter_sonic", GameAssets.GetSprite("fighter_sonic"), 30.0f, 45.0f, 20.0f, 35.0f));
+		selectableFighters.add(new SelectableFighter("fighter_rayman", GameAssets.GetSprite("fighter_rayman"), 10.0f, 25.0f, 40.0f, 55.0f));
+		selectableFighters.add(new SelectableFighter("fighter_spyro", GameAssets.GetSprite("fighter_spyro"), 30.0f, 45.0f, 40.0f, 55.0f));
 	}
 	
 	public void onActivate(){
-		Game.setMusic(Assets.GetMusic("music_menu"));
+		Game.setMusic(GameAssets.GetMusic("music_menu"));
 	}
 	
 	public void onDeactivate(){}
@@ -209,13 +209,13 @@ public class ScreenPlayerSelect implements GameState {
 						Fighter[] fighters = new Fighter[Math.max(numPlayers,4)]; //8
 						
 						for(int j=0; j<numPlayers; ++j){
-							fighters[j] = Assets.GetFighter(playerFighters.get(j), FighterTrait.Normal);
+							fighters[j] = GameAssets.GetFighter(playerFighters.get(j), FighterTrait.Normal);
 							fighters[j].SetInput(activePlayers.get(j));
 						}
 	
 						//TODO: CHANGE!
 						for(int j=numPlayers; j<4; ++j){
-							fighters[j] = Assets.GetFighter("fighter_mario", FighterTrait.Normal);
+							fighters[j] = GameAssets.GetFighter("fighter_mario", FighterTrait.Normal);
 							fighters[j].SetInput(new InputKeyboard());
 						}
 						
@@ -249,7 +249,7 @@ public class ScreenPlayerSelect implements GameState {
 				stockArea.getLeftEdge() - 5.0f, stockArea.getTopEdge(), 
 				stockArea.getSizeY(), 1.0f, 0.0f, Color.black);
 		
-		Render.render(Assets.GetTexture("white"), stockArea, Color.gray);
+		Render.render(GameAssets.GetTexture("white"), stockArea, Color.gray);
 		
 		String stockString = "None";
 		int stock = battleInfo.getStock();
@@ -263,7 +263,7 @@ public class ScreenPlayerSelect implements GameState {
 				stockArea.getLeftEdge() - 5.0f, timeArea.getTopEdge(), 
 				stockArea.getSizeY(), 1.0f, 0.0f, Color.black);
 
-		Render.render(Assets.GetTexture("white"), timeArea, Color.gray);
+		Render.render(GameAssets.GetTexture("white"), timeArea, Color.gray);
 		
 		String timeString = "None";
 		int time = battleInfo.getMinutes();
@@ -274,7 +274,7 @@ public class ScreenPlayerSelect implements GameState {
 
 		// Display start button
 		if(readyToStart()){
-			Render.render(Assets.GetTexture("white"), startArea, Color.red);
+			Render.render(GameAssets.GetTexture("white"), startArea, Color.red);
 			Render.render(titleFont, window, "Start!",
 					startArea.getCenterX(), startArea.getCenterY(), 
 					startArea.getSizeY(), 0.65f, 0.5f, Color.black);
@@ -295,7 +295,7 @@ public class ScreenPlayerSelect implements GameState {
 				fighterName = playerFighters.get(i);
 			}
 			
-			Render.render(Assets.GetSprite(fighterName), pos, pos+width, 75 - width*0.5f, 75 + width*0.5f, pointers.get(i).getColor(), false);
+			Render.render(GameAssets.GetSprite(fighterName), pos, pos+width, 75 - width*0.5f, 75 + width*0.5f, pointers.get(i).getColor(), false);
 			
 			pos += width + separation;
 		}

@@ -111,10 +111,10 @@ public class Game {
 			System.exit(0);
 		}
 		
-		Assets.InitializeTextures();
-		Assets.InitializeSounds();
-		Assets.InitializeFonts();
-		Assets.InitializeSounds();
+		GameAssets.InitializeTextures();
+		GameAssets.InitializeSounds();
+		GameAssets.InitializeFonts();
+		GameAssets.InitializeSounds();
 	}
 	
 	private void resetScreenPos(){

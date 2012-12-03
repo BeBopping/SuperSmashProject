@@ -17,7 +17,7 @@ public abstract class SelectableObject extends UtilObject {
 			if(currentState != State.BEGIN_MOUSE_PRESS && currentState != State.CONTINUE_MOUSE_PRESS){
 				currentState = State.BEGIN_MOUSE_PRESS;
 
-				Assets.GetSound("menu_select").playAsSoundEffect(1.0f, 1.0f, false);
+				GameAssets.GetSound("menu_select").playAsSoundEffect(1.0f, 1.0f, false);
 			}
 			else{
 				currentState = State.CONTINUE_MOUSE_PRESS;
@@ -35,7 +35,7 @@ public abstract class SelectableObject extends UtilObject {
 			if(currentState == State.NONE || currentState == State.END_MOUSE_PRESS){
 				currentState = State.HOVERING;
 				
-				Assets.GetSound("menu_move").playAsSoundEffect(1.0f, 1.0f, false);
+				GameAssets.GetSound("menu_move").playAsSoundEffect(1.0f, 1.0f, false);
 			}
 		}
 		else{

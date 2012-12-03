@@ -6,7 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Battle;
 import eecs285.proj4.game.BattleInfo;
 import eecs285.proj4.game.Game;
@@ -34,8 +34,8 @@ public class ScreenLevelSelect extends ScreenMenu {
 		
 		this.battleInfo = battleInfo;
 		
-		background = Assets.GetTexture("title_screen_background");
-		titleFont = Assets.GetFont("title");
+		background = GameAssets.GetTexture("title_screen_background");
+		titleFont = GameAssets.GetFont("title");
 	}
 
 	public void render(double delta){
@@ -57,8 +57,8 @@ public class ScreenLevelSelect extends ScreenMenu {
 		
 		public LevelItem(float left, float right, float top, float bottom, String visibleName, String key) {
 			super(left, right, top, bottom);
-			highLight = Assets.GetTexture("select");
-			font = Assets.GetFont("times_bold");
+			highLight = GameAssets.GetTexture("select");
+			font = GameAssets.GetFont("times_bold");
 			
 			this.visibleName = visibleName;
 			this.key = key;

@@ -1,6 +1,6 @@
 package eecs285.proj4.game.levels;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Game;
 import eecs285.proj4.game.levels.Level;
 import eecs285.proj4.util.Render;
@@ -12,11 +12,11 @@ public class LevelMario extends Level {
 		
 		levelName = "First Level";
 		minOutline = new UtilObject(-8.5f, 9.5f, 0.0f, 7.5f);
-		background = Assets.GetTexture("level_mario_background");
+		background = GameAssets.GetTexture("level_mario_background");
 		
-		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_mario_platform"), -7.0f, 0.0f, 3.0f, 4.0f));
-		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_mario_floor"), -8.0f, 9.0f, 6.0f, 7.0f));
-		solidObjects.add(new LevelObjectStretch(Assets.GetSprite("level_mario_pipe"), 8.0f, 9.0f, 3.0f, 6.0f));
+		platformObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_mario_platform"), -7.0f, 0.0f, 3.0f, 4.0f));
+		solidObjects.add(new LevelObjectRepeating(GameAssets.GetSprite("level_mario_floor"), -8.0f, 9.0f, 6.0f, 7.0f));
+		solidObjects.add(new LevelObjectStretch(GameAssets.GetSprite("level_mario_pipe"), 8.0f, 9.0f, 3.0f, 6.0f));
 
 		// Starting points for each character
 		startX[0] = -3.0f;
@@ -28,7 +28,7 @@ public class LevelMario extends Level {
 		startX[3] = 0.0f;
 		startY[3] = 6.0f;
 
-		Game.setMusic(Assets.GetMusic("music_mario"));
+		Game.setMusic(GameAssets.GetMusic("music_mario"));
 	}
 
 	public void step(double delta){

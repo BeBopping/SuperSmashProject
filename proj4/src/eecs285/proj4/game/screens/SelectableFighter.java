@@ -2,7 +2,7 @@ package eecs285.proj4.game.screens;
 
 import org.newdawn.slick.Color;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.Sprite;
 import eecs285.proj4.util.UtilObject;
@@ -42,7 +42,7 @@ public class SelectableFighter extends UtilObject {
 
 		if(selectTimer > 0.0f){
 			float value = (selectTimer / MAX_SELECTION_TIME) * 0.5f + 0.25f;
-			Render.render(Assets.GetTexture("white"), this, new Color(1.0f, 1.0f, 1.0f, value));
+			Render.render(GameAssets.GetTexture("white"), this, new Color(1.0f, 1.0f, 1.0f, value));
 		}
 	}
 	

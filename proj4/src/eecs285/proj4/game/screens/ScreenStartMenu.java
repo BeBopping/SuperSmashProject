@@ -6,7 +6,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Game;
 import eecs285.proj4.game.SelectableObject;
 import eecs285.proj4.util.Window;
@@ -25,7 +25,7 @@ public class ScreenStartMenu extends ScreenMenu {
 		
 		initMenuItems(menuItems);
 		
-		background = Assets.GetTexture("title_screen_background");
+		background = GameAssets.GetTexture("title_screen_background");
 	}
 	
 	public void render(double delta){
@@ -42,8 +42,8 @@ public class ScreenStartMenu extends ScreenMenu {
 		
 		public StartItem(float left, float right, float top, float bottom) {
 			super(left, right, top, bottom);
-			highLight = Assets.GetTexture("select");
-			font = Assets.GetFont("times_bold");
+			highLight = GameAssets.GetTexture("select");
+			font = GameAssets.GetFont("times_bold");
 		}
 
 		public void step(double delta){

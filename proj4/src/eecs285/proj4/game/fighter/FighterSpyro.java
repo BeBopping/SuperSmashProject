@@ -1,7 +1,7 @@
 package eecs285.proj4.game.fighter;
 
 import static eecs285.proj4.game.Direction.*;
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.game.Direction;
 import eecs285.proj4.util.UtilObject;
 
@@ -29,7 +29,7 @@ public class FighterSpyro extends Fighter {
 		visualWidth = 5.0f;
 		visualHeight = 5.0f;
 		
-		fighterTexture = Assets.GetTexture("fighter_spyro");
+		fighterTexture = GameAssets.GetTexture("fighter_spyro");
 		distancePerRunSprite = 0.5f;
 	}
 

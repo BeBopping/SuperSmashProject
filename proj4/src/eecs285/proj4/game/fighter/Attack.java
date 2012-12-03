@@ -2,7 +2,7 @@ package eecs285.proj4.game.fighter;
 
 import org.newdawn.slick.Color;
 
-import eecs285.proj4.game.Assets;
+import eecs285.proj4.game.GameAssets;
 import eecs285.proj4.util.Render;
 import eecs285.proj4.util.SmallSprite;
 import eecs285.proj4.util.UtilObject;
@@ -49,7 +49,7 @@ public class Attack {
 		for(CollisionBox box : boxes){
 			if(box.isAlive(currentTime)){
 				UtilObject collisionBox = box.getBox(currentTime, owner);
-				Render.render(Assets.GetTexture("square"), 
+				Render.render(GameAssets.GetTexture("square"), 
 								collisionBox.getLeftEdge(), 
 								collisionBox.getRightEdge(), 
 								collisionBox.getTopEdge(), 
