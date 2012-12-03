@@ -192,7 +192,7 @@ public class Assets {
 				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/SurgeContact.ogg"));
 				sounds.put("electric", oggEffect);
 				
-				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Explode.ogg"));
+				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/HitGround.ogg"));
 				sounds.put("hit_ground", oggEffect);
 
 				oggEffect = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("audio/Jump.ogg"));
