@@ -49,7 +49,7 @@ public class FighterMario extends Fighter {
 			boxes[0].hitSpeedY = -6.0f;
 			boxes[0].flightTime = 0.45f;
 			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
+			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
@@ -66,7 +66,7 @@ public class FighterMario extends Fighter {
 			boxes[1].hitSpeedY = -6.0f;
 			boxes[1].flightTime = 0.45f;
 			boxes[1].stunTime = 0.1f;
-			boxes[1].isStationaryInAir = false;
+			boxes[1].isStationaryInAir = true;
 			boxes[1].isStationaryOnGround = true;
 			boxes[1].isOverridingGravity = false;
 			boxes[1].canChangeDirection = false;
@@ -92,7 +92,7 @@ public class FighterMario extends Fighter {
 			boxes[0].hitSpeedY = -10.0f;
 			boxes[0].flightTime = 0.35f;
 			boxes[0].stunTime = 0.2f;
-			boxes[0].isStationaryInAir = false;
+			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
@@ -118,7 +118,7 @@ public class FighterMario extends Fighter {
 			boxes[0].hitSpeedY = -2.0f;
 			boxes[0].flightTime = 0.45f;
 			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
+			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
@@ -135,7 +135,7 @@ public class FighterMario extends Fighter {
 			boxes[1].hitSpeedY = -2.0f;
 			boxes[1].flightTime = 0.35f;
 			boxes[1].stunTime = 0.1f;
-			boxes[1].isStationaryInAir = false;
+			boxes[1].isStationaryInAir = true;
 			boxes[1].isStationaryOnGround = true;
 			boxes[1].isOverridingGravity = false;
 			boxes[1].canChangeDirection = false;
@@ -165,7 +165,7 @@ public class FighterMario extends Fighter {
 			boxes[0].hitSpeedY = -7.0f;
 			boxes[0].flightTime = 0.35f;
 			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
+			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = false;
 			boxes[0].canChangeDirection = false;
@@ -475,8 +475,8 @@ public class FighterMario extends Fighter {
 		else if(dir == South){
 			CollisionBox[] boxes = new CollisionBox[2];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f);		// From players center Base
+			boxes[0].startBox = new UtilObject(-0.65f, 0.65f, -1.5f, 0.05f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(-0.65f, 0.65f, -1.5f, 0.05f);		// From players center Base
 			boxes[0].delay = 0.3f;
 			boxes[0].duration = 0.3f;
 			boxes[0].damage = 12;
