@@ -13,6 +13,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import eecs285.proj4.game.fighter.Fighter;
 import eecs285.proj4.game.fighter.FighterMario;
+import eecs285.proj4.game.fighter.FighterSonic;
 import eecs285.proj4.game.fighter.FighterSpyro;
 import eecs285.proj4.game.fighter.FighterTrait;
 import eecs285.proj4.game.levels.Level;
@@ -140,9 +141,9 @@ public class GameAssets {
 				// Player select fighters
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Fighters.png"));
 				textures.put("fighters", texture);
-				sprites.put("fighter_mario",  new Sprite(texture, 0.000f, 0.125f, 0.0f, 0.125f));
-				sprites.put("fighter_sonic",  new Sprite(texture, 0.125f, 0.250f, 0.0f, 0.125f));
-				sprites.put("fighter_rayman", new Sprite(texture, 0.250f, 0.375f, 0.0f, 0.125f));
+				sprites.put("fighter_sonic",  new Sprite(texture, 0.000f, 0.125f, 0.0f, 0.125f));
+				sprites.put("fighter_rayman",  new Sprite(texture, 0.125f, 0.250f, 0.0f, 0.125f));
+				sprites.put("fighter_mario", new Sprite(texture, 0.250f, 0.375f, 0.0f, 0.125f));
 				sprites.put("fighter_spyro",  new Sprite(texture, 0.375f, 0.500f, 0.0f, 0.125f));
 				sprites.put("fighter_empty",  new Sprite(texture, 0.875f, 1.000f, 0.875f, 1.000f));
 				
@@ -274,10 +275,10 @@ public class GameAssets {
 			return new FighterMario(trait);
 		}
 		else if(string.equals("fighter_sonic")){
-			//return new FighterSonic(trait)();
+			return new FighterSonic(trait);
 		}
 		else if(string.equals("fighter_rayman")){
-			//return new FighterRayman(trait)();
+			//return new FighterRayman(trait);
 		}
 		else if(string.equals("fighter_spyro")){
 			return new FighterSpyro(trait);
