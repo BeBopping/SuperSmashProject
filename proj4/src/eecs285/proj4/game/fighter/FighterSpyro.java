@@ -243,7 +243,7 @@ public class FighterSpyro extends Fighter {
 			boxes[1].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
 			boxes[1].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
 			boxes[1].delay = 0.0f;
-			boxes[1].duration = 1.0f;
+			boxes[1].duration = 1.2f;
 			boxes[1].damage = 0;
 			boxes[1].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
 			boxes[1].hitSpeedX = 0.0f;
@@ -256,12 +256,14 @@ public class FighterSpyro extends Fighter {
 			boxes[1].canChangeDirection = false;
 			boxes[1].attackPriority = 0; 			// The higher the better
 			
-			SpriteTimer[] sprites = new SpriteTimer[3];
+			SpriteTimer[] sprites = new SpriteTimer[5];
 			sprites[0] = new SpriteTimer(FighterSprites.normalAttackGroundForward[0], 0.25f);
 			sprites[1] = new SpriteTimer(FighterSprites.normalAttackGroundForward[1], 0.25f);
 			sprites[2] = new SpriteTimer(FighterSprites.normalAttackGroundForward[2], 0.50f);
+			sprites[3] = new SpriteTimer(FighterSprites.normalAttackGroundForward[1], 0.10f);
+			sprites[4] = new SpriteTimer(FighterSprites.normalAttackGroundForward[0], 0.10f);
 			
-			return new Attack(boxes, sprites, this, 0.1f);	// Delay after moves are done
+			return new Attack(boxes, sprites, this, 0.0f);	// Delay after moves are done
 		}
 	}
 	
@@ -510,9 +512,9 @@ public class FighterSpyro extends Fighter {
 		if(dir == null){
 			CollisionBox[] boxes = new CollisionBox[5];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-0.5f, 0.5f, -3.0f, -1.5f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-0.5f, 0.5f, -3.0f, -1.5f);		// From players center Base
-			boxes[0].delay = 0.3f;
+			boxes[0].startBox = new UtilObject(-1.5f, 1.5f, -4.75f, -3.75f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(-1.5f, 1.5f, -4.75f, -3.75f);		// From players center Base
+			boxes[0].delay = 0.4f;
 			boxes[0].duration = 0.3f;
 			boxes[0].damage = 18;
 			boxes[0].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
@@ -527,9 +529,9 @@ public class FighterSpyro extends Fighter {
 			boxes[0].attackPriority = 2; 			// The higher the better
 
 			boxes[1] = new CollisionBox();
-			boxes[1].startBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f); 	// From players center Base
-			boxes[1].endBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f);		// From players center Base
-			boxes[1].delay = 0.3f;
+			boxes[1].startBox = new UtilObject(-1.5f, 1.5f, -1.25f, -0.25f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(-1.5f, 1.5f, -1.25f, -0.25f);		// From players center Base
+			boxes[1].delay = 0.4f;
 			boxes[1].duration = 0.3f;
 			boxes[1].damage = 18;
 			boxes[1].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
@@ -544,9 +546,9 @@ public class FighterSpyro extends Fighter {
 			boxes[1].attackPriority = 2; 			// The higher the better
 			
 			boxes[2] = new CollisionBox();
-			boxes[2].startBox = new UtilObject(0.0f, 1.5f, -2.0f, -1.0f); 	// From players center Base
-			boxes[2].endBox = new UtilObject(0.0f, 1.5f, -2.0f, -1.0f);		// From players center Base
-			boxes[2].delay = 0.3f;
+			boxes[2].startBox = new UtilObject(-2.25f, -1.25f, -4.0f, -1.0f); 	// From players center Base
+			boxes[2].endBox = new UtilObject(-2.25f, -1.25f, -4.0f, -1.0f);		// From players center Base
+			boxes[2].delay = 0.4f;
 			boxes[2].duration = 0.3f;
 			boxes[2].damage = 18;
 			boxes[2].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
@@ -561,9 +563,9 @@ public class FighterSpyro extends Fighter {
 			boxes[2].attackPriority = 2; 			// The higher the better
 			
 			boxes[3] = new CollisionBox();
-			boxes[3].startBox = new UtilObject(-1.5f, 0.0f, -2.0f, -1.0f); 	// From players center Base
-			boxes[3].endBox = new UtilObject(-1.5f, 0.0f, -2.0f, -1.0f);		// From players center Base
-			boxes[3].delay = 0.3f;
+			boxes[3].startBox = new UtilObject(1.25f, 2.25f, -4.0f, -1.0f); 	// From players center Base
+			boxes[3].endBox = new UtilObject(1.25f, 2.25f, -4.0f, -1.0f);		// From players center Base
+			boxes[3].delay = 0.4f;
 			boxes[3].duration = 0.3f;
 			boxes[3].damage = 18;
 			boxes[3].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
@@ -581,7 +583,7 @@ public class FighterSpyro extends Fighter {
 			boxes[4].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
 			boxes[4].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
 			boxes[4].delay = 0.0f;
-			boxes[4].duration = 0.8f;
+			boxes[4].duration = 1.05f;
 			boxes[4].damage = 0;
 			boxes[4].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
 			boxes[4].hitSpeedX = 0.0f;
@@ -595,100 +597,136 @@ public class FighterSpyro extends Fighter {
 			boxes[4].attackPriority = 0; 			// The higher the better
 			
 			SpriteTimer[] sprites = new SpriteTimer[4];
-			sprites[0] = new SpriteTimer(FighterSprites.specialAttack[0], 0.15f);
-			sprites[1] = new SpriteTimer(FighterSprites.specialAttack[1], 0.15f);
+			sprites[0] = new SpriteTimer(FighterSprites.specialAttack[0], 0.2f);
+			sprites[1] = new SpriteTimer(FighterSprites.specialAttack[1], 0.2f);
 			sprites[2] = new SpriteTimer(FighterSprites.specialAttack[2], 0.3f);
-			sprites[3] = new SpriteTimer(FighterSprites.specialAttack[3], 0.2f);
+			sprites[3] = new SpriteTimer(FighterSprites.specialAttack[3], 0.35f);
 			
-			return new Attack(boxes, sprites, this, 0.3f);	// Delay after moves are done
+			return new Attack(boxes, sprites, this, 0.0f);	// Delay after moves are done
 		}
 		else if(dir == North){
-			CollisionBox[] boxes = new CollisionBox[2];
+			CollisionBox[] boxes = new CollisionBox[3];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-0.25f, 0.25f, -1.9f, -1.4f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-0.25f, 0.25f, -1.9f, -1.4f);		// From players center Base
-			boxes[0].delay = 0.0f;
-			boxes[0].duration = 0.3f;
-			boxes[0].damage = 6;
-			boxes[0].healthScaler = 600.0f;			// scale = 1 + health/healthScaler
-			boxes[0].hitSpeedX = 0.2f;
-			boxes[0].hitSpeedY = -10.0f;
-			boxes[0].flightTime = 0.1f;
-			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
-			boxes[0].isStationaryOnGround = true;
-			boxes[0].isOverridingGravity = true;
-			boxes[0].canChangeDirection = false;
-			boxes[0].attackPriority = 0; 			// The higher the better
-
-			boxes[1] = new CollisionBox();
-			boxes[1].startBox = new UtilObject(-0.25f, 0.25f, -3.0f, -1.4f); 	// From players center Base
-			boxes[1].endBox = new UtilObject(-0.25f, 0.25f, -3.0f, -1.4f);		// From players center Base
-			boxes[1].delay = boxes[0].duration;
-			boxes[1].duration = 0.3f;
-			boxes[1].damage = 12;
-			boxes[1].healthScaler = 200.0f;			// scale = 1 + health/healthScaler
-			boxes[1].hitSpeedX = 0.05f;
-			boxes[1].hitSpeedY = -10.0f;
-			boxes[1].flightTime = 0.25f;
-			boxes[1].stunTime = 0.2f;
-			boxes[1].isStationaryInAir = false;
-			boxes[1].isStationaryOnGround = true;
-			boxes[1].isOverridingGravity = true;
-			boxes[1].canChangeDirection = false;
-			boxes[1].attackPriority = 0; 
-			
-			SpriteTimer[] sprites = new SpriteTimer[4];
-			sprites[0] = new SpriteTimer(FighterSprites.specialAttackUp[0], 0.1f);
-			sprites[1] = new SpriteTimer(FighterSprites.specialAttackUp[1], 0.1f);
-			sprites[2] = new SpriteTimer(FighterSprites.specialAttackUp[2], 0.1f);
-			sprites[3] = new SpriteTimer(FighterSprites.specialAttackUp[3], 0.3f);
-			
-			return new Attack(boxes, sprites, this, 0.3f);	// Delay after moves are done
-		}
-		else if(dir == South){
-			CollisionBox[] boxes = new CollisionBox[2];
-			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f);		// From players center Base
+			boxes[0].startBox = new UtilObject(1.0f, 2.25f, -5.0f, -3.0f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(1.0f, 2.25f, -5.0f, -3.0f);		// From players center Base
 			boxes[0].delay = 0.3f;
-			boxes[0].duration = 0.3f;
-			boxes[0].damage = 12;
+			boxes[0].duration = 0.15f;
+			boxes[0].damage = 13;
 			boxes[0].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
-			boxes[0].hitSpeedX = 0.0f;
-			boxes[0].hitSpeedY = 10.0f;
-			boxes[0].flightTime = 0.25f;
-			boxes[0].stunTime = 0.1f;
+			boxes[0].hitSpeedX = 0.3f;
+			boxes[0].hitSpeedY = -10.0f;
+			boxes[0].flightTime = 0.35f;
+			boxes[0].stunTime = 0.15f;
 			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
-			boxes[0].isOverridingGravity = false;
+			boxes[0].isOverridingGravity = true;
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 2; 			// The higher the better
 
 			boxes[1] = new CollisionBox();
-			boxes[1].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
-			boxes[1].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
-			boxes[1].delay = 0.0f;
-			boxes[1].duration = boxes[0].delay;
-			boxes[1].damage = 0;
-			boxes[1].healthScaler = 200.0f;			// scale = 1 + health/healthScaler
+			boxes[1].startBox = new UtilObject(-2.05f, 2.25f, -5.0f, -3.0f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(-2.05f, 2.25f, -5.0f, -3.0f);		// From players center Base
+			boxes[1].delay = boxes[0].delay + boxes[0].duration;
+			boxes[1].duration = 0.15f;
+			boxes[1].damage = 13;
+			boxes[1].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
 			boxes[1].hitSpeedX = 0.00f;
-			boxes[1].hitSpeedY = 0.0f;
-			boxes[1].flightTime = 0.0f;
-			boxes[1].stunTime = 0.0f;
+			boxes[1].hitSpeedY = -10.0f;
+			boxes[1].flightTime = 0.35f;
+			boxes[1].stunTime = 0.1f;
 			boxes[1].isStationaryInAir = true;
 			boxes[1].isStationaryOnGround = true;
 			boxes[1].isOverridingGravity = true;
 			boxes[1].canChangeDirection = false;
 			boxes[1].attackPriority = 0; 
 			
+			boxes[2] = new CollisionBox();
+			boxes[2].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
+			boxes[2].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
+			boxes[2].delay = 0.0f;
+			boxes[2].duration = 0.6f;
+			boxes[2].damage = 0;
+			boxes[2].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
+			boxes[2].hitSpeedX = 0.0f;
+			boxes[2].hitSpeedY = 0.0f;
+			boxes[2].flightTime = 0.0f;
+			boxes[2].stunTime = 0.0f;
+			boxes[2].isStationaryInAir = false;
+			boxes[2].isStationaryOnGround = true;
+			boxes[2].isOverridingGravity = false;
+			boxes[2].canChangeDirection = false;
+			boxes[2].attackPriority = 0; 			// The higher the better
+			
 			SpriteTimer[] sprites = new SpriteTimer[4];
-			sprites[0] = new SpriteTimer(FighterSprites.specialAttackDown[0], 0.1f);
-			sprites[1] = new SpriteTimer(FighterSprites.specialAttackDown[1], 0.1f);
-			sprites[2] = new SpriteTimer(FighterSprites.specialAttackDown[2], 0.1f);
-			sprites[3] = new SpriteTimer(FighterSprites.specialAttackDown[3], 0.3f);
+			sprites[0] = new SpriteTimer(FighterSprites.specialAttackUp[0], 0.15f);
+			sprites[1] = new SpriteTimer(FighterSprites.specialAttackUp[1], 0.15f);
+			sprites[2] = new SpriteTimer(FighterSprites.specialAttackUp[2], 0.15f);
+			sprites[3] = new SpriteTimer(FighterSprites.specialAttackUp[3], 0.15f);
 			
 			return new Attack(boxes, sprites, this, 0.3f);	// Delay after moves are done
+		}
+		else if(dir == South){
+			CollisionBox[] boxes = new CollisionBox[3];
+			boxes[0] = new CollisionBox();
+			boxes[0].startBox = new UtilObject(-1.25f, 1.25f, -1.5f, 0.05f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(-1.25f, 1.25f, -1.5f, 0.05f);		// From players center Base
+			boxes[0].delay = 0.3f;
+			boxes[0].duration = 0.2f;
+			boxes[0].damage = 12;
+			boxes[0].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
+			boxes[0].hitSpeedX = 0.0f;
+			boxes[0].hitSpeedY = 10.0f;
+			boxes[0].flightTime = 0.25f;
+			boxes[0].stunTime = 0.1f;
+			boxes[0].isStationaryInAir = true;
+			boxes[0].isStationaryOnGround = true;
+			boxes[0].isOverridingGravity = true;
+			boxes[0].canChangeDirection = false;
+			boxes[0].attackPriority = 2; 			// The higher the better
+
+			boxes[1] = new CollisionBox();
+			boxes[1].startBox = new UtilObject(-2.0f, 2.25f, -1.5f, 0.05f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(-2.0f, 2.25f, -1.5f, -0.05f);		// From players center Base
+			boxes[1].delay = boxes[0].delay + boxes[0].duration;
+			boxes[1].duration = 0.3f;
+			boxes[1].damage = 12;
+			boxes[1].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
+			boxes[1].hitSpeedX = 0.00f;
+			boxes[1].hitSpeedY = 10.0f;
+			boxes[1].flightTime = 0.25f;
+			boxes[1].stunTime = 0.1f;
+			boxes[1].isStationaryInAir = true;
+			boxes[1].isStationaryOnGround = true;
+			boxes[1].isOverridingGravity = false;
+			boxes[1].canChangeDirection = false;
+			boxes[1].attackPriority = 0; 
+			
+			boxes[2] = new CollisionBox();
+			boxes[2].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
+			boxes[2].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
+			boxes[2].delay = 0.0f;
+			boxes[2].duration = boxes[0].delay;
+			boxes[2].damage = 0;
+			boxes[2].healthScaler = 200.0f;			// scale = 1 + health/healthScaler
+			boxes[2].hitSpeedX = 0.00f;
+			boxes[2].hitSpeedY = 0.0f;
+			boxes[2].flightTime = 0.0f;
+			boxes[2].stunTime = 0.0f;
+			boxes[2].isStationaryInAir = true;
+			boxes[2].isStationaryOnGround = true;
+			boxes[2].isOverridingGravity = true;
+			boxes[2].canChangeDirection = false;
+			boxes[2].attackPriority = 0; 
+			
+			SpriteTimer[] sprites = new SpriteTimer[6];
+			sprites[0] = new SpriteTimer(FighterSprites.specialAttackDown[0], 0.15f);
+			sprites[1] = new SpriteTimer(FighterSprites.specialAttackDown[1], 0.15f);
+			sprites[2] = new SpriteTimer(FighterSprites.specialAttackDown[2], 0.2f);
+			sprites[3] = new SpriteTimer(FighterSprites.specialAttackDown[3], 0.3f);
+			sprites[4] = new SpriteTimer(FighterSprites.specialAttackDown[1], 0.15f);
+			sprites[5] = new SpriteTimer(FighterSprites.specialAttackDown[0], 0.15f);
+			
+			return new Attack(boxes, sprites, this, 0.0f);	// Delay after moves are done
 		}
 		// Special move, we can only do a move in the direction we are facing.
 		//else if((dir == East && !facingLeft) || (dir == West && facingLeft)){
@@ -697,31 +735,31 @@ public class FighterSpyro extends Fighter {
 			
 			CollisionBox[] boxes = new CollisionBox[3];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-1.25f, -0.0f, -2.5f, -1.5f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(0.0f, 1.25f, -2.5f, -1.5f);		// From players center Base
-			boxes[0].delay = 0.15f;
-			boxes[0].duration = 0.2f;
-			boxes[0].damage = 18;
-			boxes[0].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
-			boxes[0].hitSpeedX = 8.0f;
-			boxes[0].hitSpeedY = -0.5f;
-			boxes[0].flightTime = 0.3f;
+			boxes[0].startBox = new UtilObject(0.0f, 2.0f, -4.74f, -3.0f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(0.0f, 2.0f, -4.75f, -3.0f);		// From players center Base
+			boxes[0].delay = 0.4f;
+			boxes[0].duration = 0.25f;
+			boxes[0].damage = 15;
+			boxes[0].healthScaler = 350.0f;			// scale = 1 + health/healthScaler
+			boxes[0].hitSpeedX = 5.0f;
+			boxes[0].hitSpeedY = -7.0f;
+			boxes[0].flightTime = 0.35f;
 			boxes[0].stunTime = 0.1f;
-			boxes[0].isStationaryInAir = false;
+			boxes[0].isStationaryInAir = true;
 			boxes[0].isStationaryOnGround = true;
 			boxes[0].isOverridingGravity = true;
 			boxes[0].canChangeDirection = false;
 			boxes[0].attackPriority = 2; 			// The higher the better
 
 			boxes[1] = new CollisionBox();
-			boxes[1].startBox = new UtilObject(0.5f, 1.25f, -1.5f, -1.0f); 	// From players center Base
-			boxes[1].endBox = new UtilObject(0.5f, 1.25f, -0.75f, 0.25f);		// From players center Base
-			boxes[1].delay = boxes[0].delay + boxes[0].duration + 0.1f;
-			boxes[1].duration = 0.15f;
-			boxes[1].damage = 18;
-			boxes[1].healthScaler = 250.0f;			// scale = 1 + health/healthScaler
-			boxes[1].hitSpeedX = 0.01f;
-			boxes[1].hitSpeedY = 8.0f;
+			boxes[1].startBox = new UtilObject(0.0f, 2.0f, -4.75f, -0.25f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(0.0f, 2.0f, -4.75f, -0.25f);		// From players center Base
+			boxes[1].delay = boxes[0].delay + boxes[0].duration;
+			boxes[1].duration = 0.25f;
+			boxes[1].damage = 15;
+			boxes[1].healthScaler = 350.0f;			// scale = 1 + health/healthScaler
+			boxes[1].hitSpeedX = 7.00f;
+			boxes[1].hitSpeedY = -4.0f;
 			boxes[1].flightTime = 0.25f;
 			boxes[1].stunTime = 0.1f;
 			boxes[1].isStationaryInAir = true;
@@ -733,8 +771,8 @@ public class FighterSpyro extends Fighter {
 			boxes[2] = new CollisionBox();
 			boxes[2].startBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f); 	// From players center Base
 			boxes[2].endBox = new UtilObject(0.001f, 0.0f, 0.0001f, 0.0f);		// From players center Base
-			boxes[2].delay = boxes[1].delay + boxes[1].duration;
-			boxes[2].duration = 0.85f - boxes[2].delay;
+			boxes[2].delay = 0.0f;
+			boxes[2].duration = 0.90f;
 			boxes[2].damage = 0;
 			boxes[2].healthScaler = 300.0f;			// scale = 1 + health/healthScaler
 			boxes[2].hitSpeedX = 0.f;
@@ -745,15 +783,15 @@ public class FighterSpyro extends Fighter {
 			boxes[2].isStationaryOnGround = true;
 			boxes[2].isOverridingGravity = true;
 			boxes[2].canChangeDirection = false;
-			boxes[2].attackPriority = 2; 			// The higher the better
+			boxes[2].attackPriority = 0; 			// The higher the better
 			
 			SpriteTimer[] sprites = new SpriteTimer[4];
-			sprites[0] = new SpriteTimer(FighterSprites.specialAttackForward[0], 0.25f);
-			sprites[1] = new SpriteTimer(FighterSprites.specialAttackForward[1], 0.2f);
-			sprites[2] = new SpriteTimer(FighterSprites.specialAttackForward[2], 0.15f);
+			sprites[0] = new SpriteTimer(FighterSprites.specialAttackForward[0], 0.20f);
+			sprites[1] = new SpriteTimer(FighterSprites.specialAttackForward[1], 0.20f);
+			sprites[2] = new SpriteTimer(FighterSprites.specialAttackForward[2], 0.25f);
 			sprites[3] = new SpriteTimer(FighterSprites.specialAttackForward[3], 0.25f);
 			
-			return new Attack(boxes, sprites, this, 0.2f);	// Delay after moves are done
+			return new Attack(boxes, sprites, this, 0.25f);	// Delay after moves are done
 		}
 	}
 	

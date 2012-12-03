@@ -336,8 +336,8 @@ public class FighterMario extends Fighter {
 		if(dir == null){
 			CollisionBox[] boxes = new CollisionBox[5];
 			boxes[0] = new CollisionBox();
-			boxes[0].startBox = new UtilObject(-0.5f, 0.5f, -3.0f, -1.5f); 	// From players center Base
-			boxes[0].endBox = new UtilObject(-0.5f, 0.5f, -3.0f, -1.5f);		// From players center Base
+			boxes[0].startBox = new UtilObject(-0.75f, 0.75f, -3.0f, -1.5f); 	// From players center Base
+			boxes[0].endBox = new UtilObject(-0.75f, 0.75f, -3.0f, -1.5f);		// From players center Base
 			boxes[0].delay = 0.3f;
 			boxes[0].duration = 0.3f;
 			boxes[0].damage = 18;
@@ -353,8 +353,8 @@ public class FighterMario extends Fighter {
 			boxes[0].attackPriority = 2; 			// The higher the better
 
 			boxes[1] = new CollisionBox();
-			boxes[1].startBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f); 	// From players center Base
-			boxes[1].endBox = new UtilObject(-0.5f, 0.5f, -1.5f, 0.0f);		// From players center Base
+			boxes[1].startBox = new UtilObject(-0.75f, 0.75f, -1.5f, 0.0f); 	// From players center Base
+			boxes[1].endBox = new UtilObject(-0.75f, 0.75f, -1.5f, 0.0f);		// From players center Base
 			boxes[1].delay = 0.3f;
 			boxes[1].duration = 0.3f;
 			boxes[1].damage = 18;
@@ -370,8 +370,8 @@ public class FighterMario extends Fighter {
 			boxes[1].attackPriority = 2; 			// The higher the better
 			
 			boxes[2] = new CollisionBox();
-			boxes[2].startBox = new UtilObject(0.0f, 1.5f, -2.0f, -1.0f); 	// From players center Base
-			boxes[2].endBox = new UtilObject(0.0f, 1.5f, -2.0f, -1.0f);		// From players center Base
+			boxes[2].startBox = new UtilObject(0.0f, 1.5f, -2.25f, -0.75f); 	// From players center Base
+			boxes[2].endBox = new UtilObject(0.0f, 1.5f, -2.25f, -0.75f);		// From players center Base
 			boxes[2].delay = 0.3f;
 			boxes[2].duration = 0.3f;
 			boxes[2].damage = 18;
@@ -387,8 +387,8 @@ public class FighterMario extends Fighter {
 			boxes[2].attackPriority = 2; 			// The higher the better
 			
 			boxes[3] = new CollisionBox();
-			boxes[3].startBox = new UtilObject(-1.5f, 0.0f, -2.0f, -1.0f); 	// From players center Base
-			boxes[3].endBox = new UtilObject(-1.5f, 0.0f, -2.0f, -1.0f);		// From players center Base
+			boxes[3].startBox = new UtilObject(-1.5f, 0.0f, -2.25f, -0.750f); 	// From players center Base
+			boxes[3].endBox = new UtilObject(-1.5f, 0.0f, -2.25f, -0.75f);		// From players center Base
 			boxes[3].delay = 0.3f;
 			boxes[3].duration = 0.3f;
 			boxes[3].damage = 18;
