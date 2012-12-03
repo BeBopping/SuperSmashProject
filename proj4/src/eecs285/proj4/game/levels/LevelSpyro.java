@@ -20,6 +20,9 @@ public class LevelSpyro extends Level {
 		platformObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -6.5f, -4.5f, 1.0f, 7.0f));
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_spyro_block"), 4.5f, 6.5f, 1.0f, 2.0f));
 		platformObjects.add(new LevelObjectStretch(Assets.GetSprite("level_spyro_block"), -6.5f, -4.5f, 1.0f, 2.0f));
+		solidObjects.add(new LevelObjectRepeating2D(Assets.GetSprite("level_spyro_ground"), -8.5f, 8.5f, 7.0f, 15.2f, 1.0f, 1.0f));
+		platformObjects.add(new LevelObjectRepeating2D(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 7.2f, 15.2f, 2.833333f, 2.833333f));
+		/*
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_ground"), -8.5f, 8.5f, 7.0f, 8.0f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 7.2f, 8.2f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 8.2f, 9.2f));
@@ -29,7 +32,7 @@ public class LevelSpyro extends Level {
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 12.2f, 13.2f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 13.2f, 14.2f));
 		solidObjects.add(new LevelObjectRepeating(Assets.GetSprite("level_spyro_wall"), -8.5f, 8.5f, 14.2f, 15.2f));
-
+		 */
 		// Starting points for each character
 		startX[0] = -5.0f;
 		startY[0] = 1.0f;
