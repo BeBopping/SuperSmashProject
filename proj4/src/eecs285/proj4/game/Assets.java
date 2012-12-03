@@ -70,7 +70,7 @@ public class Assets {
 				sprites.put("level_sonic_ground", new Sprite(texture, 0.0f, 0.625f, 0.0f, 1.0f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("sonicLevelPlatform.png"));
-				sprites.put("level_sonic_platform", new Sprite(texture, 0.0f, 1.0f, 0.0f, 0.5f));
+				sprites.put("level_sonic_platform", new Sprite(texture, 0.0f, 1.0f, 0.0f, 1.0f));
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("spyrolevelBG.png"));
 				textures.put("level_spyro_background", texture);
