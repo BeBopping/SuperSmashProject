@@ -30,9 +30,9 @@ public class ScreenTitle extends ScreenMenu {
 	public void render(double delta){
 		Render.renderBackground(background);
 		
-		Render.render(titleFont, window, "Title of Game", 
-				window.getCenterX(), window.getTop() + window.getSizeY()/4.0f, 
-				window.getSizeY()/8.0f, 0.5f, 0.5f, Color.black);
+		//Render.render(titleFont, window, "Title of Game", 
+		//		window.getCenterX(), window.getTop() + window.getSizeY()/4.0f, 
+		//		window.getSizeY()/8.0f, 0.5f, 0.5f, Color.black);
 		
 		super.render(delta);
 	}

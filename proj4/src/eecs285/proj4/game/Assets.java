@@ -45,6 +45,8 @@ public class Assets {
 				
 				texture = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("Sky.png"));
 				textures.put("start_menu_background", texture);
+
+				texture = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("TitleScreen.jpg"));
 				textures.put("title_screen_background", texture);
 				textures.put("about_screen_background", texture);
 				textures.put("how_to_play_screen_background", texture);
