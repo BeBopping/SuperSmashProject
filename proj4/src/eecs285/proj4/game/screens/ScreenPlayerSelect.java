@@ -73,8 +73,8 @@ public class ScreenPlayerSelect implements GameState {
 		// Add selectable fighters
 		selectableFighters.add(new SelectableFighter("fighter_mario", GameAssets.GetSprite("fighter_mario"), 10.0f, 25.0f, 20.0f, 35.0f));
 		selectableFighters.add(new SelectableFighter("fighter_sonic", GameAssets.GetSprite("fighter_sonic"), 30.0f, 45.0f, 20.0f, 35.0f));
-		selectableFighters.add(new SelectableFighter("fighter_rayman", GameAssets.GetSprite("fighter_rayman"), 10.0f, 25.0f, 40.0f, 55.0f));
-		selectableFighters.add(new SelectableFighter("fighter_spyro", GameAssets.GetSprite("fighter_spyro"), 30.0f, 45.0f, 40.0f, 55.0f));
+		//selectableFighters.add(new SelectableFighter("fighter_rayman", GameAssets.GetSprite("fighter_rayman"), 10.0f, 25.0f, 40.0f, 55.0f));
+		selectableFighters.add(new SelectableFighter("fighter_spyro", GameAssets.GetSprite("fighter_spyro"), 20.0f, 35.0f, 40.0f, 55.0f));
 	}
 	
 	public void onActivate(){
