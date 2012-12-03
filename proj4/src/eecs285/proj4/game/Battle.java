@@ -400,25 +400,27 @@ public class Battle implements GameState {
 		}
 
 		// Render Clock
-		int timeVal = (int)Math.ceil(timeLeft);
-		String text = "";
-		if(timeVal >= 60){
-			text += String.valueOf((int)((float)timeVal / 60.0f)) + ":";
-			
-			if(timeVal % 60 < 10){
-				text += "0" + timeVal % 60;
+		if(timedMatch){
+			int timeVal = (int)Math.ceil(timeLeft);
+			String text = "";
+			if(timeVal >= 60){
+				text += String.valueOf((int)((float)timeVal / 60.0f)) + ":";
+				
+				if(timeVal % 60 < 10){
+					text += "0" + timeVal % 60;
+				}
+				else{
+					text += timeVal % 60;
+				}
 			}
 			else{
 				text += timeVal % 60;
 			}
+			text += "  ";
+	
+			Render.render(Assets.GetTexture("white"), 40, 60, 1, 11, Color.gray);
+			Render.render(titleFont, hud, text, 50, 6, 10, 0.5f, 0.5f, Color.black);
 		}
-		else{
-			text += timeVal % 60;
-		}
-		text += "  ";
-
-		Render.render(Assets.GetTexture("white"), 40, 60, 1, 11, Color.gray);
-		Render.render(titleFont, hud, text, 50, 6, 10, 0.5f, 0.5f, Color.black);
 	}
 	
 	private void endGame(){
